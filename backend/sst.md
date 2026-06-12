@@ -210,7 +210,7 @@ export type LiteralNode =
     | {
           type: 'REGEX_LITERAL'
           pattern: string
-          flags: string[]
+          flags: ('g'|'m'|'i')[]
       }
 ```
 
