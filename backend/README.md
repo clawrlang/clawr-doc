@@ -12,9 +12,9 @@ Clawr can target any general-purpose computer that implements von Neumann, Harva
 
 ## The SST
 
-The Clawr frontend generates a *semantic syntax tree* (SST). This is a data structure that represents the source code, but where any disambiguation has been resolved. Inferred type declarations are made explicit, syntax sugar has been reinterpreted, and memory management instructions have been injected. The SST is a formalised, structured version of the more human source code.
+The Clawr frontend generates a [*semantic syntax tree*](./sst.md) (SST). This is a data structure that represents the source code, but where any disambiguation has been resolved. Inferred type declarations are made explicit, syntax sugar has been reinterpreted, and memory management instructions have been injected. The SST is a formalised, structured version of the more human source code.
 
-The backend’s responsibility is to “lower” the SST to machine code. What exact technologes and strategies it employs to achieve this are of no matter. What does matter however is that the semantics of Clawr is honoured. This documentation uses [IEEE 2119 keywords](https://www.rfc-editor.org/info/rfc2119/) to indicate when the backend `MUST` or `MUST NOT` implement certain behaviour and when it `MAY` choose as it pleases.
+The backend’s responsibility is to “lower” the SST to machine code. What exact technologes and strategies it employs to achieve this are of no matter. What does matter however is that the semantics of Clawr is honoured. This documentation uses [IEEE 2119 syntax](https://www.rfc-editor.org/info/rfc2119/) to indicate when the backend `MUST` or `MUST NOT` implement certain behaviour and when it `MAY` choose as it pleases. It also uses `WILL` and `WILL NOT` for equivalent requirements — promises — regarding the input structure.
 
 ## General Constraints
 
@@ -29,3 +29,4 @@ There are some constraints that the backend must adhere to:
 ## Other Documentation
 
 - Shared reference documentation: [reference/README.md](../reference/README.md)
+- [SST specification](./sst.md)
