@@ -13,7 +13,7 @@ This repository contains documentation for the Clawr language. The documentation
 
 - [Language developers](developers/README.md)
 - [Language users](users/README.md)
-- [Backend developers](backend-developers/README.md)
+- [Backend developers](backend/README.md)
 - [Reference documentation](reference/README.md)
 
 ## Other Repositories
