@@ -12,7 +12,7 @@ This repository contains documentation for the Clawr language. The documentation
 
 - [Learning the Language](./language/README.md)
 - [API Reference](./api-reference/README.md)
-- [IR Reference](./ir-reference/README.md)
+- [CIR Reference](./cir-reference/README.md)
 
 The API reference details the functions and types that are part of Clawr’s standard library.
 
