@@ -14,7 +14,7 @@ There is no official JSON schema at this time, but a preliminary schema id has b
 ## Module Root
 
 ```ts
-export interface ClawrModule {
+export type ClawrModule = {
   $schema: 'http://clawr.lang/schema/cir/DRAFT-0'
   startBlock?: Statement[]
   declarations?: Declaration[]
@@ -49,31 +49,9 @@ Example:
 
 ```ts
 export type Declaration =
-  | {
-      kind: 'VARIABLE_DECL'
-      name: string
-      valueSet: ValueSet
-      initialValue: Expression
-    }
-  | {
-      kind: 'FUNCTION_DECL'
-      baseName: string
-      parameters: {
-        label?: string
-        varName: string
-        valueSet: ValueSet
-      }[]
-      body: Statement[]
-      returnValueSet?: ValueSet
-    }
-  | {
-      kind: 'DATA_DECL'
-      name: string
-      fields: {
-        name: string
-        valueSet: ValueSet
-      }[]
-    }
+  | VariableDeclaration
+  | FunctionDeclaration
+  | DataDeclaration
 ```
 
 Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is important. Referenced entities `MUST` exist prior to the reference is made.
@@ -83,7 +61,7 @@ Declarations are added to the top scope of a module in the `ClawrModule.declarat
 ### `DATA_DECL`
 
 ```ts
-type _ = {
+type DataDeclaration = {
   kind: 'DATA_DECL'
   name: string
   fields: {
@@ -98,7 +76,7 @@ The `DATA_DECL` defines a type that stores its internal data in fields.
 ### `VARIABLE_DECL`
 
 ```ts
-type _ = {
+type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
   name: string
   valueSet: ValueSet
@@ -120,16 +98,16 @@ The `valueSet` property identifies the type of the variable. Its intent is to he
 ### `FUNCTION_DECL`
 
 ```ts
-type _ = {
+type FunctionDeclaration = {
   kind: 'FUNCTION_DECL'
   baseName: string
   parameters: {
-    label: string | undefined
+    label?: string
     varName: string
     valueSet: ValueSet
   }[]
   body: Statement[]
-  returnValueSet: ValueSet | undefined
+  resultValueSet?: ValueSet
 }
 ```
 
@@ -147,38 +125,12 @@ When mangling a function name, the backend `MUST` use a naming scheme that inclu
 
 ```ts
 export type Statement =
-  | {
-      kind: 'ENSURE_UNIQUE'
-      object: Extract<
-        Expression,
-        { kind: 'VARIABLE_REF' | 'FIELD_REF'; valueSet?: ValueSet }
-      >
-    }
-  | {
-      kind: 'RELEASE'
-      object: Extract<
-        Expression,
-        { kind: 'VARIABLE_REF' | 'FIELD_REF'; valueSet?: ValueSet }
-      >
-    }
-  | {
-      kind: 'EXEC'
-      name: {
-        baseName: string
-        labels: string[]
-      }
-      arguments: Expression[]
-    }
-  | {
-      kind: 'RETURN'
-      value?: Expression
-    }
-  | Extract<Declaration, { kind: 'VARIABLE_DECL' }>
-  | {
-      kind: 'ASSIGN'
-      target: Extract<Expression, { kind: 'VARIABLE_REF' | 'FIELD_REF' }>
-      value: Expression
-    }
+  | EnsureUnique
+  | Release
+  | Exec
+  | Return
+  | VariableDeclaration
+  | Assign
 ```
 
 Statements are added to the `startBlock` of a module, and to the `body` of a function. Statements `MUST NOT` be reordered or skipped when lowering. An optimisation step `MAY` however perform limited changes.
@@ -186,13 +138,12 @@ Statements are added to the `startBlock` of a module, and to the `body` of a fun
 ### `ENSURE_UNIQUE`
 
 ```ts
-type _ = {
+type EnsureUnique = {
   kind: 'ENSURE_UNIQUE'
-  object: Extract<
-    Expression,
-    { kind: 'VARIABLE_REF' | 'FIELD_REF'; valueSet?: ValueSet }
-  >
+  object: Storage
 }
+
+type Storage = VariableReference | FieldReference
 ```
 
 An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and fields. When assigning a variable/field to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated before change is applied.
@@ -205,10 +156,12 @@ An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-w
 ### `RELEASE`
 
 ```ts
-type _ = {
+type Release = {
   kind: 'RELEASE'
-  object: VariableReference | FieldReference
+  object: Storage
 }
+
+type Storage = VariableReference | FieldReference
 ```
 
 The `RELEASE` statement decrements the reference count of a block of memory.
@@ -221,7 +174,7 @@ The `RELEASE` statement decrements the reference count of a block of memory.
 ### `EXEC`
 
 ```ts
-type _ = {
+type Exec = {
   kind: 'EXEC'
   name: {
     baseName: string
@@ -239,7 +192,7 @@ A Clawr function may or may not have a return value. A function without a return
 ### `RETURN`
 
 ```ts
-type _ = {
+type Return = {
   kind: 'RETURN'
   value?: Expression
 }
@@ -250,11 +203,13 @@ Return early from a `void` function or return a value from a query function.
 ### `ASSIGN`
 
 ```ts
-type _ = {
+type Assign = {
   kind: 'ASSIGN'
-  target: VariableReference | FieldReference
+  target: Storage
   value: Expression
 }
+
+type Storage = VariableReference | FieldReference
 ```
 
 Assign a value to a variable or a field.
@@ -262,68 +217,29 @@ Assign a value to a variable or a field.
 ### `VARIABLE_DECL`
 
 ```ts
-type _ = {
+type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
   name: string
-  type: string
+  valueSet: ValueSet
   initialValue: Expression
 }
 ```
 
-The variable declaration can also be used as a `Statement`. In other words, it `MAY` appear in a function body and in the `startBlock` pf a module.
+The variable declaration can also be used as a `Statement`. In other words, it `MAY` appear in a function body and in the `startBlock` of a module.
 
 ## Expressions
 
 ```ts
 export type Expression =
-  | {
-      kind: 'STRING_LITERAL'
-      value: string
-      valueSet: Extract<ValueSet, { type: 'string' }>
-    }
-  | {
-      kind: 'INTEGER_LITERAL'
-      value: string
-      valueSet: Extract<ValueSet, { type: 'integer' }>
-    }
-  | {
-      kind: 'TRUTHVALUE_LITERAL'
-      value: 'false' | 'ambiguous' | 'true'
-      valueSet: Extract<ValueSet, { type: 'truthvalue' }>
-    }
-  | {
-      kind: 'ALLOCATE'
-      valueSet: Extract<ValueSet, { type: 'rc-type' }>
-      fields: {
-        name: string
-        value: Expression
-      }[]
-    }
-  | {
-      kind: 'RETAIN'
-      object: Extract<Expression, { kind: 'VARIABLE_REF' | 'FIELD_REF' }>
-      valueSet: Extract<ValueSet, { type: 'rc-type' }>
-    }
-  | {
-      kind: 'VARIABLE_REF'
-      name: string
-      valueSet: ValueSet
-    }
-  | {
-      kind: 'FIELD_REF'
-      object: Expression
-      field: string
-      valueSet: ValueSet
-    }
-  | {
-      kind: 'QUERY'
-      name: {
-        baseName: string
-        labels: string[]
-      }
-      arguments: Expression[]
-      valueSet: ValueSet
-    }
+  | StringLiteral
+  | IntegerLiteral
+  | TruthLiteral
+  | MemoryAllocation
+  | MemoryRetention
+  | AsShared
+  | VariableReference
+  | FieldReference
+  | QueryFunctionCall
 ```
 
 `Expression`s are used as arguments for `Statement`s and other `Expression`s.
@@ -331,10 +247,10 @@ export type Expression =
 ### `STRING_LITERAL`
 
 ```ts
-type _ = {
+type StringLiteral = {
   kind: 'STRING_LITERAL'
   value: string
-  valueSet: Extract<ValueSet, { type: 'string' }>
+  valueSet: StringValueSet
 }
 ```
 
@@ -347,10 +263,10 @@ The `valueSet` simply identifies the literal value as a `string` (which the `kin
 ### `INTEGER_LITERAL`
 
 ```ts
-type _ = {
+type IntegerLiteral = {
   kind: 'INTEGER_LITERAL'
   value: string
-  valueSet: Extract<ValueSet, { type: 'integer' }>
+  valueSet: IntegerValueSet
 }
 ```
 
@@ -361,10 +277,10 @@ The `value` is the decimal representation of the integer value. It is a string b
 ### `TRUTHVALUE_LITERAL`
 
 ```ts
-type _ = {
+type TruthLiteral = {
   kind: 'TRUTHVALUE_LITERAL'
   value: 'false' | 'ambiguous' | 'true'
-  valueSet: Extract<ValueSet, { type: 'truthvalue' }>
+  valueSet: TruthValueSet
 }
 ```
 
@@ -375,7 +291,7 @@ The `value` can be either of `"false"`, `"ambiguous"` or `"true"`. The backend `
 ### `QUERY`
 
 ```ts
-type _ = {
+type QueryFunctionCall = {
   kind: 'QUERY'
   name: {
     baseName: string
@@ -394,9 +310,9 @@ A Clawr function may or may not have a return value. A function _without_ a retu
 ### `ALLOCATE`
 
 ```ts
-type _ = {
+type MemoryAllocation = {
   kind: 'ALLOCATE'
-  valueSet: Extract<ValueSet, { type: 'rc-type' }>
+  valueSet: RcTypeValueSet
   fields: {
     name: string
     value: Expression
@@ -408,26 +324,43 @@ Allocate memory for a reference-counted entity. The `valueSet` `MUST` name a ref
 
 The backend `MUST` allocate enough memory to store the entire entity, plus whatever additional information it needs for reference counting and other runtime checks.
 
-The `semantics` property in included as a courtesy. The backend `MAY` use the information to aid optimisation. If the value is `"COW"` the backend `MAY` use stack allocation instead of heap allocation. But then it `MUST` dereference `COW` values accordingly in other expressions.
+The `semantics` property in included as a courtesy. The backend `MAY` use the information to aid optimisation. If the value is `"ISOLATED"` the backend `MAY` use stack allocation instead of heap allocation. But then it `MUST` dereference `ISOLATED` values accordingly in other expressions.
 
 The `fields` property indicates the initial value of the allocated memory. The reference-counted `type` `MUST` have fields to maintain its state (whether those fields are considered private or public). The backend `MUST` populate each field with the value of the corresponding `Expression`.
 
 ### `RETAIN`
 
 ```ts
-type _ = {
+type MemoryRetention = {
   kind: 'RETAIN'
-  object: VariableReference | FieldReference
-  valueSet: Extract<ValueSet, { type: 'rc-type' }>
+  object: Storage
+  valueSet: RcTypeValueSet
 }
 ```
 
 Increment the reference count of an allocation. The reference count of the `object` `MUST` be increased by exactly one.
 
+### `AS_SHARED`
+
+```ts
+type AsShared = {
+  kind: 'AS_SHARED'
+  object: QueryFunctionCall
+  targetSemantics: 'SHARED' | 'ISOLATED'
+  valueSet: RcTypeValueSet
+}
+```
+
+Converts a `UNIQUE` `QUERY` result into a specific semantics `SHARED` or `ISOLATED` value.
+
+The reference count of the `object` value `MUST` be exactly 1.
+
+The backend `MAY` ignore this and consider only the `object` as the expression.
+
 ### `VARIABLE_REF`
 
 ```ts
-type _ = {
+type VariableReference = {
   kind: 'VARIABLE_REF'
   name: string
   valueSet: ValueSet
@@ -439,7 +372,7 @@ Reference a variable. The `valueSet` returns the best lattice knowledge of the v
 ### `FIELD_REF`
 
 ```ts
-type _ = {
+type FieldReference = {
   kind: 'FIELD_REF'
   object: Expression
   field: string
@@ -453,27 +386,11 @@ Reference a field. The `valueSet` returns the best lattice knowledge of the fiel
 
 ```ts
 export type ValueSet =
-  | {
-      type: 'integer'
-      min?: string
-      max?: string
-    }
-  | {
-      type: 'truthvalue'
-      values: ('false' | 'ambiguous' | 'true')[]
-    }
-  | {
-      type: 'string'
-    }
-  | {
-      type: 'rc-type'
-      typeName: string
-      semantics: 'REF' | 'COW' | 'UNIQUE'
-      fields?: {
-        name: string
-        valueSet: ValueSet
-      }[]
-    }
+  | IntegerValueSet
+  | RealValueSet
+  | TruthValueSet
+  | StringValueSet
+  | RcTypeValueSet
 ```
 
 Every expression has a `valueSet`. Variables, fields and parameters also have one. In the former case, the value-set represent the best knowledge of the value of the expression. In the latter it represents constraints for what values may be stored.
@@ -481,35 +398,35 @@ Every expression has a `valueSet`. Variables, fields and parameters also have on
 ### `integer`
 
 ```ts
-type _ = {
+type IntegerValueSet = {
   type: 'integer'
-  min?: string // numeric (no decimal point), can be arbitrarity big
-  max?: string // numeric (no decimal point), can be arbitrarity big
+  min?: string
+  max?: string
 }
 ```
 
-A range of integer values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip the `min`, `max` or both properties.
+A range of integer values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip either the `min`, `max` or both properties.
 
 If either or both limits is excluded, the value could be any integer ($\mathbb{Z}$), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
 
 ### `real`
 
 ```ts
-type _ = {
+type RealValueSet = {
   type: 'real'
   min?: string // numeric, can be arbitrarity big
   max?: string // numeric, can be arbitrarity big
 }
 ```
 
-A range of real values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip the `min`, `max` or both properties.
+A range of real values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip either the `min`, `max` or both properties.
 
 If either or both limits is excluded, the value could be any real number ($\mathbb{R}$), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
 
 ### `truthvalue`
 
 ```ts
-type _ = {
+type TruthValueSet = {
   type: 'truthvalue'
   values: ('false' | 'ambiguous' | 'true')[]
 }
@@ -520,9 +437,7 @@ A set of truth values.
 ### `string`
 
 ```ts
-type _ = {
-  type: 'string'
-}
+type StringValueSet = { type: 'string' }
 ```
 
 An unconstrained string value.
@@ -530,17 +445,13 @@ An unconstrained string value.
 ### Custom `data` Structures
 
 ```ts
-type _ = {
+type RcTypeValueSet = {
   type: 'rc-type'
   typeName: string
-  semantics: 'REF' | 'COW'
-  fields?: {
-    name: string
-    valueSet: ValueSet
-  }[]
+  semantics: 'SHARED' | 'ISOLATED'
 }
 ```
 
-A set allowing all instances of a reference counted type (including inheritance). The `typeName`  `MUST` identify a type that is available in the current scope.
+A set allowing all instances of a reference counted type (including inheritance). The `typeName` `MUST` identify a type that is available in the current scope.
 
-The `semantics` property 
+The `semantics` property
