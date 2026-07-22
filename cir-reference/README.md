@@ -3,13 +3,17 @@
 
 # Clawr Intermediate Representation
 
-Clawr is hardware agnostic and the same frontend should be reusable for multiple custom backends. The Clawr Intermediate Representation (CIR) is the main artefact for communicating between the two subsystems.
+Clawr is not a compiler. It is a language specification. Teams are expected to create multiple compiler implementations targeting various hardware/OS configurations. And maybe offering different levels of optimization. There might be an officially recommended compiler for your platform, but there can be several alternatives that could be a better fit your specific situation.
 
-This document uses [RFC 2119](https://www.rfc-editor.org/info/rfc2119/) ([BCP 14](https://www.rfc-editor.org/info/bcp14/)) terminology. The backend `MAY` freely define its own lowering strategy. It `MUST` however honour the semantics defined in this document.
+The specification assumes a separation between a frontend and a backend. The responsibility of the frontend is language interpretation and “static” semantic analysis. The Clawr Intermediate Representation (CIR) communicates that analysis to the backend. The responsibility of the backend is to “lower” the CIR specification to executable machine code targeting the platform of choice.
 
-The CIR is defined using TypeScript in <https://github.com/clawrlang/clawr/blob/main/src/cir/index.ts>. That code is duplicated here for easy reference, but it might be out of sync. Please, refer to the source for the official truth.
+Clawr is hardware agnostic and the same frontend should be reusable for multiple custom backends. It can in theory be written once as a single canonical library, reused by multiple backend teams and integrated with their implementations. But multiple frontend implementations are allowed, offering different optimizations or other capabilities. The backend is **assumed to come in many flavours** for servicing unique and exotic hardware and/or operating systems.
 
-There is no official JSON schema at this time, but a preliminary schema id has been invented: `"http://clawr.lang/schema/cir/DRAFT-0"`. If we can secure that domain name, we could export the definitions to the JSON schema format and publish it on that URL. Alternatively, we could secure a different domain name and update the schema id accordingly.
+This document uses [RFC 2119](https://www.rfc-editor.org/info/rfc2119/) ([BCP 14](https://www.rfc-editor.org/info/bcp14/)) terminology. The backend `MAY` freely define its own lowering strategy and optimizations. It `MUST` however honour the semantics defined in this document.
+
+The CIR is defined using TypeScript in <https://github.com/clawrlang/clawr/blob/main/src/cir/index.ts>. That code is duplicated here for easy reference but it might be out of sync. Please refer to the source for the official truth.
+
+There is no official JSON schema at this time, but a preliminary schema identifier has been invented: `"http://clawr.lang/schema/cir/DRAFT-0"`. If we can secure that domain name, we can export the definitions to the JSON schema format and publish it on that URL. Alternatively, we could secure a different domain name and update the `$schema` property accordingly.
 
 ## Module Root
 
@@ -84,13 +88,13 @@ type VariableDeclaration = {
 }
 ```
 
-A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables are unchanged from inception until release (constants). Others are updated frequently.
+A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables (“constants”) are from inception until destruction. Others are updated frequently.
 
 Each variable has a unique `name` in its scope. A variable `MAY` shadow another variable defined in the parent scope. Shadowed variables become effectively inaccessible until the shadowing scope is destroyed.
 
 The `initialValue` is an expression thet `MUST` be called and assigned to the variable when it is declared. The backend `MAY` serialise the value as machine code data if it is simple enough.
 
-The `valueSet` property identifies the type of the variable. Its intent is to help the backend optimise storage for the variable. The backend `MAY` eschew optimisation, but it `MUST` use a storage size that can fit all possible values as declared by the `valueSet` (as long as there is enough available memory). An unconstrained `integer` for example will need arbitrary precision, while an `integer` with `max` and `min` values might fit inside a `uint64_t` (C type).
+The `valueSet` property identifies the type of the variable. Its intent is to help the backend optimise storage for the variable. The backend `MAY` eschew optimisation, but it `MUST` use a storage size that can fit all possible values as declared by the `valueSet` (as long as there is enough available memory). An unconstrained `integer` for example will need arbitrary precision, while an `integer` with `max` and `min` values might fit inside a `uint64_t` (C type), or even a single `byte`.
 
 > [!note]
 > Mutability and `const`ness is presumed to be inconsequential to the process of lowering. It is enforced by the frontend and not a concern for the backend. All variables `MUST` be lowered allowing mutation.
@@ -351,11 +355,9 @@ type AsShared = {
 }
 ```
 
-Converts a `UNIQUE` `QUERY` result into a specific semantics `SHARED` or `ISOLATED` value.
+Upgrades an `ISOLATED` value to a `SHARED` entity. The reference count of the `object` value `MUST` be exactly 1.
 
-The reference count of the `object` value `MUST` be exactly 1.
-
-The backend `MAY` ignore this and consider only the `object` as the expression.
+The backend `MAY` create a copy of the value or modify an isolation flag on the value.
 
 ### `VARIABLE_REF`
 
@@ -393,7 +395,7 @@ export type ValueSet =
   | RcTypeValueSet
 ```
 
-Every expression has a `valueSet`. Variables, fields and parameters also have one. In the former case, the value-set represent the best knowledge of the value of the expression. In the latter it represents constraints for what values may be stored.
+Every expression has a `valueSet` that encompasses all possible runtime values of the given expression in its position in the code. Variables, fields and parameters also have a value-set. that constrains what values may be stored in the respective container.
 
 ### `integer`
 
@@ -407,7 +409,7 @@ type IntegerValueSet = {
 
 A range of integer values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip either the `min`, `max` or both properties.
 
-If either or both limits is excluded, the value could be any integer ($\mathbb{Z}$), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
+If either or both limits is excluded, the value is any integer ($\mathbb{Z}$), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
 
 ### `real`
 
@@ -454,4 +456,4 @@ type RcTypeValueSet = {
 
 A set allowing all instances of a reference counted type (including inheritance). The `typeName` `MUST` identify a type that is available in the current scope.
 
-The `semantics` property
+The `semantics` property identifies whether the value is a `SHARED` entity or meant for `ISOLATED` variables.
