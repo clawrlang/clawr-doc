@@ -56,7 +56,7 @@ data:
 // A companion object defines “static” members and methods.
 // It has full access to the internal data of the main object type.
 
-namespace Money {
+companion Money {
     const zero: Money = { cents: 0 }
 
     func cents(_ c: integer) -> Money => { cents: c }

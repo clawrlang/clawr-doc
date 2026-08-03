@@ -1,3 +1,6 @@
+<!-- markdownlint-disable MD041 MD033 -->
+<img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
+[< `data` <](./data-structures.md)
 # Encapsulation
 
 The `data` construct is useful when gathering related data elements. It is however meant for communication protocols and large-data computation. When collecting information — protecting invariants — open accesss to raw data is not recommended. It is better to encapsulate that data in an `object`.
@@ -30,10 +33,10 @@ An `object` is instantiated like a `data` structure:
 const hoverConversionPrice: Money = { dollars 39_999, cents: 99 }
 ```
 
-This syntax however needs accesses to the internal `data` structure which is typically unavailable. You should define a builder or a dedicated factory function that has access to the interals, and use that to instantiate new instances. A factory is a function in a companion `namespace`, sometimes alled a “static method.” It has to be defined in the same module (file), and have the same name as the `object` itself.
+This syntax however needs accesses to the internal `data` structure which is typically unavailable. You should define a builder or a dedicated factory function that has access to the internals, and use that to instantiate new instances. A factory is a function in a `companion` namespace, sometimes called a “static method.” It has to be defined in the same module (file), and have the same name as the `object` itself.
 
 ```clawr
-namespace Money {
+companion Money {
   func of(dollars: integer, cents: integer(0..<100)) => {
     dollars, cents
   }
@@ -116,7 +119,7 @@ data:
   const value: string
 }
 
-namespace SwedishID {
+companion SwedishID {
   func value(_ value: string(isValid)) -> Validated<SwedishID> => { value }
 }
 ```
@@ -152,9 +155,10 @@ data:
   field: integer
 }
 
-// Single “instance” (mutable, not COW). No need for `mutating:` section
 object Sub {}
-namespace Sub {
+
+// Single “instance” (mutable, not COW). No need for `mutating:` section
+companion Sub {
   func new(field: integer) => { O.constructAsSuper(field: field) }
 data:
   staticField: integer
@@ -169,3 +173,11 @@ data:
   stateField: integer
 }
 ```
+
+> [!warning]
+> I’m wavering on whether to use the term `companion` or `namespace` for the container of factory methods.
+>
+> - On the one hand the concept is essentially a namespace that contains free functions (and variables) that are not attached to any specific instance. And that concept could be expanded and generalised to namespaces that do _not_ share a name with any type.
+> - On the other hand a “companion” feels more strongly associated with the type in question. If the companion also has privileges regarding the type's privates, that connection is pretty important.
+>
+> I’ll use `companion` for now, but the future might bring new insights.
