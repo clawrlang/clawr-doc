@@ -55,33 +55,36 @@ Example:
 export type Declaration =
   | VariableDeclaration
   | FunctionDeclaration
-  | DataDeclaration
+  | TypeDeclaration
 ```
 
 Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is important. Referenced entities `MUST` exist prior to the reference is made.
 
 `VARIABLE_DECL` and `FUNCTION_DECL` declarations that reference a declared type `MUST` appear after the corresponding `DATA_DECL`. If a variable calls a function for its initial value, the `FUNCTION_DECL` `MUST` appear before the `VARIABLE_DECL`.
 
-### `DATA_DECL`
+### `TYPE_DECL`
 
 ```ts
-type DataDeclaration = {
-  kind: 'DATA_DECL'
+type TypeDeclaration = {
+  kind: 'TYPE_DECL'
+  namespace?: string
   name: string
   fields: {
     name: string
     valueSet: ValueSet
   }[]
+  methods?: FunctionDeclaration[]
 }
 ```
 
-The `DATA_DECL` defines a type that stores its internal data in fields.
+The `TYPE_DECL` defines a type that stores its internal data in fields. The type might have `methods` for interactions. If there is a matching `companion`, its methods are included.
 
 ### `VARIABLE_DECL`
 
 ```ts
 type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
+  namespace?: string
   name: string
   valueSet: ValueSet
   initialValue: Expression
@@ -104,6 +107,7 @@ The `valueSet` property identifies the type of the variable. Its intent is to he
 ```ts
 type FunctionDeclaration = {
   kind: 'FUNCTION_DECL'
+  namespace?: string
   baseName: string
   parameters: {
     label?: string
@@ -115,7 +119,7 @@ type FunctionDeclaration = {
 }
 ```
 
-A `FUNCTION_DECL` defines a “free function” in the module. A function's unique name is defined by its `baseName` and parameter labels.
+A `FUNCTION_DECL` defines a “free function” in the module, or a method on an `object`/`service` tywe. A function's unique name is defined by its `baseName` and parameter labels.
 
 Each parameter is defined by an optional `label`, an internal `varName` and a `valueSet`. The `label` is used when calling the function and considered part of the function name. The `varName` is how the parameter is referenced in the function body, and the `valueSet` identifies the type of the variable. It is a `ValueSet` — not a simple type name — to allow the backend to make custom storage optimisation.
 
@@ -131,7 +135,7 @@ When mangling a function name, the backend `MUST` use a naming scheme that inclu
 export type Statement =
   | EnsureUnique
   | Release
-  | Exec
+  | FunctionCall
   | Return
   | VariableDeclaration
   | Assign
@@ -175,12 +179,14 @@ The `RELEASE` statement decrements the reference count of a block of memory.
 - `MUST` allow `RELEASE(null)` without crashing
 - `MAY` assign `null` to the variable/field to avoid zombie dereferencing
 
-### `EXEC`
+### `CALL`
 
 ```ts
-type Exec = {
-  kind: 'EXEC'
+type FunctionCall = {
+  kind: 'CALL'
+  receiver?: Expression
   name: {
+    namespace?: string
     baseName: string
     labels: string[]
   }
@@ -188,7 +194,9 @@ type Exec = {
 }
 ```
 
-A Clawr function may or may not have a return value. A function without a return value can only be called as a statement/command. A function with a return value can only be called as an expression. The `EXEC` statement `MUST NOT` be `ASSIGN`ed to a variable of field, or used as an argument in another `EXEC` statement or a `QUERY` expression.
+A Clawr function may or may not have a return value. A function without a return value can only be called as a statement/command. A function with a return value can only be called as an expression. The `CALL` statement `MUST NOT` be `ASSIGN`ed to a variable of field, or used as an argument in another `CALL` statement or expression.
+
+If called a method, the `receiver` is the `object` or `service` the message is sent to. If the called function exists in a `namespace` or a `companion`, that is the `namespace` property.
 
 - The name `MUST` be mangled using the same naming scheme as `FUNCTION_DECL` uses.
 - The indicated function `MUST` be called with the specified arguments matching the parameters of the function in declared order.
@@ -295,9 +303,11 @@ The `value` can be either of `"false"`, `"ambiguous"` or `"true"`. The backend `
 ### `QUERY`
 
 ```ts
-type QueryFunctionCall = {
-  kind: 'QUERY'
+type QueryFunctionCall {
+  kind: 'CALL'
+  receiver?: Expression
   name: {
+    namespace?: string
     baseName: string
     labels: string[]
   }
@@ -306,16 +316,18 @@ type QueryFunctionCall = {
 }
 ```
 
-A Clawr function may or may not have a return value. A function _without_ a return value can only be called as a statement (`EXEC`). A function _with_ a return value can only be called as an expression. The `QUERY` expression `MUST` be `ASSIGN`ed to a variable of field, or used as an argument in another `QUERY` expression or statement.
+A Clawr function may or may not have a return value. A function _without_ a return value can only be called as a statement. A function _with_ a return value can only be called as an expression. The `CALL` expression `MUST` be `ASSIGN`ed to a variable of field, or used as an argument in another `CALL` expression or statement.
+
+If called a method, the `receiver` is the `object` or `service` the message is sent to. If the called function exists in a `namespace` or a `companion`, that is the `namespace` property.
 
 - The name `MUST` be mangled using the same naming scheme as `FUNCTION_DECL` uses.
 - The indicated function `MUST` be called with the specified arguments matching the parameters of the function in declared order.
 
-### `ALLOCATE`
+### `ALLOCATION`
 
 ```ts
 type MemoryAllocation = {
-  kind: 'ALLOCATE'
+  kind: 'ALLOCATION'
   valueSet: RcTypeValueSet
   fields: {
     name: string
@@ -355,7 +367,7 @@ type AsShared = {
 }
 ```
 
-Upgrades an `ISOLATED` value to a `SHARED` entity. The reference count of the `object` value `MUST` be exactly 1.
+Upgrades a uniquely referenced `ISOLATED` value to a `SHARED` entity. The reference count of the `object` value `MUST` be exactly 1.
 
 The backend `MAY` create a copy of the value or modify an isolation flag on the value.
 
@@ -369,7 +381,7 @@ type VariableReference = {
 }
 ```
 
-Reference a variable. The `valueSet` returns the best lattice knowledge of the variable's current value. The variable might be defined as an unconstrained `integer`, but could still be known within a certain range at this point. The backend `MAY` use this information to optimise the lowered statement.
+The runtime value of a variable. The `valueSet` returns the best lattice knowledge of the variable's current value. The variable might be defined as an unconstrained `integer`, but could still be known within a certain range at this point. The backend `MAY` use this information to optimise the lowered statement.
 
 ### `FIELD_REF`
 
@@ -382,7 +394,7 @@ type FieldReference = {
 }
 ```
 
-Reference a field. The `valueSet` returns the best lattice knowledge of the field's current value. The field might be defined as an unconstrained `integer`, but could still be known within a certain range at this point. The backend `MAY` use this information to optimise the lowered statement.
+The runtime value of a field. The `valueSet` returns the best lattice knowledge of the field's current value. The field might be defined as an unconstrained `integer`, but could still be known within a certain range at this point. The backend `MAY` use this information to optimise the lowered statement.
 
 ## Value Sets
 
