@@ -21,7 +21,7 @@ object Money {
   func dollars() => self.dollars
   func cents() => self.cents
 
-data: // the state
+state: // the internal data structure
   dollars: integer
   cents: integer(0..<100)
 }
@@ -33,7 +33,7 @@ An `object` is instantiated like a `data` structure:
 const hoverConversionPrice: Money = { dollars 39_999, cents: 99 }
 ```
 
-This syntax however needs accesses to the internal `data` structure which is typically unavailable. You should define a builder or a dedicated factory function that has access to the internals, and use that to instantiate new instances. A factory is a function in a `companion` namespace, sometimes called a “static method.” It has to be defined in the same module (file), and have the same name as the `object` itself.
+This syntax however explicitly names the constituents of the internal `state` (the fields). Because coupling to internal structures is anathema, the data literal syntax is not available except in specific locations. Instead, you should create factories that can be called from anywhere. Sometimes labelled a “static method,” a factory is a function in a `companion` namespace. It has to be defined in the same module (file), and have the same name as the `object` itself.
 
 ```clawr
 companion Money {
@@ -41,6 +41,12 @@ companion Money {
     dollars, cents
   }
 }
+```
+
+Now you can create new `Money` instances using the factory:
+
+```clawr
+Money.of(dollars: 39_999, cents: 99)
 ```
 
 ## Inheritance
@@ -64,7 +70,7 @@ mutating:
   func setSubfield(_ value: integer) {
     self.field = value
   }
-data:
+state:
   field: integer // the Sub can name fields independently of Super
 }
 
