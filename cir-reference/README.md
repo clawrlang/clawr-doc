@@ -79,6 +79,8 @@ type TypeDeclaration = {
 
 The `TYPE_DECL` defines a type that stores its internal data in fields. The type might have `methods` for interactions. If there is a matching `companion`, its methods are included.
 
+Methods `MUST` all have access to an implicit variable `self` that has the declared type as its type. The `self` variable `MUST` always refer to the same instance as the `receiver` expression of each `CALL` to said method.
+
 ### `VARIABLE_DECL`
 
 ```ts
@@ -154,12 +156,12 @@ type EnsureUnique = {
 type Storage = VariableReference | FieldReference
 ```
 
-An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and fields. When assigning a variable/field to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated before change is applied.
+An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and fields. When assigning a variable/field to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated (using `ENSURE_UNIQUE`) before the change is applied.
 
-- If the reference-count of the `object` is greater than one, a copy must be made
-- The variable/field indicated by the `object` property must be changed to reference the new allocation
-- The new allocation `MUST` have a reference count of exactly 1
-- The reference count of the old value `MUST` be decremented by exactly 1
+- If the reference-count of the `object` is greater than one, a copy must be made.
+- The variable/field indicated by the `object` property `MUST` be relocated to reference the new allocation.
+- The new allocation `MUST` have a reference count of exactly 1.
+- The reference count of the original allocation `MUST` be decremented by exactly 1.
 
 ### `RELEASE`
 
@@ -174,10 +176,10 @@ type Storage = VariableReference | FieldReference
 
 The `RELEASE` statement decrements the reference count of a block of memory.
 
-- The reference count of the `object` must be decremented by exactly 1
+- The reference count of the `object` must be decremented by exactly 1.
 - If the reference count reaches 0, the `object` `MUST` be deallocated.
-- `MUST` allow `RELEASE(null)` without crashing
-- `MAY` assign `null` to the variable/field to avoid zombie dereferencing
+- The backend/runtime `MUST` allow `RELEASE(null)` without crashing.
+- The backend `MAY` assign `null` to the variable/field to avoid zombie references.
 
 ### `CALL`
 
@@ -196,8 +198,9 @@ type FunctionCall = {
 
 A Clawr function may or may not have a return value. A function without a return value can only be called as a statement/command. A function with a return value can only be called as an expression. The `CALL` statement `MUST NOT` be `ASSIGN`ed to a variable of field, or used as an argument in another `CALL` statement or expression.
 
-If called a method, the `receiver` is the `object` or `service` the message is sent to. If the called function exists in a `namespace` or a `companion`, that is the `namespace` property.
+If calling a method, the `receiver` expression `MUST` evaluate to the `object` or `service` the message is sent to. If the called function exists in a `namespace` or a `companion`, that is the `namespace` property. Any `VARIABLE_REF` using the reserved name `"self"` in the body of the method `MUST` evaluate to the `receiver` of the `CALL`.
 
+- At least one of `namespace` or `receiver` `MUST` be `undefined`/`null`.
 - The name `MUST` be mangled using the same naming scheme as `FUNCTION_DECL` uses.
 - The indicated function `MUST` be called with the specified arguments matching the parameters of the function in declared order.
 
@@ -300,26 +303,17 @@ A `TRUTHVALUE_LITERAL` is a simple truth value. The `valueSet.values` property `
 
 The `value` can be either of `"false"`, `"ambiguous"` or `"true"`. The backend `MUST` treat these values as zzzseparate and mutually unequal.
 
-### `QUERY`
+### `CALL`
 
 ```ts
-type QueryFunctionCall {
-  kind: 'CALL'
-  receiver?: Expression
-  name: {
-    namespace?: string
-    baseName: string
-    labels: string[]
-  }
-  arguments: Expression[]
-  valueSet: ValueSet
-}
+type QueryFunctionCall = FunctionCall & { valueSet: ValueSet }
 ```
 
 A Clawr function may or may not have a return value. A function _without_ a return value can only be called as a statement. A function _with_ a return value can only be called as an expression. The `CALL` expression `MUST` be `ASSIGN`ed to a variable of field, or used as an argument in another `CALL` expression or statement.
 
-If called a method, the `receiver` is the `object` or `service` the message is sent to. If the called function exists in a `namespace` or a `companion`, that is the `namespace` property.
+If calling a method, the `receiver` expression `MUST` evaluate to the `object` or `service` the message is sent to. If the called function exists in a `namespace` or a `companion`, that is the `namespace` property. Any `VARIABLE_REF` using the reserved name `"self"` in the body of the method `MUST` evaluate to the `receiver` of the `CALL`.
 
+- At least one of `namespace` or `receiver` `MUST` be `undefined`/`null`.
 - The name `MUST` be mangled using the same naming scheme as `FUNCTION_DECL` uses.
 - The indicated function `MUST` be called with the specified arguments matching the parameters of the function in declared order.
 
