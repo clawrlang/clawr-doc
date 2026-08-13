@@ -38,12 +38,12 @@ Additionally:
 ```clawr
 // Compiler error examples:
 object Student {
-data:
+state:
     ref logger: Logger  // âŒ Error: objects cannot reference services
 }
 
 service DatabaseService {
-data:
+state:
     ref logger: Logger  // âœ“ OK: services can reference other services
 }
 ```

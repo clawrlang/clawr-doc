@@ -12,7 +12,7 @@ For another, the `object` might inherit fields. Those fields are not known by th
 
 ```clawr
 object ConcreteType: Super {
-data:
+state:
     concreteField: integer
 }
 
@@ -34,11 +34,11 @@ Like the factory method, the initialiser also invokes a data literal. It too mus
 object Super: SuperSuper {
 inheritance:
     func init() => {
-	    SuperSuper.init()
+        SuperSuper.init()
         field: 12
     }
 }
-data: field: integer
+state: field: integer
 ```
 
 When the top initializer is invoked, it completes the memory initialization. When its literal is invoked, all the fields in the entire hierarchy will have valid values. It is now allowed to call secondary intitialization steps before returning. Those steps may include calling virtual methods that operate on fields in the subtypes.
@@ -52,7 +52,7 @@ inheritance:
         performSetup()
     }
 }
-data: topField: integer
+state: topField: integer
 ```
 
 > [!tip]

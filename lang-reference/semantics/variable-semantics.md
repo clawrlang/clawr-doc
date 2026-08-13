@@ -92,7 +92,7 @@ mutating:
         rolls.append(count)
     }
 
-data:
+state:
     rolls: RollResult[]
 }
 

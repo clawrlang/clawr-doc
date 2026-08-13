@@ -49,7 +49,7 @@ object Money {
     func dollars() => self.cents / 100
     func cents() => self.cents % 100
 
-data:
+state:
     const cents: integer
 }
 

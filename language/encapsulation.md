@@ -60,7 +60,7 @@ mutating:
   }
 inheritance:
   func constructAsSuper(field: integer) => { field }
-data:
+state:
   field: integer
 }
 
@@ -107,7 +107,7 @@ object Money: Equatable {
     self.dollars == other.dollars &&
     self.cents == other.cents
 
-data:
+state:
   const dollars: integer
   const cents: integer(0..<100)
 }
@@ -121,7 +121,7 @@ object SwedishID: HasStringRepresentation, HashEquatable { // "Personnummer"
   // Implements HashEquatable
   func hashCode() => self.value.hashCode()
 
-data:
+state:
   const value: string
 }
 
@@ -157,7 +157,7 @@ mutating:
   }
 inheritance:
   func constructAsSuper(field: integer) => { field }
-data:
+state:
   field: integer
 }
 
@@ -166,7 +166,7 @@ object Sub {}
 // Single “instance” (mutable, not COW). No need for `mutating:` section
 companion Sub {
   func new(field: integer) => { O.constructAsSuper(field: field) }
-data:
+state:
   staticField: integer
 }
 
@@ -175,7 +175,7 @@ service S {
   func read() => loadFile(FILE)
   func write(value: string) {}
 inheritance:
-data:
+state:
   stateField: integer
 }
 ```
