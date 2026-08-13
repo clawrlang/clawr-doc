@@ -196,6 +196,8 @@ The `RELEASE` statement decrements the reference count of a block of memory.
 - The backend/runtime `MUST` allow `RELEASE(null)` without crashing.
 - The backend `MAY` assign `null` to the variable/field to avoid zombie references.
 
+If the runtime is implemented using stack-allocated values for `ISOLATED` variables, this instruction may be disregarded. (Would that require including the semantics as a property?)
+
 ### `CALL`
 
 ```ts
@@ -361,7 +363,7 @@ type MemoryAllocation = {
 export type CanonicalName = { name: string; namespace?: string }
 ```
 
-Allocate memory for a reference-counted entity. The `valueSet` `MUST` name a reference-counted type (`rc-type`) in its `typeName` property.
+Allocate memory for a reference-counted entity. The `valueSet` `MUST` name a reference-counted type (`rc-type`) in its `type` property.
 
 The backend `MUST` allocate enough memory to store the entire entity, plus whatever additional information it needs for reference counting and other runtime checks.
 
@@ -376,9 +378,13 @@ type MemoryRetention = {
   kind: 'RETAIN'
   object: Storage
 }
+
+type Storage = VariableReference | FieldReference
 ```
 
 Increment the reference count of an allocation. The reference count of the `object` `MUST` be increased by exactly one.
+
+If the runtime is implemented using stack-allocated values for `ISOLATED` variables, this instruction may be disregarded. (Would that require including the semantics as a property?)
 
 ### `AS_SHARED`
 
@@ -391,7 +397,7 @@ type AsShared = {
 
 Upgrades a uniquely referenced `ISOLATED` value to a `SHARED` entity. The reference count of the `object` value `MUST` be exactly 1.
 
-The backend `MAY` create a copy of the value or modify an isolation flag on the value.
+The backend `MAY` create a copy of the value or just modify an isolation flag on the value.
 
 ### `VARIABLE_REF`
 
