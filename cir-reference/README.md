@@ -52,10 +52,11 @@ Example:
 ## Declarations
 
 ```ts
-export type Declaration =
+export type Declaration = { namespace?: string } & (
   | VariableDeclaration
   | FunctionDeclaration
   | TypeDeclaration
+)
 ```
 
 Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is important. Referenced entities `MUST` exist prior to the reference is made.
@@ -66,15 +67,28 @@ Declarations are added to the top scope of a module in the `ClawrModule.declarat
 
 ```ts
 type TypeDeclaration = {
+  // `data` only supports these
   kind: 'TYPE_DECL'
-  namespace?: string
   name: string
   fields: {
     name: string
     valueSet: ValueSet
   }[]
-  methods?: FunctionDeclaration[]
-}
+} & ( // `object`/`service` add methods and optional inheritance
+  | {
+      base?: CanonicalName
+      methods: FunctionDeclaration[]
+      initializers?: Omit<FunctionDeclaration, 'resultValueSet'>[]
+      dispatchTable?: {
+        slot: FunctionSignature
+        declaredIn: CanonicalName
+        implementedBy?: CanonicalName
+      }[]
+    }
+  | {}
+)
+
+export type CanonicalName = { name: string; namespace?: string }
 ```
 
 The `TYPE_DECL` defines a type that stores its internal data in fields. The type might have `methods` for interactions. If there is a matching `companion`, its methods are included.
@@ -86,7 +100,6 @@ Methods `MUST` all have access to an implicit variable `self` that has the decla
 ```ts
 type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
-  namespace?: string
   name: string
   valueSet: ValueSet
   initialValue: Expression
@@ -109,14 +122,16 @@ The `valueSet` property identifies the type of the variable. Its intent is to he
 ```ts
 type FunctionDeclaration = {
   kind: 'FUNCTION_DECL'
-  namespace?: string
+  body: Statement[]
+} & FunctionSignature
+
+type FunctionSignature = {
   baseName: string
   parameters: {
     label?: string
     varName: string
     valueSet: ValueSet
   }[]
-  body: Statement[]
   resultValueSet?: ValueSet
 }
 ```
@@ -186,7 +201,7 @@ The `RELEASE` statement decrements the reference count of a block of memory.
 ```ts
 type FunctionCall = {
   kind: 'CALL'
-  receiver?: Expression
+  receiver?: Receiver
   name: {
     namespace?: string
     baseName: string
@@ -194,6 +209,21 @@ type FunctionCall = {
   }
   arguments: Expression[]
 }
+
+type Receiver = {
+  object: Storage
+} & (
+  | {
+      dispatch: 'direct'
+      type: CanonicalName
+    }
+  | {
+      dispatch: 'inherited'
+      declaredIn: CanonicalName
+    }
+)
+
+export type CanonicalName = { name: string; namespace?: string }
 ```
 
 A Clawr function may or may not have a return value. A function without a return value can only be called as a statement/command. A function with a return value can only be called as an expression. The `CALL` statement `MUST NOT` be `ASSIGN`ed to a variable of field, or used as an argument in another `CALL` statement or expression.
@@ -265,7 +295,6 @@ export type Expression =
 type StringLiteral = {
   kind: 'STRING_LITERAL'
   value: string
-  valueSet: StringValueSet
 }
 ```
 
@@ -281,7 +310,6 @@ The `valueSet` simply identifies the literal value as a `string` (which the `kin
 type IntegerLiteral = {
   kind: 'INTEGER_LITERAL'
   value: string
-  valueSet: IntegerValueSet
 }
 ```
 
@@ -295,7 +323,6 @@ The `value` is the decimal representation of the integer value. It is a string b
 type TruthLiteral = {
   kind: 'TRUTHVALUE_LITERAL'
   value: 'false' | 'ambiguous' | 'true'
-  valueSet: TruthValueSet
 }
 ```
 
@@ -322,12 +349,16 @@ If calling a method, the `receiver` expression `MUST` evaluate to the `object` o
 ```ts
 type MemoryAllocation = {
   kind: 'ALLOCATION'
-  valueSet: RcTypeValueSet
+  type: CanonicalName
+  base?: CanonicalName
+  semantics: 'ISOLATED' | 'SHARED'
   fields: {
     name: string
     value: Expression
   }[]
 }
+
+export type CanonicalName = { name: string; namespace?: string }
 ```
 
 Allocate memory for a reference-counted entity. The `valueSet` `MUST` name a reference-counted type (`rc-type`) in its `typeName` property.
@@ -344,7 +375,6 @@ The `fields` property indicates the initial value of the allocated memory. The r
 type MemoryRetention = {
   kind: 'RETAIN'
   object: Storage
-  valueSet: RcTypeValueSet
 }
 ```
 
@@ -356,8 +386,6 @@ Increment the reference count of an allocation. The reference count of the `obje
 type AsShared = {
   kind: 'AS_SHARED'
   object: QueryFunctionCall
-  targetSemantics: 'SHARED' | 'ISOLATED'
-  valueSet: RcTypeValueSet
 }
 ```
 
@@ -371,7 +399,6 @@ The backend `MAY` create a copy of the value or modify an isolation flag on the 
 type VariableReference = {
   kind: 'VARIABLE_REF'
   name: string
-  valueSet: ValueSet
 }
 ```
 
@@ -384,7 +411,6 @@ type FieldReference = {
   kind: 'FIELD_REF'
   object: Expression
   field: string
-  valueSet: ValueSet
 }
 ```
 
@@ -455,6 +481,7 @@ An unconstrained string value.
 ```ts
 type RcTypeValueSet = {
   type: 'rc-type'
+  namespace?: string
   typeName: string
   semantics: 'SHARED' | 'ISOLATED'
 }
