@@ -83,10 +83,15 @@ And this is where we stop. When the quotient $q$ reaches $0$, the result is the 
 Let’s see how we would do this left-to-right. The first digit represents the value $1 \cdot 3^6 = 729$. How do we know to start there? Well, the only way to find that value — if we did not already know it — is either to guess or to know your logarithms. As $log_3(833) ≈ 6.121$, this tells us that the number is between $3^6 = 729$ (a plus-one followed by 6 ternary zeroes) and $3^7 = 2,187$ (seven ternary zeroes). In standard (positive) notations, we simply choose the lower power, but in balanced ternary we have to contend with negative digits which subtract from the total rather than add to it. How do we know when we should choose the higher power and when to choose the lower?
 
 The answer is hidden in the expression $3^n - 1 \over 2$. That is the largest (positive) integer that can be written using $n$ balanced ternary digits. If our first digit is a plus-one in the $3^n$ position, the largest possible integer we can form using only smaller-powers — we’re going left-to-right remember? — is:
+
 $$\text{max} = 3^n + {3^n - 1 \over 2} = {3^{n+1} - 1 \over 2}$$
+
 and the smallest integer we can form is:
+
 $$\text{min} = 3^n - {3^n - 1 \over 2} = {3^n + 1 \over 2}$$
+
 So we can form any integer in the range
+
 $$\left [ {3^n + 1 \over 2}, {3^{n+1} - 1 \over 2} \right ] $$
 
 So with 7 digits, the largest number we can form is ${3^7 - 1 \over 2} = 1,093$. If we start with a plus-one in the $3^7$ position, we will not be able to write any value smaller than ${3^7 + 1 \over 2} = 1,094$. If we choose the $3^6$ position on the other hand, we can form any value between ${3^6 + 1 \over 2} = 365$ and ${3^{6+1} - 1 \over 2} = 1,093$.
@@ -96,7 +101,7 @@ The upper limit from picking the lower power digit and the lower limit from pick
 > [!note]
 > The midpoint value isn't an arithmetic or geometric mean. For example it is consistently closer (in absolute terms) to the smaller candidate than the larger. But it functions much like a mean: it is a balance point between two successive powers of three.
 
-[^caveat]: The rule is incorrect as stated. For example: $19_{10} + 1 ≠ 100_{10}$. But it works superficially, which is close enough for our purposes.
+[^caveat]: The rule is incorrect as stated. For example, 19 + 1 ≠ 100. But it works superficially, which is close enough for our purposes.
 
 As long as we choose our digit position (and with that an even power of three) such that the target value lies on its side of the midpoint value, we will always be able to use progressively lesser positions to eventually land on the target. If we ever pick a power that does not include the target value in its range, we cannot succeed without going back to make amends.
 
