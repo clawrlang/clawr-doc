@@ -1,11 +1,14 @@
 <!-- markdownlint-disable MD041 MD033 -->
 <img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
+
 [< `data` <](./data-structures.md)
+[> inheritance >](./inheritance.md)
+
 # Encapsulation
 
-The `data` construct is useful when gathering related data elements. It is however meant for communication protocols and large-data computation. When collecting information — protecting invariants — open accesss to raw data is not recommended. It is better to encapsulate that data in an `object`.
+The `data` construct is useful when gathering related data elements. It is however primarily meant for communication protocols and large-data computation. When collecting information — protecting invariants — open access to raw data is not recommended. It is better to encapsulate that data in an `object`.
 
-While a `data` structure is defined by its elements, an `object` is defined by its methods:
+While a `data` structure is defined by its content (fields), an `object` is defined by its behaviour (methods):
 
 ```clawr
 object Money {

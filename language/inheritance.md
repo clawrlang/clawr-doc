@@ -1,3 +1,7 @@
+<img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
+
+[< encapsulation <](./encapsulation.md)x
+
 # Inheritance
 
 `object` and `service` types can utilise inheritance. Every type can have a single supertype of the same kind. An `object` can inherit another `object` and `service` can inherit another `service`, but an `object` cannot inherit a `service` or vice versa.
