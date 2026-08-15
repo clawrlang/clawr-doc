@@ -1,6 +1,6 @@
 <img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
 
-[< encapsulation <](./encapsulation.md)x
+[< encapsulation](./encapsulation.md)
 
 # Inheritance
 
