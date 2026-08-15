@@ -1,10 +1,11 @@
 <!-- markdownlint-disable MD041 MD033 -->
 <img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px; width: 150px;">
+
 # Clawr Frontend Implementation
 
 This document describes the implementation of the [Clawr example compiler](https://github.com/clawrlang/clawr).
 
-The [Clawr example compiler](https://github.com/clawrlang/clawr) is separated in two parts, a [frontend](./frontend/README.md) and a [backend](./backend/README.md). The protocol between the two is described in the [official specification](../cir-reference/README.md).
+The [Clawr example compiler](https://github.com/clawrlang/clawr) is separated in two parts, a [frontend](./README.md) and a [backend](../backend/README.md). The protocol between the two is described in the [official specification](../../cir-reference/README.md).
 
 This section discusses the frontend implementation.
 

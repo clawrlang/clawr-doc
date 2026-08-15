@@ -1,5 +1,6 @@
 <!-- markdownlint-disable MD041 MD033 -->
 <img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px; width: 150px;">
+
 # Clawr Implementation
 
 This document describes the implementation of the [Clawr example compiler](https://github.com/clawrlang/clawr).
