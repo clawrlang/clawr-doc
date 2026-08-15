@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD041 MD033 -->
+<img src="/images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
 # Balanced Ternary Notation
 
 > [!note]
@@ -9,7 +11,7 @@ Every positional system defines a base, $b$, and a set of $b$ distinct digits, $
 
 $$x = \sum_i d_i \cdot b^i = … + d_2 \cdot b^2 + d_1 \cdot b^1 + d_0 \cdot b^0 + d_{-1} \cdot b^{-1} + d_{-2} \cdot b^{-2} + …$$
 
-The notational typically adds a dot or comma to denote which digit is $d_0$ and which is $d{-1}$. And to avoid writing infinite digits, the number zero is elided to the left of the most significant (non-zero) digit (if it is to the left of the separator) and the same for zeros to the right of the least significant non-zero digit (if it is to the right of the separator). The separator itself is typically elided if the number is an integer (i.e. it has only zero-valued digits to the right of the separator).
+Notations typically add a dot or comma to denote which digit is $d_0$ and which is $d_{-1}$. And to avoid writing infinite digits, the number zero is omitted to the left of the most significant (non-zero) digit (if it is to the left of the separator) and the same for zeros to the right of the least significant non-zero digit (if it is to the right of the separator). The separator itself is typically elided if the number is an integer (i.e. it has only zero-valued digits to the right of the separator).
 
 The _balanced_ ternary system switches the digit $2$ in standard ternary for a digit with the value $-1$. This has some benefits and some drawbacks. The pros seem to outweigh the cons however.
 
@@ -20,19 +22,19 @@ One advantage is in how to construct the negative of a value. It’s a simple ma
 >
 > This is however already standard practice in binary ALUs. The negative is slightly more complex in that it needs to add 1 after flipping all bits, but that addition is done efficiently (for integers) by using the carry-in on the first adder. I have not examined how this affects floating-point values
 
-It also means that there is no need for an explicit minus sign. If the most significant digit is negative, the entire value is negative. And if the MSD is plus one, the entire value is positive.
+It also means that there is no need for an explicit minus sign. If the most significant digit (MSD) is negative, the entire value is negative. And if the MSD is plus one, the entire value is positive.
 
 A third benefit is that the absolute value of a digit has only two possible values: zero or one, and standard algorithm multiplication becomes much simplified. The step of multiplying digits to prepare for addition becomes just a matter of copying them (shifted). This is similar to binary multiplication. The difference is that when the multiplicand is negative, the “copied” digits must be negated.
 
 Rounding is also rather beautiful in balanced ternary: it is a simple act of truncation. If you truncate a number in a positive base, you always “round” toward zero, which is incorrect if rounding up would have a shorter distance. In a balanced base, truncation always rounds to the nearest.
 
-The only major negative is perhaps that of intuition. A number with negative digits is not easily understood by human minds. An issue that can be mitigated by simply not exposing the “ternary-ness” to most users. (This is Clawr’s approach.)
+The only major negative is perhaps that of intuition. A number with negative digits is not easily understood by human minds. An issue that can be mitigated by simply not exposing the “ternary-ness” to most users. (This is Clawr’s approach. A programmer does not need to know if numbers are stored as binary or ternary; it is just a number.)
 
 ## the Counting Numbers
 
-So how is a balanced ternary number constructed. Let’s start with the counting numbers to get a feel for it.
+So how is a balanced ternary number constructed? Let’s start with the counting numbers to get a feel for it.
 
-Oh! And yes, we will need a symbol to denote each digit value. Let’s use `+` to denote $+1$ and `-` to denote $-1$. We can call them “plus-one” and “minus-one” respectively. For the zero value, let’s simply use the familiar `0`.
+Oh! And yes, we will need a symbol to denote each digit value. Let’s use `+` to denote $+1$ and `-` to denote $-1$. We can refer to the digits as “plus-one” and “minus-one” respectively. For the zero value, let’s simply use the familiar `0`.
 
 Then the natural counting numbers (1, 2, 3, 4, 5, 6, …) will be written as `+`, `+-`, `+0`, `++`, `+--`, `+-0`, …
 
@@ -44,7 +46,7 @@ In positive bases, the lowest digit value is `0`, but in balanced tenary it is `
 
 ## Converting from Decimal
 
-Interpreting a given ternary number is relatively easy. By the general positional number system, the ternary notation `+-0` represents $1 \times 3^2 + (-1) \times 3^1 + 0 \times 3^0$. That evaluates to the value 6. To take a longer example (of random digits), `+0++--+00+` evaluates as:
+Interpreting a given ternary number is relatively easy. By the general positional number system, the ternary notation `+-0` represents $1 \times 3^2 + (-1) \times 3^1 + 0 \times 3^0$. That evaluates to the value 6. To take a longer example (of randomly selected digits), `+0++--+00+` evaluates as:
 
 $$1 \cdot 3^9 + 0 \cdot 3^8 + 1 \cdot 3^7 + 1 \cdot 3^6 + (-1) \cdot 3^5 + (-1) \cdot 3^4 + 1 \cdot 3^3 + 0 \cdot 3^2 + 0 \cdot 3^1 + 1 \cdot 3^0$$
 
@@ -115,3 +117,14 @@ If we repeat the same pattern over and over again until the input is zero, we wi
 In the last two steps, we are dead on the midpoint value (by magnitude). That is not ambiguous. Rather, it means that we are exactly at the largest value that can be represented in the remaining positions. In both cases, the input is also negative, so we enter minus-ones in the corresponding positions.
 
 Note that when selecting candidate positions and midpoint for the final two (negative) inputs, the _magnitude_ (or absolute value) of the input is used. (That works for positive inputs as well of course.) Using negative values as they are could not place them between two positive powers of three and it would be unclear what the algorithm should do.
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
