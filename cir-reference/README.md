@@ -106,11 +106,11 @@ type VariableDeclaration = {
 }
 ```
 
-A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables (“constants”) are from inception until destruction. Others are updated frequently.
+A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables (“constants”) remain unchanged from inception until destruction. Others are updated frequently.
 
 Each variable has a unique `name` in its scope. A variable `MAY` shadow another variable defined in the parent scope. Shadowed variables become effectively inaccessible until the shadowing scope is destroyed.
 
-The `initialValue` is an expression thet `MUST` be called and assigned to the variable when it is declared. The backend `MAY` serialise the value as machine code data if it is simple enough.
+The `initialValue` is an expression that `MUST` be called and assigned to the variable when it is declared. The backend `MAY` serialise the value as machine code data if it is simple enough.
 
 The `valueSet` property identifies the type of the variable. Its intent is to help the backend optimise storage for the variable. The backend `MAY` eschew optimisation, but it `MUST` use a storage size that can fit all possible values as declared by the `valueSet` (as long as there is enough available memory). An unconstrained `integer` for example will need arbitrary precision, while an `integer` with `max` and `min` values might fit inside a `uint64_t` (C type), or even a single `byte`.
 
@@ -136,7 +136,7 @@ type FunctionSignature = {
 }
 ```
 
-A `FUNCTION_DECL` defines a “free function” in the module, or a method on an `object`/`service` tywe. A function's unique name is defined by its `baseName` and parameter labels.
+A `FUNCTION_DECL` defines a “free function” in the module, or a method on an `object`/`service` type. A function's unique name is defined by its `baseName` and parameter labels.
 
 Each parameter is defined by an optional `label`, an internal `varName` and a `valueSet`. The `label` is used when calling the function and considered part of the function name. The `varName` is how the parameter is referenced in the function body, and the `valueSet` identifies the type of the variable. It is a `ValueSet` — not a simple type name — to allow the backend to make custom storage optimisation.
 
@@ -330,7 +330,7 @@ type TruthLiteral = {
 
 A `TRUTHVALUE_LITERAL` is a simple truth value. The `valueSet.values` property `MUST` contain a single value, and that value `MUST` equal the `value` property.
 
-The `value` can be either of `"false"`, `"ambiguous"` or `"true"`. The backend `MUST` treat these values as zzzseparate and mutually unequal.
+The `value` can be either of `"false"`, `"ambiguous"` or `"true"`. The backend `MUST` treat these values as separate and mutually unequal.
 
 ### `CALL`
 
