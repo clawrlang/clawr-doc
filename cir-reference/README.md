@@ -496,3 +496,14 @@ type RcTypeValueSet = {
 A set allowing all instances of a reference counted type (including inheritance). The `typeName` `MUST` identify a type that is available in the current scope.
 
 The `semantics` property identifies whether the value is a `SHARED` entity or meant for `ISOLATED` variables.
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
