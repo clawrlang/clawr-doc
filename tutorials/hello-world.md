@@ -25,7 +25,9 @@ Statements often need values to operate with. These values are in the form of _e
 
 ## A Small Refactoring
 
-The same example can be written with an intermediate constant, like this:
+The same example can be refactored [^refact] to use an intermediate constant, like this:
+
+[^refact]: The term “refactoring” is often used loosely to mean structural redesign. It was however popularized and formally [defined](https://martinfowler.com/bliki/DefinitionOfRefactoring.html) by Martin Fowler in the book [*Refactoring: Improving the Design of Existing Code*](https://martinfowler.com/books/refactoring.html) to refer to a disciplined practice that does not visibly alter behavior. That is how the term will be used here too.
 
 ```clawr
 @main {
