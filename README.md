@@ -7,7 +7,7 @@ Clawr is a language with three main goals: clarity, a focus on modelling, and ea
 
 This repository contains documentation for the Clawr language. The documentation is separated into four sections:
 
-- [Learning the Language](./language/README.md)
+- [Learning the Language](./tutorials/README.md)
 - [Language Reference](./lang-reference/README.md)
 - [Standard Library Reference](./std-lib/README.md)
 - [IDE Extensions](./ide-reference/README.md)
