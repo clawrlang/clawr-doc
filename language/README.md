@@ -3,28 +3,29 @@
 
 # Clawr Language Tutorials
 
-This is the place for language learners.
+Welcome! This is the place for language learners.
 
-A language is a tool for communication. Human language likely began with gestures, facial expressions, and simple vocalizations. Over time, as our anatomy and social structures evolved, so did our ability to express complex ideas. Eventually, writing allowed knowledge to be recorded and passed across generations.
+## What Is a Language?
 
-A programming language, too, is a tool for communication. It communicates instructions to a machine. And, while this might be considered its primary line of communication, it is certainly not the only one. It also read and edited by people. It expresses intent. And like all human writing, it often outlives the moment of its creation.
+Language is a tool for communication. Human communication likely began with gestures, facial expressions, and simple vocalizations. As our anatomy and social structures evolved, so did our ability to express complex ideas. Eventually, writing allowed knowledge to be recorded and passed across generations.
 
-But there is an important difference between human and programming languages. Humans can tolerate ambiguity. We compensate with context, redundancy, and shared assumptions. A computer cannot. It does not infer. It does not read ahead for clues. It must interpret and perform each and every instruction immediately as it reads them. [^compiler] To be useful, a programming language must have a precise syntax and unambiguous semantics.
+Source code — the language of programmers — does all that too, just in a different form and for a specific ultimate purpose: to run on a machine and to be read by other programmers.
 
-[^compiler]: Of course, the nice human-readable programming language is not what the computer sees. It sees something called machine-code. There is a translation step that is performed ahead of time to generate that code. That step is called compilation. But that does not invalidate the need for unambiguity in the source.
+### Fossilised Thought
 
-It may be tempting to define a programming language by its execution — what runtime it uses, what memory model it assumes, what standard library it ships with — but those are implementation details, not the language itself. They are not semantics. Semantics is the *abstract* meaning of the code, not the *concrete execution* of it.
+Programming is an **intellectual** job, not mere production.The programmer writes source code to solve problems. Once a problem has been solved, that knowledge is valuable and the solution itself might be reused in a different context after some adaptive edits.
 
-Java is often described as more than a syntax: it is the JRE, the JDK, the ecosystem. Yet when Google adopted Java as the official language for Android, it replaced much of that ecosystem with its own SDK. The language remained recognizably Java, but the platform underneath had changed.
+The result is already a document — an instruction — of *how* the processor performs the chosen solution. It is perhaps negligent of the programmer not to also describe *what* problem it solves so that a better solution might be generated later when new understanding is revealed. How are future programmers supposed to know that their edits do not break something important if all. they can read is the *mechanics* of a solution? And how can they ever come up with new, better solutions?
 
-Clawr takes this separation further. Clawr is defined by its syntax and the meaning of each statement and expression—not by a runtime, not by an ABI, not by a memory management strategy. Those may vary. The language itself is the fixed point.
+Clawr is designed to distance the programmer from mechanics and instead document their domain. Instead of value-semantics and reference-semantics *types*, Clawr uses *variable* semantics. And type design is instead a clear decision between encapsulation — driven by behaviour, invariants and rules — versus naked data — driven by describing structure that can never be considered “invalid.”
 
-> [!note]
-> In practice, a language will probably have to imply or assume some constraints on memory management — Clawrs intermediate representation e.g. assumes reference-counting — and on other technical details as well. But those are not what *defines the language*. They are *concessions to pragmatism*.
->
-> If it is possible to implement a backend that employs GC instead of ARC — or some new invention as yet unknown — that would be absolutely valid. And if that requires some redesigns to the CIR, it might be worth making that change.
+Clawr source code tries to become that document that not only describes *how* to solve a problem, but *which* problem was chosen. And — to some degree — maybe even *why*!
 
-This section details the syntax and semantics of the Clawr language.
+## Why This Matters for You
+
+As you learn Clawr, you're not just learning how to tell a computer what to do. You're learning how to write an executable document — one that tells the computer what to do, tells other humans what it means, and explains why it exists.
+
+That's what these tutorials are about. Let's begin.
 
 - [Data Structures](./data-structures.md)
 - [Encapsulation](./encapsulation.md)
