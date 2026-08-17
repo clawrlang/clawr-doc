@@ -1,5 +1,4 @@
 <!-- markdownlint-disable MD041 MD033 -->
-<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
 <img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px; width: 150px;">
 
 # Clawr Implementation
