@@ -18,21 +18,16 @@ There is no official JSON schema at this time, but a preliminary schema identifi
 ## Module Root
 
 ```ts
-export type ClawrModule = {
+type ClawrModule = {
   $schema: 'http://clawr.lang/schema/cir/DRAFT-0'
   startBlock?: Statement[]
   declarations?: Declaration[]
 }
 ```
 
-A _module_ is a single .clawr source code file. The file `MAY` contain a single `@main {}` block for running the program. The frontend `MUST` add this block as `startBlock` in the CIR.
+A _module_ is a single .clawr code file. The file `MAY` contain a single `@main {}` block for running the program. The frontend `MUST` add this block as `startBlock` in the CIR.
 
-- The `startBlock` statements `MUST` go into the block of an `int main() {}` function (if lowering though C) or whatever equivalent the backend uses for the same purpose.
-- In a multi-module project there `MUST NOT` be more than one `startBlock` in total.
-- An executable product `MUST` contain a `startBlock`. If the programmer does not define one, the frontend `MUST` exit with an error status.
-- A library product `MAY` define a `startBlock`, but it `MUST` be ignored by the backend.
-
-Example:
+### Example
 
 ```json
 {
@@ -40,8 +35,8 @@ Example:
     {
       "type": "EXEC",
       "name": {
-        "baseName": "foo",
-        "labels": ["x"]
+        "baseName": "print",
+        "labels": []
       },
       "arguments": [{ "kind": "INTEGER_LITERAL", "value": "42" }]
     }
@@ -49,19 +44,30 @@ Example:
 }
 ```
 
+### Rules for Frontend
+
+- A module `MAY` include zero or one `startBlock` nodes.
+- There `MUST` be no more than one `startBlock` in the entire application, even in a multi-module project. If there are multiple `@main` blocks in the source code, the frontend `MUST` exit with an error status.
+- An executable product `MUST` contain a `startBlock`. If the programmer does not define a `@main` block, the frontend `MUST` exit with an error status.
+- A library (non-executable) product `MUST NOT` define a `startBlock`. The frontend `MAY` allow a `@main` block in the source code, but in such case it `MUST NOT` propagate to the CIR.
+
+### Rules for Backend
+
+- The `startBlock` statements `MUST` go into the block of an `int main() {}` function (if lowering though C) or whatever equivalent the backend uses for the same purpose.
+- Module-level variables `MUST` be initialized before executing any statements that depend on them.
+- For the sake of optimization, the `startBlock` statements `MAY` be executed in a different order than they appear, provided that the semantic meaning is not affected.
+
 ## Declarations
 
 ```ts
-export type Declaration = { namespace?: string } & (
+type Declaration = { namespace?: string } & (
   | VariableDeclaration
   | FunctionDeclaration
   | TypeDeclaration
 )
 ```
 
-Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is important. Referenced entities `MUST` exist prior to the reference is made.
-
-`VARIABLE_DECL` and `FUNCTION_DECL` declarations that reference a declared type `MUST` appear after the corresponding `DATA_DECL`. If a variable calls a function for its initial value, the `FUNCTION_DECL` `MUST` appear before the `VARIABLE_DECL`.
+Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is of some importance (see the rules below). Referenced entities must generally be declared prior to the declarations that reference them.
 
 ### `TYPE_DECL`
 
@@ -88,12 +94,34 @@ type TypeDeclaration = {
   | {}
 )
 
-export type CanonicalName = { name: string; namespace?: string }
+type CanonicalName = { name: string; namespace?: string }
 ```
 
-The `TYPE_DECL` defines a type that stores its internal data in fields. The type might have `methods` for interactions. If there is a matching `companion`, its methods are included.
+The `TYPE_DECL` defines a type that stores its internal data in fields. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
 
-Methods `MUST` all have access to an implicit variable `self` that has the declared type as its type. The `self` variable `MUST` always refer to the same instance as the `receiver` expression of each `CALL` to said method.
+The `base` property indicates the direct supertype in an inheritance structure. The structure `MAY` be arbitrarily long by each ancestor including a `base` reference to the next supertype.
+
+The `dispatchTable` array lists polymorphic methods by their method signature (`slot`). These methods `MAY` be called directly or through a dispatch process that selects a different implementation depending on which instance is called. See the [`CALL`](#CALL) node for details regarding invocation. The `declaredIn` property references the earliest ancestor type that first declared the slot. The `implementedBy` property references the type that defines the implementation used by the current type.
+
+### Rules for Frontend
+
+- `TYPE_DECL declarations `MAY` include cyclic references inside a module.
+- They `MUST NOT` cause cyclic references between modules.
+    - **_TODO_** Should that only be between libraries/packages? Packages should never be allowed to form cycles anyway so it may be a moot rule in that case.
+- The `initializers` are methods that are called when the type is used as a supertype. When allocated/instantiated, the subtype `MUST` always call an initializer from the supertype, after initializing all its own fields.
+- Each `TYPE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when when including the optional `namespace`). That uniqueness includes variables and functions.
+- The `dispatchTable` of a subtype `MUST` include entries with the same `slot` values as defined by its supertype in the same order before adding new entries.
+- The `declaredIn` and `implementedBy` properties of the `dispatchTable` `MUST` each refer to either the type itself or a type accessible through the `base` property. That type `MUST` include a method with the same signature as the corresponding `slot`.
+- The `fields` of a supertype/ancestor `MAY` repeat the same name(s) as the `fields` of a subtype/descendant.
+- The frontend `MUST` forbid the cedilla (`¸`), ogonek (`˛`) and caron (`ˇ`) characters in all identifiers.
+
+### Rules for Backend
+
+- The bodies of methods and initializers `MUST` all have access to an implicit variable `self` that has the declared type as its type.
+- The `self` variable `MUST` always refer to the same instance as the `receiver` expression of each `CALL` to said method.
+- Initializers officially have no return-value, but the backend `MAY` employ the fluent pattern (`return self`) to simplify lowering.
+- The `fields` of all types in the inheritance hierarchy `MUST` be allocated as separate memory addresses without overlap. The methods accessing the fields `MUST` be able to reference the same property regardless where in the hierarchy they are.
+- The backend `MUST` allow repeated field names in the inheritance structure without conflating them.
 
 ### `VARIABLE_DECL`
 
@@ -106,16 +134,32 @@ type VariableDeclaration = {
 }
 ```
 
-A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables (“constants”) remain unchanged from inception until destruction. Others are updated frequently.
+A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables (“constants”) remain unchanged from inception until destruction. Others are updated frequently. `VARIABLE_DECL` `MAY` be used as a statement (a local variable in a function) or as a module-level declaration (available to all code in the module and — through a namespace reference — to the entire application).
 
-Each variable has a unique `name` in its scope. A variable `MAY` shadow another variable defined in the parent scope. Shadowed variables become effectively inaccessible until the shadowing scope is destroyed.
+The `valueSet` property identifies the type of the variable. Its intent is to help the backend declare an appropriate storage type for lowering.
 
-The `initialValue` is an expression that `MUST` be called and assigned to the variable when it is declared. The backend `MAY` serialise the value as machine code data if it is simple enough.
+### Rules for Frontend
 
-The `valueSet` property identifies the type of the variable. Its intent is to help the backend optimise storage for the variable. The backend `MAY` eschew optimisation, but it `MUST` use a storage size that can fit all possible values as declared by the `valueSet` (as long as there is enough available memory). An unconstrained `integer` for example will need arbitrary precision, while an `integer` with `max` and `min` values might fit inside a `uint64_t` (C type), or even a single `byte`.
+- A `VARIABLE_DECL` that reference a type `MUST` appear after the corresponding `TYPE_DECL`.
+- If a `VARIABLE_DECL` calls a function for its initial value, the `FUNCTION_DECL` `MUST` appear before it in the module `declarations` array.
+- Each `VARIABLE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when when including the optional `namespace`). That uniqueness includes types and functions.
+- A local variable `MAY` shadow another variable defined in the parent scope. Shadowed variables become effectively inaccessible as if replaced by their shadows. But when the shadowing scope is exited, the shadowed variables are once again there.
+- The frontend `MUST` forbid the cedilla (`¸`), ogonek (`˛`) and caron (`ˇ`) characters in all identifiers.
+
+### Rules for Backend
+
+- All module-scope variables `MUST` be initialized before executing any statements that depend on them.
+- Global variables in an executable `MUST` be initialized before the `startBody` statements are executed.
+- Global variables in a library `MUST` be initialized before any (other) library code is executed.
+- The `initialValue` is an expression that `MUST` be called and assigned to the variable when it is declared. The backend `MAY` serialise the value as machine code data if it is simple enough.
+- The backend `MAY` optimize the storage of the variable if its possible values are small enough, but it `MUST` use a storage size that can fit all possible values as declared by the `valueSet` (as long as there is enough available memory). An unconstrained `integer` for example will need arbitrary precision, while an `integer` with `max` and `min` values might fit inside a `uint64_t` (C type), or even a single `byte`.
 
 > [!note]
-> Mutability and `const`ness is presumed to be inconsequential to the process of lowering. It is enforced by the frontend and not a concern for the backend. All variables `MUST` be lowered allowing mutation.
+>
+> Mutability and `const`ness are presumed to be inconsequential to the process of lowering. Immutability is enforced by the frontend and not a concern for the backend. All variables `MUST` be lowered in a way that allows mutation.
+
+> [!tip]
+> If lowering via C, the backend might use `__attribute__((constructor))` to initialize module-level variables in executables, and use guarded `static` variables for libraries.
 
 ### `FUNCTION_DECL`
 
@@ -127,29 +171,39 @@ type FunctionDeclaration = {
 
 type FunctionSignature = {
   baseName: string
+  labels: string[]
   parameters: {
-    label?: string
-    varName: string
+    name: string
     valueSet: ValueSet
   }[]
   resultValueSet?: ValueSet
 }
 ```
 
-A `FUNCTION_DECL` defines a “free function” in the module, or a method on an `object`/`service` type. A function's unique name is defined by its `baseName` and parameter labels.
+A `FUNCTION_DECL` defines a “free function” in the module, a “static” `companion` method, or a method on an `object`/`service` type. A function's unique name is defined by its `baseName` and its labels (plus the optional `namespace` that exists on all declarations).
 
-Each parameter is defined by an optional `label`, an internal `varName` and a `valueSet`. The `label` is used when calling the function and considered part of the function name. The `varName` is how the parameter is referenced in the function body, and the `valueSet` identifies the type of the variable. It is a `ValueSet` — not a simple type name — to allow the backend to make custom storage optimisation.
+In the source code, each parameter is defined by an optional label. In the CIR, those `labels` are considered part of the function name.
 
-The `returnValueSet` — like parameter value-sets — is a hint to allow the backend to lower the function definition with optimisations. An `undefined` `returnValueSet` indicates that the function returns no result (`void` in C-like languages).
+The `name` is how the parameter is referenced in the function body, and the `valueSet` identifies the type of the variable. It is a `ValueSet` — not a simple type name — to allow the backend to make custom storage optimisation.
 
-The function has a `body`, which is a sequence of statements. The backend `MUST` lower these statements in order. An optimisation step `MAY` be injected before lowering. That step `MAY` move (or even remove) reference-counting statements as long as it can be done non-destructively.
+The `resultValueSet` — like parameter value-sets — is a hint to allow the backend to lower the function definition with an appropriate storage type. An `undefined`/`null` `resultValueSet` indicates that the function returns no result (`void` in C-like languages).
 
-When mangling a function name, the backend `MUST` use a naming scheme that includes all labels, but is unlikely to cause collisions with programmer-defined names. The backend `MAY` use the `¸` character to separate labels from each other, and from the `baseName`. The frontend `MUST` forbid that character in Clawr identifiers.
+### Rules for Frontend
+
+- A `FUNCTION_DECL` that reference a type `MUST` appear after the corresponding `TYPE_DECL`.
+- The `labels` array `MUST` have at most the same number of items as the `parameters`.
+- The frontend `MUST` forbid the cedilla (`¸`), ogonek (`˛`) and caron (`ˇ`) characters in all identifiers.
+
+### Rules for Backend
+
+- The `body` statements `MUST` be executed in the order they appear or in an order that is semantically equivalent.
+- For the sake of optimization, the `body` statements `MAY` be executed in a different order than they appear, provided that the semantic meaning is not affected.
+- When mangling a function name, the backend `MUST` use a naming scheme that includes all labels, but is unlikely to cause collisions with programmer-defined names. The backend `MAY` use the cedilla (`¸`) character to separate labels from each other, and from the `baseName`. The frontend `MUST` forbid that character in Clawr identifiers.
 
 ## Statements
 
 ```ts
-export type Statement =
+type Statement =
   | EnsureUnique
   | Release
   | FunctionCall
@@ -225,10 +279,11 @@ type Receiver = {
     }
 )
 
-export type CanonicalName = { name: string; namespace?: string }
+type CanonicalName = { name: string; namespace?: string }
+type Storage = VariableReference | FieldReference
 ```
 
-A Clawr function may or may not have a return value. A function without a return value can only be called as a statement/command. A function with a return value can only be called as an expression. The `CALL` statement `MUST NOT` be `ASSIGN`ed to a variable of field, or used as an argument in another `CALL` statement or expression.
+A Clawr function may or may not have a return value. A function without a return value can only be called as a statement/command. A function with a return value `MUST` only be called as an expression.
 
 If calling a method, the `receiver` expression `MUST` evaluate to the `object` or `service` the message is sent to. If the called function exists in a `namespace` or a `companion`, that is the `namespace` property. Any `VARIABLE_REF` using the reserved name `"self"` in the body of the method `MUST` evaluate to the `receiver` of the `CALL`.
 
@@ -277,7 +332,7 @@ The variable declaration can also be used as a `Statement`. In other words, it `
 ## Expressions
 
 ```ts
-export type Expression =
+type Expression =
   | StringLiteral
   | IntegerLiteral
   | TruthLiteral
@@ -286,7 +341,7 @@ export type Expression =
   | AsShared
   | VariableReference
   | FieldReference
-  | QueryFunctionCall
+  | FunctionCall
 ```
 
 `Expression`s are used as arguments for `Statement`s and other `Expression`s.
@@ -335,7 +390,31 @@ The `value` can be either of `"false"`, `"ambiguous"` or `"true"`. The backend `
 ### `CALL`
 
 ```ts
-type QueryFunctionCall = FunctionCall & { valueSet: ValueSet }
+type FunctionCall = {
+  kind: 'CALL'
+  receiver?: Receiver
+  name: {
+    namespace?: string
+    baseName: string
+    labels: string[]
+  }
+  arguments: Expression[]
+}
+
+type Receiver = {
+  object: Storage
+} & (
+  | {
+      dispatch: 'direct'
+      type: CanonicalName
+    }
+  | {
+      dispatch: 'inherited'
+      declaredIn: CanonicalName
+    }
+)
+
+type Storage = VariableReference | FieldReference
 ```
 
 A Clawr function may or may not have a return value. A function _without_ a return value can only be called as a statement. A function _with_ a return value can only be called as an expression. The `CALL` expression `MUST` be `ASSIGN`ed to a variable of field, or used as an argument in another `CALL` expression or statement.
@@ -353,14 +432,15 @@ type MemoryAllocation = {
   kind: 'ALLOCATION'
   type: CanonicalName
   base?: CanonicalName
-  semantics: 'ISOLATED' | 'SHARED'
+  isolationLevel: IsolationLevel
   fields: {
     name: string
     value: Expression
   }[]
 }
 
-export type CanonicalName = { name: string; namespace?: string }
+type CanonicalName = { name: string; namespace?: string }
+type IsolationLevel = 'ISOLATED' | 'SHARED'
 ```
 
 Allocate memory for a reference-counted entity. The `valueSet` `MUST` name a reference-counted type (`rc-type`) in its `type` property.
@@ -391,7 +471,7 @@ If the runtime is implemented using stack-allocated values for `ISOLATED` variab
 ```ts
 type AsShared = {
   kind: 'AS_SHARED'
-  object: QueryFunctionCall
+  object: FunctionCall
 }
 ```
 
@@ -425,7 +505,7 @@ The runtime value of a field. The `valueSet` returns the best lattice knowledge 
 ## Value Sets
 
 ```ts
-export type ValueSet =
+type ValueSet =
   | IntegerValueSet
   | RealValueSet
   | TruthValueSet
@@ -489,7 +569,6 @@ type RcTypeValueSet = {
   type: 'rc-type'
   namespace?: string
   typeName: string
-  semantics: 'SHARED' | 'ISOLATED'
 }
 ```
 
