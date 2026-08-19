@@ -109,7 +109,7 @@ The `dispatchTable` array lists polymorphic methods by their method signature (`
 - They `MUST NOT` cause cyclic references between modules.
     - **_TODO_** Should that only be between libraries/packages? Packages should never be allowed to form cycles anyway so it may be a moot rule in that case.
 - The `initializers` are methods that are called when the type is used as a supertype. When allocated/instantiated, the subtype `MUST` always call an initializer from the supertype, after initializing all its own fields.
-- Each `TYPE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when when including the optional `namespace`). That uniqueness includes variables and functions.
+- Each `TYPE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes variables and functions.
 - The `dispatchTable` of a subtype `MUST` include entries with the same `slot` values as defined by its supertype in the same order before adding new entries.
 - The `declaredIn` and `implementedBy` properties of the `dispatchTable` `MUST` each refer to either the type itself or a type accessible through the `base` property. That type `MUST` include a method with the same signature as the corresponding `slot`.
 - The `fields` of a supertype/ancestor `MAY` repeat the same name(s) as the `fields` of a subtype/descendant.
@@ -122,6 +122,8 @@ The `dispatchTable` array lists polymorphic methods by their method signature (`
 - Initializers officially have no return-value, but the backend `MAY` employ the fluent pattern (`return self`) to simplify lowering.
 - The `fields` of all types in the inheritance hierarchy `MUST` be allocated as separate memory addresses without overlap. The methods accessing the fields `MUST` be able to reference the same property regardless where in the hierarchy they are.
 - The backend `MUST` allow repeated field names in the inheritance structure without conflating them.
+- `SHARED` `fields` `MUST` be implemented as pointers to separately reference-counted memory allocations.
+- `ISOLATED` `fields` `MAY` be implemented as pointers to separately reference-counted allocations OR be inlined in their parent container. If inlined, they `MUST NOT` include a separate reference count, and `RETAIN`/`RELEASE` nodes that reference them `MUST` be discarded.
 
 ### `VARIABLE_DECL`
 
@@ -142,7 +144,7 @@ The `valueSet` property identifies the type of the variable. Its intent is to he
 
 - A `VARIABLE_DECL` that reference a type `MUST` appear after the corresponding `TYPE_DECL`.
 - If a `VARIABLE_DECL` calls a function for its initial value, the `FUNCTION_DECL` `MUST` appear before it in the module `declarations` array.
-- Each `VARIABLE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when when including the optional `namespace`). That uniqueness includes types and functions.
+- Each `VARIABLE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes types and functions.
 - A local variable `MAY` shadow another variable defined in the parent scope. Shadowed variables become effectively inaccessible as if replaced by their shadows. But when the shadowing scope is exited, the shadowed variables are once again there.
 - The frontend `MUST` forbid the cedilla (`¸`), ogonek (`˛`) and caron (`ˇ`) characters in all identifiers.
 
@@ -154,11 +156,11 @@ The `valueSet` property identifies the type of the variable. Its intent is to he
 - The `initialValue` is an expression that `MUST` be called and assigned to the variable when it is declared. The backend `MAY` serialise the value as machine code data if it is simple enough.
 - The backend `MAY` optimize the storage of the variable if its possible values are small enough, but it `MUST` use a storage size that can fit all possible values as declared by the `valueSet` (as long as there is enough available memory). An unconstrained `integer` for example will need arbitrary precision, while an `integer` with `max` and `min` values might fit inside a `uint64_t` (C type), or even a single `byte`.
 
-> [!note]
+> [!NOTE]
 >
 > Mutability and `const`ness are presumed to be inconsequential to the process of lowering. Immutability is enforced by the frontend and not a concern for the backend. All variables `MUST` be lowered in a way that allows mutation.
 
-> [!tip]
+> [!TIP]
 > If lowering via C, the backend might use `__attribute__((constructor))` to initialize module-level variables in executables, and use guarded `static` variables for libraries.
 
 ### `FUNCTION_DECL`
@@ -227,7 +229,17 @@ type Storage = VariableReference | FieldReference
 
 An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and fields. When assigning a variable/field to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated (using `ENSURE_UNIQUE`) before the change is applied.
 
-- If the reference-count of the `object` is greater than one, a copy must be made.
+### Rules for Frontend
+
+- The operation `MUST` be injected before editing an `ISOLATED` referenced-counted variable or field.
+- The operation `MUST NOT` be injected for `SHARED` values.
+- The operation `MUST NOT` be injected for non-reference-counted values.
+- The operation `MAY` be elided/removed by optimization if the reference count is already provably 1 (e.g. if `ENSURE_UNIQUE` has already been performed due to a previous mutation).
+
+### Rules for Backend
+
+- If the reference-count of the `object` is greater than one, a copy `MUST` be made.
+- If the reference-count is exactly one, copying `MUST NOT` be made.
 - The variable/field indicated by the `object` property `MUST` be relocated to reference the new allocation.
 - The new allocation `MUST` have a reference count of exactly 1.
 - The reference count of the original allocation `MUST` be decremented by exactly 1.
@@ -344,7 +356,7 @@ type Expression =
   | FunctionCall
 ```
 
-`Expression`s are used as arguments for `Statement`s and other `Expression`s.
+`Expression`s are used as arguments in `Statement`s and other `Expression`s.
 
 ### `STRING_LITERAL`
 
@@ -478,6 +490,12 @@ type AsShared = {
 Upgrades a uniquely referenced `ISOLATED` value to a `SHARED` entity. The reference count of the `object` value `MUST` be exactly 1.
 
 The backend `MAY` create a copy of the value or just modify an isolation flag on the value.
+
+If the function call is `copy(of:)`, the backend `MAY` optimize the entire structure into passing a flag and 
+
+The backend `MAY` collapse the structure and pass a flag into the function implementation instead. But in that case, it `MUST` pass the equivalent of `ISOLATED` to that function whenever the `AS_SHARED` structure does not wrap the call.
+
+The backend `MAY` ignore the wrapper entirely if it does not track isolation-levels for allocations. But it `MUST` still call the wrapped funtion.
 
 ### `VARIABLE_REF`
 
