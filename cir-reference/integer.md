@@ -38,3 +38,14 @@ The `max` and `min` bounds are both inclusive; a value is a member of the set if
 
 - A value-set with either or both `max` and `min` unset or `null` `MUST` be stored as an arbitrarily-sized integer.
 - A value-set with both `max` and `min` set `MAY` be stored as a fixed-width integer, but the chosen storage type `MUST` support the entire range.
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
