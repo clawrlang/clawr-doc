@@ -5,12 +5,12 @@
 
 > What if you want to use the same type in different parts of your code, but sometimes you need it to be a `struct` and at other times a `class`?
 
-This is the thought that sparked the need for a new programming language.
+This is the thought that sparked the desire to design a new programming language.
 
 > [!note]
 > This document gives a practical explanation of how variables work in Clawr. If you want an introduction to the conceptual meaning of the keywords, you should check out the [Mental Model](./index.md). Or you could read that first and then come back here.
 
-In the languages I know, such a need would require duplicating code — which violates DRY — or wrapping one type inside another — a `class` that contains a `struct` — which is awkward.
+In the languages I know, such a need would require duplicating code — which violates DRY — or wrapping one type inside another — a `class` that contains a `struct` — which can be awkward.
 
 In Clawr, I want to be able to define a type once and then specify its "kind" (i.e., `struct`-like vs `class`-like) based on the context in which it is used. This would allow for more flexible and reusable code without duplication.
 
@@ -54,7 +54,7 @@ Rust uses ownership and borrowing to manage memory safety. While this is powerfu
 
 | Keyword  | Contract                                    | Modifications                                                    |
 | -------- | ------------------------------------------- | ---------------------------------------------------------------- |
-| `const`  | Isolated (immutable) value contained        | Do not propagate to/from other variables                         |
+| `const`  | Isolated (immutable) value contained        | Are not allowed and do not propagate from other variables        |
 | `mut`    | Isolated (mutable) value container          | Do not propagate to/from other variables                         |
 | `ref`    | Reference to a (fixed) shared entity        | Apply to referenced entity and reflect all referencing variables |
 | `mutref` | Reference to a (reassignable) shared entity | Apply to referenced entity and reflect all referencing variables |

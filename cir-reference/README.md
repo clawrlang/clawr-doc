@@ -545,7 +545,7 @@ type IntegerValueSet = {
 
 A range of integer values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip either the `min`, `max` or both properties.
 
-If either or both limits is excluded, the value is any integer ($\mathbb{Z}$), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
+If either or both limits is excluded, the value is any integer (ℤ), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
 
 ### `real`
 
@@ -559,7 +559,7 @@ type RealValueSet = {
 
 A range of real values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip either the `min`, `max` or both properties.
 
-If either or both limits is excluded, the value could be any real number ($\mathbb{R}$), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
+If either or both limits is excluded, the value could be any real number (ℝ), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
 
 ### `truthvalue`
 
