@@ -1,11 +1,15 @@
 <!-- markdownlint-disable MD041 MD033 -->
 <img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
 
-# [Clawr Intermediate Representation](./README.md) : [Declarations](./declarations.md) : `TYPE_DECL`
+# `TYPE_DECL`
+
+[CIR](../README.md) : [Declarations](./README.md)
 
 The `TYPE_DECL` node defines a reference-counted type that stores its state in fields. The type might include `methods` for interactions and it might be part of an inheritance chain.
 
 Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
+
+TypeScript:
 
 ```ts
 type TypeDeclaration = {
@@ -30,6 +34,57 @@ type TypeDeclaration = {
 )
 
 type CanonicalName = { name: string; namespace?: string }
+```
+
+JSON Schema:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "namespace": { "type": "string" },
+    "kind": { "const": "TYPE_DECL" },
+    "name": { "type": "string" },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "valueSet": { "$ref": "#/$defs/ValueSet" }
+        },
+        "required": ["name", "valueSet"],
+        "additionalProperties": false
+      }
+    },
+    "base": { "$ref": "#/$defs/CanonicalName" },
+    "methods": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/FunctionDeclaration" }
+    },
+    "initializers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OmitFunctionDeclarationresultValueSet"
+      }
+    },
+    "dispatchTable": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "slot": { "$ref": "#/$defs/FunctionSignature" },
+          "declaredIn": { "$ref": "#/$defs/CanonicalName" },
+          "implementedBy": { "$ref": "#/$defs/CanonicalName" }
+        },
+        "required": ["slot", "declaredIn"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["kind", "name", "fields", "methods"],
+  "additionalProperties": false
+}
 ```
 
 The break in the definition above indicates that some types (`object`/`service`) include `methods`, and those types may include the optional properties `base`, `initializers` and `dispatchTable`. A type without `methods` ( `data` syntax) cannot include those properties. *All* types however have both `name` and `fields`. 

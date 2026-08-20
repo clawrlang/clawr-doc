@@ -12,4 +12,6 @@ Every expression that is not a `VARIABLE_REF` or a `FIELD_REF` imply some form o
 
 These are not conceptually reference-counted. They are primitive values and it is up to the backend to decide when simple forms can be used and when large pointer-structures are needed. It is an implementation detail.
 
-It might still be wrong to not treat *all* values as reference-counted. But the frontend does not know (or can it? — better think this through) when e.g. an `integer` is the same instance as another and when they are merely similar values.
+> [!error]
+>
+> It might still be wrong to not treat *all* values as reference-counted. But the frontend does not know (or can it? — better think this through) when e.g. an `integer` is the same instance as another and when they are merely similar values?
