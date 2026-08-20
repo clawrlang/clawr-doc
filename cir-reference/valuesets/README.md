@@ -59,16 +59,14 @@ An unconstrained string value.
 ### Custom `data` Structures
 
 ```ts
-type RcTypeValueSet = {
+type RCTypeValueSet = {
   type: 'rc-type'
   namespace?: string
-  typeName: string
+  name: string
 }
 ```
 
-A set allowing all instances of a reference counted type (including inheritance). The `typeName` `MUST` identify a type that is available in the current scope.
-
-The `semantics` property identifies whether the value is a `SHARED` entity or meant for `ISOLATED` variables.
+A set allowing all instances of a reference counted type (including inheritance). The `name` `MUST` identify a type that is available in the current scope.
 
 <script>
 MathJax = {

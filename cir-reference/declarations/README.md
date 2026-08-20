@@ -21,11 +21,11 @@ type ClawrModule = {
 
 This document lists all declarations and their content.
 
-## `TYPE_DECL`
+## `RC_TYPE_DECL`
 
 ```ts
 type TypeDeclaration = {
-  kind: 'TYPE_DECL'
+  kind: 'RC_TYPE_DECL'
   name: string
   fields: {
     name: string
@@ -48,7 +48,7 @@ type TypeDeclaration = {
 type CanonicalName = { name: string; namespace?: string }
 ```
 
-The `TYPE_DECL` defines a type that stores its internal data in fields. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
+The `RC_TYPE_DECL` defines a type that stores its internal data in fields. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
 
 The `base` property indicates the direct supertype in an inheritance structure. The structure `MAY` be arbitrarily long by each ancestor including a `base` reference to the next supertype.
 
@@ -56,11 +56,11 @@ The `dispatchTable` array lists polymorphic methods by their method signature (`
 
 ### Rules for Frontend
 
-- `TYPE_DECL declarations `MAY` include cyclic references inside a module.
+- `RC_TYPE_DECL declarations `MAY` include cyclic references inside a module.
 - They `MUST NOT` cause cyclic references between modules.
-    - **_TODO_** Should that only be between libraries/packages? Packages should never be allowed to form cycles anyway so it may be a moot rule in that case.
+  - **_TODO_** Should that only be between libraries/packages? Packages should never be allowed to form cycles anyway so it may be a moot rule in that case.
 - The `initializers` are methods that are called when the type is used as a supertype. When allocated/instantiated, the subtype `MUST` always call an initializer from the supertype, after initializing all its own fields.
-- Each `TYPE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes variables and functions.
+- Each `RC_TYPE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes variables and functions.
 - The `dispatchTable` of a subtype `MUST` include entries with the same `slot` values as defined by its supertype in the same order before adding new entries.
 - The `declaredIn` and `implementedBy` properties of the `dispatchTable` `MUST` each refer to either the type itself or a type accessible through the `base` property. That type `MUST` include a method with the same signature as the corresponding `slot`.
 - The `fields` of a supertype/ancestor `MAY` repeat the same name(s) as the `fields` of a subtype/descendant.
@@ -93,7 +93,7 @@ The `valueSet` property identifies the type of the variable. Its intent is to he
 
 ### Rules for Frontend
 
-- A `VARIABLE_DECL` that reference a type `MUST` appear after the corresponding `TYPE_DECL`.
+- A `VARIABLE_DECL` that reference a type `MUST` appear after the corresponding `RC_TYPE_DECL`.
 - If a `VARIABLE_DECL` calls a function for its initial value, the `FUNCTION_DECL` `MUST` appear before it in the module `declarations` array.
 - Each `VARIABLE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes types and functions.
 - A local variable `MAY` shadow another variable defined in the parent scope. Shadowed variables become effectively inaccessible as if replaced by their shadows. But when the shadowing scope is exited, the shadowed variables are once again there.
@@ -143,7 +143,7 @@ The `resultValueSet` — like parameter value-sets — is a hint to allow the b
 
 ### Rules for Frontend
 
-- A `FUNCTION_DECL` that reference a type `MUST` appear after the corresponding `TYPE_DECL`.
+- A `FUNCTION_DECL` that reference a type `MUST` appear after the corresponding `RC_TYPE_DECL`.
 - The `labels` array `MUST` have at most the same number of items as the `parameters`.
 - The frontend `MUST` forbid the cedilla (`¸`), ogonek (`˛`) and caron (`ˇ`) characters in all identifiers.
 

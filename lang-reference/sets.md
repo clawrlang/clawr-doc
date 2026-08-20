@@ -35,7 +35,7 @@ But Clawr takes it one step further: it considers types _sets_.
 
 Let's start with a question: What is an `integer`?
 
-C programmers would perhaps answer “64 or 32 bits.” There is no semantics implied. The value can be bit-shifted, multiplied, XOR'ed, printed as an ASCII character… There is no semantics at all implied in the typename. All it is, is a size for layout.
+C programmers would perhaps answer “64 or 32 bits.” There is no semantics implied. The value can be bit-shifted, multiplied, XOR'ed, printed as an ASCII character… There is no semantics at all implied in the type-name. All it is, is a size for layout.
 
 A C#, Java or Swift programmer—or really any programmer at all—would probably say something similar. An integer is a numeric value that is used in arithmetics, but it can also be used in bitwise Boolean operations in most other languages, maybe in all of them.
 

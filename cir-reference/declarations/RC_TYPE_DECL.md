@@ -1,17 +1,17 @@
 <!-- markdownlint-disable MD041 MD033 -->
 <img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
 
-# `TYPE_DECL`
+# `RC_TYPE_DECL`
 
 [CIR](../README.md) : [Declarations](./README.md)
 
-The `TYPE_DECL` node defines a reference-counted type that stores its state in fields. The type might include `methods` for interactions and it might be part of an inheritance chain.
+The `RC_TYPE_DECL` node defines a reference-counted type that stores its state in fields. The type might include `methods` for interactions and it might be part of an inheritance chain.
 
 Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is reflected in the CIR only in so much as disallowing certain properties unless the `methods` property is included.
 
 ```ts
 type TypeDeclaration = {
-  kind: 'TYPE_DECL'
+  kind: 'RC_TYPE_DECL'
   name: string
   fields: {
     name: string
@@ -42,11 +42,11 @@ The `dispatchTable` array lists polymorphic methods by their method signature (`
 
 ## Rules for Frontend
 
-- `TYPE_DECL declarations `MAY` incur cyclic references inside a module (a single source/CIR file).
+- `RC_TYPE_DECL declarations `MAY` incur cyclic references inside a module (a single source/CIR file).
 - They `MUST NOT` cause cyclic references between modules.
   - **_TODO_** Should that only be between libraries/packages? Packages should never be allowed to form cycles anyway so it may be a moot rule in that case.
 - The `initializers` are methods that are called when the type is used as a supertype. When allocated/instantiated, the subtype `MUST` always call an initializer from the supertype, after initializing all its own fields.
-- Each `TYPE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes variables and functions.
+- Each `RC_TYPE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes variables and functions.
 - The `dispatchTable` of a subtype `MUST` include entries with the same `slot` values as defined by its supertype in the same order before adding new entries.
 - The `declaredIn` and `implementedBy` properties of the `dispatchTable` `MUST` each refer to either the type itself or a type accessible through the `base` property. That type `MUST` include a method with the same signature as the corresponding `slot`.
 - The `fields` of a supertype/ancestor `MAY` repeat the same name(s) as the `fields` of a subtype/descendant.
@@ -69,7 +69,7 @@ The `dispatchTable` array lists polymorphic methods by their method signature (`
   "type": "object",
   "properties": {
     "namespace": { "type": "string" },
-    "kind": { "const": "TYPE_DECL" },
+    "kind": { "const": "RC_TYPE_DECL" },
     "name": { "type": "string" },
     "fields": {
       "type": "array",
@@ -135,7 +135,7 @@ Supertype with one virtual-dispatch method:
 
 ```json
 {
-  "kind": "TYPE_DECL",
+  "kind": "RC_TYPE_DECL",
   "name": "Super",
   "fields": [
     {
@@ -242,7 +242,7 @@ Subtype without overrides:
 
 ```json
 {
-  "kind": "TYPE_DECL",
+  "kind": "RC_TYPE_DECL",
   "name": "Sub1",
   "base": {
     "name": "Super"
@@ -310,7 +310,7 @@ Subtype that overrides a method:
 
 ```json
 {
-  "kind": "TYPE_DECL",
+  "kind": "RC_TYPE_DECL",
   "name": "Sub2",
   "base": {
     "name": "Super"

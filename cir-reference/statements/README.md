@@ -262,7 +262,7 @@ Upgrades a uniquely referenced `ISOLATED` value to a `SHARED` entity. The refere
 
 The backend `MAY` create a copy of the value or just modify an isolation flag on the value.
 
-If the function call is `copy(of:)`, the backend `MAY` optimize the entire structure into passing a flag and 
+If the function call is `copy(of:)`, the backend `MAY` optimize the entire structure into passing a flag and
 
 The backend `MAY` collapse the structure and pass a flag into the function implementation instead. But in that case, it `MUST` pass the equivalent of `ISOLATED` to that function whenever the `AS_SHARED` structure does not wrap the call.
 
@@ -299,7 +299,7 @@ type ValueSet =
   | RealValueSet
   | TruthValueSet
   | StringValueSet
-  | RcTypeValueSet
+  | RCTypeValueSet
 ```
 
 Every expression has a `valueSet` that encompasses all possible runtime values of the given expression in its position in the code. Variables, fields and parameters also have a value-set. that constrains what values may be stored in the respective container.
@@ -354,16 +354,14 @@ An unconstrained string value.
 ### Custom `data` Structures
 
 ```ts
-type RcTypeValueSet = {
+type RCTypeValueSet = {
   type: 'rc-type'
   namespace?: string
-  typeName: string
+  name: string
 }
 ```
 
-A set allowing all instances of a reference counted type (including inheritance). The `typeName` `MUST` identify a type that is available in the current scope.
-
-The `semantics` property identifies whether the value is a `SHARED` entity or meant for `ISOLATED` variables.
+A set allowing all instances of a reference counted type (including inheritance). The `name` `MUST` identify a type that is available in the current scope.
 
 <script>
 MathJax = {

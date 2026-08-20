@@ -5,15 +5,15 @@
 
 [CIR](../README.md) : [ValueSets](./README.md)
 
-A set allowing all instances of a reference counted type (meaning `data`, `object` and `service` types). The `typeName` `MUST` identify a type that is accessible from the current scope.
+A set allowing all instances of a reference counted type (meaning `data`, `object` and `service` types). The `name` `MUST` identify a type that is accessible from the current scope.
 
 TypeScript declaration:
 
 ```ts
-type RcTypeValueSet = {
+type RCTypeValueSet = {
   type: 'rc-type'
   namespace?: string
-  typeName: string
+  name: string
 }
 ```
 
@@ -25,10 +25,9 @@ JSON Schema:
   "properties": {
     "type": { "const": "rc-type" },
     "namespace": { "type": "string" },
-    "typeName": { "type": "string" }
+    "name": { "type": "string" }
   },
-  "required": ["type", "typeName"],
+  "required": ["type", "name"],
   "additionalProperties": false
 }
 ```
-
