@@ -33,11 +33,11 @@ type RealValueSet = {
 }
 ```
 
-A range of real values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip either the `min`, `max` or both properties.
-
-If either or both limits is excluded, the value could be any real number (ℝ), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
+[Click here](./real.md) for more details
 
 ## `truthvalue`
+
+The three values of three-valued (Kleene K3) truth.
 
 ```ts
 type TruthValueSet = {
@@ -46,17 +46,21 @@ type TruthValueSet = {
 }
 ```
 
-A set of truth values.
+[Click here](./truthvalue.md) for more details
 
 ## `string`
+
+An unconstrained string value.
 
 ```ts
 type StringValueSet = { type: 'string' }
 ```
 
-An unconstrained string value.
+[Click here](./string.md) for more details
 
-### Custom `data` Structures
+## `rc-type`
+
+A set allowing all instances of a reference counted type (including inheritance). The `name` `MUST` identify a type that is available in the current scope.
 
 ```ts
 type RCTypeValueSet = {
@@ -65,16 +69,4 @@ type RCTypeValueSet = {
   name: string
 }
 ```
-
-A set allowing all instances of a reference counted type (including inheritance). The `name` `MUST` identify a type that is available in the current scope.
-
-<script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
-  }
-};
-</script>
-<script id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-</script>
+[Click here](./rc-type.md) for more details

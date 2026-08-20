@@ -1,8 +1,9 @@
 <!-- markdownlint-disable MD041 MD033 -->
 <img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
+
 # `VARIABLE_DECL`
 
-[CIR](../README.md) : [Statements](./README.md)
+[CIR](../README.md) : [Declarations](./README.md)
 
 A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables (“constants”) remain unchanged from inception until destruction. Others are updated frequently.
 
