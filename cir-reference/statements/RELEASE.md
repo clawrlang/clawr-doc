@@ -3,7 +3,7 @@
 
 # `RELEASE`
 
-[CIR](cir-reference/README.md) : [Statements](cir-reference/statements/README.md)
+[CIR](../README.md) : [Statements](./README.md)
 
 The `RELEASE` statement decrements the reference count of a memory allocation when a variable stops referencing it. If the reference count reaches 0, the allocation is no longer needed and the memory can be freed for use in new allocations.
 

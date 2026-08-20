@@ -7,28 +7,11 @@
 
 The `integer` value-set represents the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 
-TypeScript declaration:
-
 ```ts
 type IntegerValueSet = {
   type: 'integer'
   min?: `${bigint}`
   max?: `${bigint}`
-}
-```
-
-JSON Schema:
-
-```json
-{
-  "type": "object",
-  "properties": {
-    "type": { "const": "integer" },
-    "min": { "type": "string", "pattern": "^-?\\d+$" },
-    "max": { "type": "string", "pattern": "^-?\\d+$" }
-  },
-  "required": ["type"],
-  "additionalProperties": false
 }
 ```
 
@@ -54,6 +37,21 @@ In theory, any integer should be representable. [^memory] In practice, this mean
 
 - A value-set with either or both `max` and `min` unset or `null` `MUST` be stored as an arbitrarily-sized integer.
 - A value-set with both `max` and `min` set `MAY` be stored as a fixed-width integer, but the chosen storage type `MUST` support the entire range.
+
+## JSON Schema
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "type": { "const": "integer" },
+    "min": { "type": "string", "pattern": "^-?\\d+$" },
+    "max": { "type": "string", "pattern": "^-?\\d+$" }
+  },
+  "required": ["type"],
+  "additionalProperties": false
+}
+```
 
 <script>
 MathJax = { tex: { inlineMath: [['$', '$']] } };

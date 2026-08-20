@@ -3,7 +3,7 @@
 
 # `ENSURE_UNIQUE`
 
-[CIR](cir-reference/README.md) : [Statements](cir-reference/statements/README.md)
+[CIR](../README.md) : [Statements](./README.md)
 
 An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and fields. When assigning a variable/field to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated (using `ENSURE_UNIQUE`) before the change is applied.
 
