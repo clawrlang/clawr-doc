@@ -58,8 +58,8 @@ There are also [expressions](./expressions/README.md) that are used as arguments
 ```ts
 type Expression =
   | StringLiteral
-  | IntegerLiteral<bigint>
-  | TruthLiteral<truthvalue>
+  | IntegerLiteral
+  | TruthLiteral
   | MemoryAllocation
   | MemoryRetention
   | AsShared
@@ -68,13 +68,13 @@ type Expression =
   | (FunctionCall & { value: Lattice })
 ```
 
-Types, functions and variables use [value-sets](./lattices/README.md) to constrain what data is passed around the program.
+Types, functions and variables use [lattices](./lattices/README.md) to constrain what data is passed around the program.
 
 ```ts
 type Lattice =
-  | IntegerLattice<bigint | undefined, bigint | undefined>
+  | IntegerLattice
   | RealLattice
-  | TruthvalueLattice<truthvalue[]>
+  | TruthvalueLattice
   | StringLattice
   | RCTypeLattice
 ```

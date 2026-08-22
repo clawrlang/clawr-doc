@@ -5,20 +5,14 @@
 
 [CIR](../README.md) : [Lattices](cir-reference/lattices/README.md)
 
-The `integer` value-set represents the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
+The `integer` lattice represents the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 
 ```ts
-type IntegerLattice<
-  Min extends bigint | undefined,
-  Max extends bigint | undefined,
-> = {
+type IntegerLattice<Min extends bigint, Max extends bigint> = {
   type: 'integer'
-} & (Min extends undefined
-  ? { min?: undefined }
-  : { min: `${Min}` & tags.Pattern<'^-?\\d+$'> }) &
-  (Max extends undefined
-    ? { max?: undefined }
-    : { max: `${Max}` & tags.Pattern<'^-?\\d+$'> })
+  min?: `${Min}`
+  max?: `${Max}`
+}
 ```
 
 The value-set is unlimited by default, representing all of ℤ. A limited subset can be created by specifying an upper bound (`max`) and/or a lower bound (`min`), thereby defining a range of values.
@@ -42,22 +36,7 @@ In theory, any integer should be representable. [^memory] In practice, this mean
 ## Rules for Backend
 
 - A value-set with either or both `max` and `min` unset or `null` `MUST` be stored as an arbitrarily-sized integer.
-- A value-set with both `max` and `min` set `MAY` be stored as a fixed-width integer, but the chosen storage type `MUST` support the entire range.
-
-## JSON Schema
-
-```json
-{
-  "type": "object",
-  "properties": {
-    "type": { "const": "integer" },
-    "min": { "type": "string", "pattern": "^-?\\d+$" },
-    "max": { "type": "string", "pattern": "^-?\\d+$" }
-  },
-  "required": ["type"],
-  "additionalProperties": false
-}
-```
+- A value-set with both `max` and `min` set `MAY` be stored as a fixed-width integer, but the chosen storage size `MUST` support the entire range of values.
 
 <script>
 MathJax = { tex: { inlineMath: [['$', '$']] } };

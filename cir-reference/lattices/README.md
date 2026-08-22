@@ -5,24 +5,18 @@
 
 [CIR](../README.md)
 
-Clawr considers types as sets and lattices. Every variable has a set of values that it may store, functions have a set of possible result values, and so on. Every expression has a value-set too, though that is not exposed in the CIR at this time.
+Clawr considers types as sets and lattices. Every variable has a set of values that it may store, functions have a set of possible result values, and so on. Every expression has a `Lattice` too, which represents the best knowledge of the expression’s runtime value when executed.
 
 ## `integer`
 
-An [`integer`](integer.md) value-set is either the entire infinite mathematical set “the integers” (ℤ) or a subset of ℤ defined as a range.
+An [`integer`](integer.md) lattice either spans the entire infinite mathematical set called “the integers” (ℤ) or a subset of ℤ defined as a range.
 
 ```ts
-type IntegerLattice<
-  Min extends bigint | undefined,
-  Max extends bigint | undefined,
-> = {
+type IntegerLattice<Min extends bigint, Max extends bigint> = {
   type: 'integer'
-} & (Min extends undefined
-  ? { min?: undefined }
-  : { min: `${Min}` & tags.Pattern<'^-?\\d+$'> }) &
-  (Max extends undefined
-    ? { max?: undefined }
-    : { max: `${Max}` & tags.Pattern<'^-?\\d+$'> })
+  min?: `${Min}`
+  max?: `${Max}`
+}
 ```
 
 [Click here](integer.md) for more details
@@ -46,9 +40,9 @@ type RealLattice = {
 The three values of three-valued (Kleene K3) truth.
 
 ```ts
-type TruthvalueLattice<T extends truthvalue[]> = {
+type TruthvalueLattice<Values extends truthvalue[]> = {
   type: 'truthvalue'
-  values: T
+  values: Values
 }
 ```
 

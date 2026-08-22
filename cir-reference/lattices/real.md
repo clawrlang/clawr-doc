@@ -19,21 +19,6 @@ type RealLattice = {
 }
 ```
 
-JSON Schema:
-
-```json
-{
-  "type": "object",
-  "properties": {
-    "type": { "const": "real" },
-    "min": { "type": "string" },
-    "max": { "type": "string" }
-  },
-  "required": ["type"],
-  "additionalProperties": false
-}
-```
-
 ## Rules for Frontend
 
 ## Rules for Backend

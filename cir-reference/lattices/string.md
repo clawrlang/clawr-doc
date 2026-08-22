@@ -14,14 +14,3 @@ TypeScript declaration:
 ```ts
 type StringLattice = { type: 'string'; value?: string }
 ```
-
-JSON Schema:
-
-```json
-{
-  "type": "object",
-  "properties": { "type": { "const": "string" } },
-  "required": ["type"],
-  "additionalProperties": false
-}
-```

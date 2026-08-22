@@ -12,41 +12,18 @@ Rather than a simple Boolean type, Clawr considers a three-valued truth:
 TypeScript declaration:
 
 ```ts
-type TruthvalueLattice<T extends truthvalue[]> = {
+type TruthvalueLattice<Values extends truthvalue[]> = {
   type: 'truthvalue'
-  values: T
+  values: Values
 }
 
 type truthvalue = 'false' | 'ambiguous' | 'true'
 ```
 
-JSON Schema:
-
-```json
-{
-  "type": "object",
-  "properties": {
-    "type": { "const": "truthvalue" },
-    "values": {
-      "type": "array",
-      "items": {
-        "oneOf": [
-          { "const": "ambiguous" },
-          { "const": "false" },
-          { "const": "true" }
-        ]
-      }
-    }
-  },
-  "required": ["type", "values"],
-  "additionalProperties": false
-}
-```
-
-There is still a `boolean` “type.” but it is not a type in the same way as ordinary
-
-Clawr employs sets and lattices to determine value compatibility.
+There is still a `boolean` “type,” but it is not a type in the same way as ordinary languages define it. Instead it is a `subset` (or sub-lattice) to the `truthvalue` top lattice.
 
 ```clawr
 subset boolean = truthvalue(false|true)
 ```
+
+This means that all `boolean` values are in reality `truthvalue` values. They are simply restricted to the values `true` and `false`. This could perhaps be used to simplify conditions at runtime. I leave the exercise to the backend developer.

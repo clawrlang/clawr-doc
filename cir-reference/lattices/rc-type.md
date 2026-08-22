@@ -5,29 +5,12 @@
 
 [CIR](../README.md) : [Lattices](cir-reference/lattices/README.md)
 
-A set allowing all instances of a reference counted type (meaning `data`, `object` and `service` types). The `name` `MUST` identify a type that is accessible from the current scope.
-
-TypeScript declaration:
+A set allowing all instances of a reference counted type (meaning `data`, `object` and `service` types). The `name` `MUST` identify an [RC_TYPE_DECL](../declarations/RC_TYPE_DECL.md) declaration that is accessible from the current scope.
 
 ```ts
 type RCTypeLattice = {
   type: 'rc-type'
   namespace?: string
   name: string
-}
-```
-
-JSON Schema:
-
-```json
-{
-  "type": "object",
-  "properties": {
-    "type": { "const": "rc-type" },
-    "namespace": { "type": "string" },
-    "name": { "type": "string" }
-  },
-  "required": ["type", "name"],
-  "additionalProperties": false
 }
 ```
