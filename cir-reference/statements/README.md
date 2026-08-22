@@ -76,7 +76,7 @@ type Assign = {
   value: Expression
 }
 
-type Storage = VariableReference | FieldReference
+type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
 
 [Click here](./ASSIGN.md) for more details
@@ -89,7 +89,8 @@ The variable declaration can also be used as a `Statement`. In other words, it `
 type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
   name: string
-  valueSet: ValueSet
+  namespace?: string
+  lattice: Lattice
   initialValue: Expression
 }
 ```

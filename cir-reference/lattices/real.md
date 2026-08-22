@@ -3,7 +3,7 @@
 
 # `real`
 
-[CIR](../README.md) : [ValueSets](./README.md)
+[CIR](../README.md) : [Lattices](../lattices/README.md)
 
 A range of real values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip either the `min`, `max` or both properties.
 
@@ -12,7 +12,7 @@ If either or both limits is excluded, the value could be any real number (ℝ), 
 TypeScript declaration:
 
 ```ts
-type RealValueSet = {
+type RealLattice = {
   type: 'real'
   min?: string // numeric, can be arbitrarity big
   max?: string // numeric, can be arbitrarity big

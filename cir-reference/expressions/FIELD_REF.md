@@ -4,20 +4,22 @@
 
 [CIR](../README.md) : [Expressions](./README.md)
 
-The runtime value of a field. The `valueSet` returns the best lattice knowledge of the field's current value. The field might be defined as an unconstrained `integer`, but could still be known within a certain range at this point. The backend `MAY` use this information to optimise the lowered statement.
+The runtime value of a field.
 
 ```ts
 type FieldReference = {
   kind: 'FIELD_REF'
   object: Expression
   field: string
+  value: Lattice
 }
 ```
 
 ## Rules for Frontend
 
-- The `object` property `MUST` indicate a value that has an  [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md) type.
-- The `field` property `MUST` match the name of a declared field in the corresponding  [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md).
+- The `object` property `MUST` indicate a value that has an [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md) type.
+- The `field` property `MUST` match the name of a declared field in the corresponding [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md).
+- The `value` `MUST` be a subset (sub-lattice) of the field’s declared lattice.
 
 ## Rules for Backend
 

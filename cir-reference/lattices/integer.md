@@ -3,16 +3,22 @@
 
 # `integer`
 
-[CIR](../README.md) : [ValueSets](./README.md)
+[CIR](../README.md) : [Lattices](cir-reference/lattices/README.md)
 
 The `integer` value-set represents the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 
 ```ts
-type IntegerValueSet = {
+type IntegerLattice<
+  Min extends bigint | undefined,
+  Max extends bigint | undefined,
+> = {
   type: 'integer'
-  min?: `${bigint}`
-  max?: `${bigint}`
-}
+} & (Min extends undefined
+  ? { min?: undefined }
+  : { min: `${Min}` & tags.Pattern<'^-?\\d+$'> }) &
+  (Max extends undefined
+    ? { max?: undefined }
+    : { max: `${Max}` & tags.Pattern<'^-?\\d+$'> })
 ```
 
 The value-set is unlimited by default, representing all of ℤ. A limited subset can be created by specifying an upper bound (`max`) and/or a lower bound (`min`), thereby defining a range of values.

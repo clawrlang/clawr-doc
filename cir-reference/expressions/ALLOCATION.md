@@ -16,6 +16,7 @@ type MemoryAllocation = {
     name: string
     value: Expression
   }[]
+  value: RCTypeLattice
 }
 
 type CanonicalName = { name: string; namespace?: string }
@@ -35,7 +36,7 @@ The `fields` property indicates the initial value of the allocated memory.
 - The `type` property `MUST` identify a reference-counted type.
 - The `isolationLevel` property `MUST` match the isolation-level of the variable, field or parameter the value is used for.
 - The field `name`s and `value`s `MUST` match the names and value-sets of the fields defined in the corresponding [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md).
-- All fields defined  in the corresponding [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md) must be named in the `fields` list.
+- All fields defined in the corresponding [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md) must be named in the `fields` list.
 
 ## Rules for Backend
 

@@ -15,7 +15,7 @@ type Release = {
   object: Storage
 }
 
-type Storage = VariableReference | FieldReference
+type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
 
 - The reference count of the `object` must be decremented by exactly 1.

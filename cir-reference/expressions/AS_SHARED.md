@@ -9,7 +9,8 @@ Upgrade a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 ```ts
 type AsShared = {
   kind: 'AS_SHARED'
-  object: FunctionCall
+  object: FunctionCall & Expression
+  value: RCTypeLattice
 }
 ```
 

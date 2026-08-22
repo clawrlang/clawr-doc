@@ -10,18 +10,18 @@ The `RC_TYPE_DECL` node defines a reference-counted type that stores its state i
 Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is reflected in the CIR only in so much as disallowing certain properties unless the `methods` property is included.
 
 ```ts
-type TypeDeclaration = {
+type RCTypeDeclaration = {
   kind: 'RC_TYPE_DECL'
   name: string
   fields: {
     name: string
-    valueSet: ValueSet
+    lattice: Lattice
   }[]
 } & (
   | {
       base?: CanonicalName
       methods: FunctionDeclaration[]
-      initializers?: (FunctionDeclaration & { resultValueSet?: undefined })[]
+      initializers?: (FunctionDeclaration & { lattice?: undefined })[]
       dispatchTable?: {
         slot: FunctionSignature
         declaredIn: CanonicalName
@@ -77,9 +77,9 @@ The `dispatchTable` array lists polymorphic methods by their method signature (`
         "type": "object",
         "properties": {
           "name": { "type": "string" },
-          "valueSet": { "$ref": "#/$defs/ValueSet" }
+          "lattice": { "$ref": "#/$defs/Lattice" }
         },
-        "required": ["name", "valueSet"],
+        "required": ["name", "lattice"],
         "additionalProperties": false
       }
     },
@@ -125,7 +125,7 @@ Simple `data` structure:
   "fields": [
     {
       "name": "myField",
-      "valueSet": { "type": "integer" }
+      "lattice": { "type": "integer" }
     }
   ]
 }
@@ -140,7 +140,7 @@ Supertype with one virtual-dispatch method:
   "fields": [
     {
       "name": "field",
-      "valueSet": {
+      "lattice": {
         "type": "integer",
         "min": "0",
         "max": "100"
@@ -153,7 +153,7 @@ Supertype with one virtual-dispatch method:
       "baseName": "f",
       "labels": [],
       "parameters": [],
-      "resultValueSet": {
+      "lattice": {
         "type": "integer",
         "min": "0",
         "max": "100"
@@ -181,7 +181,7 @@ Supertype with one virtual-dispatch method:
       "parameters": [
         {
           "name": "field",
-          "valueSet": {
+          "lattice": {
             "type": "integer",
             "min": "0",
             "max": "100"
@@ -221,7 +221,7 @@ Supertype with one virtual-dispatch method:
         "baseName": "f",
         "labels": [],
         "parameters": [],
-        "resultValueSet": {
+        "lattice": {
           "type": "integer",
           "min": "0",
           "max": "100"
@@ -250,7 +250,7 @@ Subtype without overrides:
   "fields": [
     {
       "name": "field",
-      "valueSet": {
+      "lattice": {
         "type": "integer",
         "min": "0",
         "max": "100"
@@ -263,7 +263,7 @@ Subtype without overrides:
       "baseName": "f",
       "labels": [],
       "parameters": [],
-      "resultValueSet": {
+      "lattice": {
         "type": "integer",
         "min": "43",
         "max": "43"
@@ -289,7 +289,7 @@ Subtype without overrides:
         "baseName": "f",
         "labels": [],
         "parameters": [],
-        "resultValueSet": {
+        "lattice": {
           "type": "integer",
           "min": "0",
           "max": "100"
@@ -323,7 +323,7 @@ Subtype that overrides a method:
         "baseName": "f",
         "labels": [],
         "parameters": [],
-        "resultValueSet": {
+        "lattice": {
           "type": "integer",
           "min": "0",
           "max": "100"

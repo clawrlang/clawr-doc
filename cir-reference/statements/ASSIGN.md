@@ -13,18 +13,18 @@ type Assign = {
   value: Expression
 }
 
-type Storage = VariableReference | FieldReference
+type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
 
 The `value` property indicates the returned value.
 
 ## Rules for Frontend
 
-- 
+-
 
 ## Rules for Backend
 
-- 
+-
 
 ### `VARIABLE_DECL`
 
@@ -32,7 +32,8 @@ The `value` property indicates the returned value.
 type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
   name: string
-  valueSet: ValueSet
+  namespace?: string
+  lattice: Lattice
   initialValue: Expression
 }
 ```

@@ -28,18 +28,18 @@ This document lists all declarations and their content.
 The `RC_TYPE_DECL` defines a type that stores its internal data in fields. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
 
 ```ts
-type TypeDeclaration = {
+type RCTypeDeclaration = {
   kind: 'RC_TYPE_DECL'
   name: string
   fields: {
     name: string
-    valueSet: ValueSet
+    lattice: Lattice
   }[]
 } & (
   | {
       base?: CanonicalName
       methods: FunctionDeclaration[]
-      initializers?: Omit<FunctionDeclaration, 'resultValueSet'>[]
+      initializers?: (FunctionDeclaration & { lattice?: undefined })[]
       dispatchTable?: {
         slot: FunctionSignature
         declaredIn: CanonicalName
@@ -62,7 +62,8 @@ A variable in the module scope. The variable will be accessible to all functions
 type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
   name: string
-  valueSet: ValueSet
+  namespace?: string
+  lattice: Lattice
   initialValue: Expression
 }
 ```
@@ -76,6 +77,7 @@ A `FUNCTION_DECL` defines a “free function” in the module, a “static” `c
 ```ts
 type FunctionDeclaration = {
   kind: 'FUNCTION_DECL'
+  namespace?: string
   body: Statement[]
 } & FunctionSignature
 
@@ -84,9 +86,9 @@ type FunctionSignature = {
   labels: string[]
   parameters: {
     name: string
-    valueSet: ValueSet
+    lattice: Lattice
   }[]
-  resultValueSet?: ValueSet
+  lattice?: Lattice
 }
 ```
 

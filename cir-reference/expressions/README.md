@@ -7,27 +7,29 @@
 
 `Expression`s are used as arguments for `Statement`s and other `Expression`s.
 
+Every expression has a `value` property. This is a `Lattice` that includes every possible value the expression can take at runtime. Sometimes the `value` is the full (top) lattice of the referenced variable or function. Sometimes the value is known exactly, down to a singleton set.
+
 ```ts
 type Expression =
   | StringLiteral
-  | IntegerLiteral
-  | TruthLiteral
+  | IntegerLiteral<bigint>
+  | TruthLiteral<truthvalue>
   | MemoryAllocation
   | MemoryRetention
   | AsShared
   | VariableReference
   | FieldReference
-  | FunctionCall
+  | (FunctionCall & { value: Lattice })
 ```
 
 ## `STRING_LITERAL`
 
-A `STRING_LITERAL` is a simple textual value. 
+A `STRING_LITERAL` is a simple textual value.
 
 ```ts
 type StringLiteral = {
   kind: 'STRING_LITERAL'
-  value: string
+  value: StringLattice & { value: string }
 }
 ```
 
@@ -38,9 +40,9 @@ type StringLiteral = {
 An `INTEGER_LITERAL` is a simple integer value. It may be arbitrarily large.
 
 ```ts
-type IntegerLiteral = {
+type IntegerLiteral<Value extends bigint> = {
   kind: 'INTEGER_LITERAL'
-  value: string
+  value: IntegerLattice<Value, Value>
 }
 ```
 
@@ -51,9 +53,9 @@ type IntegerLiteral = {
 A `TRUTHVALUE_LITERAL` is a simple three-state truth value
 
 ```ts
-type TruthLiteral = {
+type TruthLiteral<Value extends truthvalue> = {
   kind: 'TRUTHVALUE_LITERAL'
-  value: 'false' | 'ambiguous' | 'true'
+  value: TruthvalueLattice<[Value]>
 }
 ```
 
@@ -73,6 +75,7 @@ type FunctionCall = {
     labels: string[]
   }
   arguments: Expression[]
+  value: Lattice
 }
 ```
 
@@ -92,6 +95,7 @@ type MemoryAllocation = {
     name: string
     value: Expression
   }[]
+  value: RCTypeLattice
 }
 ```
 
@@ -99,15 +103,16 @@ type MemoryAllocation = {
 
 ## `RETAIN`
 
-Increment the reference count of an allocation. 
+Increment the reference count of an allocation.
 
 ```ts
 type MemoryRetention = {
   kind: 'RETAIN'
   object: Storage
+  value: RCTypeLattice
 }
 
-type Storage = VariableReference | FieldReference
+type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
 
 [Click here](./RETAIN.md) for details
@@ -119,7 +124,8 @@ Upgrades a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 ```ts
 type AsShared = {
   kind: 'AS_SHARED'
-  object: FunctionCall
+  object: FunctionCall & Expression
+  value: RCTypeLattice
 }
 ```
 
@@ -133,6 +139,7 @@ A reference to a local or global [`VARIABLE_DECL`](../declarations/VARIABLE_DECL
 type VariableReference = {
   kind: 'VARIABLE_REF'
   name: string
+  value: Lattice
 }
 ```
 
@@ -147,6 +154,7 @@ type FieldReference = {
   kind: 'FIELD_REF'
   object: Expression
   field: string
+  value: Lattice
 }
 ```
 

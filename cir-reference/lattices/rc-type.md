@@ -3,14 +3,14 @@
 
 # `rc-type`
 
-[CIR](../README.md) : [ValueSets](./README.md)
+[CIR](../README.md) : [Lattices](cir-reference/lattices/README.md)
 
 A set allowing all instances of a reference counted type (meaning `data`, `object` and `service` types). The `name` `MUST` identify a type that is accessible from the current scope.
 
 TypeScript declaration:
 
 ```ts
-type RCTypeValueSet = {
+type RCTypeLattice = {
   type: 'rc-type'
   namespace?: string
   name: string

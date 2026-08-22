@@ -9,11 +9,11 @@ A `STRING_LITERAL` is a simple textual value. The backend `MAY` lower this as a 
 ```ts
 type StringLiteral = {
   kind: 'STRING_LITERAL'
-  value: string
+  value: StringLattice & { value: string }
 }
 ```
 
-The `value` property specifies the text.
+The `value` property is a singleton set that specifies the literal text.
 
 ## JSON Shema
 

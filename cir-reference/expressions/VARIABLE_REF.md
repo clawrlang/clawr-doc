@@ -4,19 +4,20 @@
 
 [CIR](../README.md) : [Expressions](./README.md)
 
-The runtime value of a variable. The `valueSet` returns the best lattice knowledge of the variable's current value. The variable might be defined as an unconstrained `integer`, but could still be known within a certain range at this point. The backend `MAY` use this information to optimise the lowered statement.
-
+The runtime value of a variable.
 
 ```ts
 type VariableReference = {
   kind: 'VARIABLE_REF'
   name: string
+  value: Lattice
 }
 ```
 
 ## Rules for Frontend
 
 - The `name` `MUST` indicate a variable declared in the current scope or a parent scope.
+- The `value` `MUST` be a subset (sub-lattice) of the variable’s declared lattice.
 
 ## Rules for Backend
 

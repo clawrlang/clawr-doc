@@ -4,7 +4,7 @@
 
 [CIR](../README.md) : [Expressions](./README.md)
 
-A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as an *expression* always references a function *with* a `resultValueSet`.
+A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as an _expression_ always references a function _with_ a `lattice`.
 
 ```ts
 type FunctionCall = {
@@ -16,6 +16,7 @@ type FunctionCall = {
     labels: string[]
   }
   arguments: Expression[]
+  value: Lattice
 }
 
 type Receiver = {
@@ -31,7 +32,7 @@ type Receiver = {
     }
 )
 
-type Storage = VariableReference | FieldReference
+type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
 
 The `receiver` property — if specified — indicates that the called function is a method and the `self` of the call is the receiver.
@@ -48,6 +49,7 @@ The `dispatch` property of the `receiver` indicate how the method is called: dir
 - If the called function exists in a `namespace` or a `companion`, that `MUST` be named in the `namespace` property.
 - The called function `MUST NOT` have a `void` return type
 - The `CALL` expression `MUST` be `ASSIGN`ed to a variable of field, or used as an argument in another `CALL` expression or statement.
+- The `value` `MUST` be a subset (sub-lattice) of the function’s declared lattice.
 
 ## Rules for Backend
 

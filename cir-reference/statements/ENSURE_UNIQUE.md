@@ -13,7 +13,7 @@ type EnsureUnique = {
   object: Storage
 }
 
-type Storage = VariableReference | FieldReference
+type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
 
 ## Rules for Frontend

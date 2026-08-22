@@ -10,6 +10,7 @@ A `FUNCTION_DECL` defines a “free function” in the module, a “static” `c
 ```ts
 type FunctionDeclaration = {
   kind: 'FUNCTION_DECL'
+  namespace?: string
   body: Statement[]
 } & FunctionSignature
 
@@ -18,9 +19,9 @@ type FunctionSignature = {
   labels: string[]
   parameters: {
     name: string
-    valueSet: ValueSet
+    lattice: Lattice
   }[]
-  resultValueSet?: ValueSet
+  lattice?: Lattice
 }
 ```
 
@@ -28,9 +29,9 @@ A function's unique name is defined by its `baseName` and its `labels` (plus the
 
 In the source code, each parameter is defined by an optional label. In the CIR, those `labels` are considered part of the function name.
 
-The `name` is how the parameter is referenced in the function body, and the `valueSet` identifies the type of the variable. It is a `ValueSet` — not a simple type name — to allow the backend to make custom storage optimisation.
+The `name` is how the parameter is referenced in the function body, and the `lattice` identifies the type of the variable. It is a `Lattice` — not a simple type name — to allow the backend to make custom storage optimisation.
 
-The `resultValueSet` — like parameter value-sets — is a hint to allow the backend to lower the function definition with an appropriate storage type. An `undefined`/`null` `resultValueSet` indicates that the function returns no result (`void` in C-like languages).
+The `lattice` — like parameter value-sets — is a hint to allow the backend to lower the function definition with an appropriate storage type. An `undefined`/`null` `lattice` indicates that the function returns no result (`void` in C-like languages).
 
 ## Rules for Frontend
 

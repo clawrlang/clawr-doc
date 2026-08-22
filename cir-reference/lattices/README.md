@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD041 MD033 -->
 <img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
 
-# ValueSets
+# Lattices
 
 [CIR](../README.md)
 
@@ -9,64 +9,71 @@ Clawr considers types as sets and lattices. Every variable has a set of values t
 
 ## `integer`
 
-An [`integer`](./integer.md) value-set is either the entire infinite mathematical set “the integers” (ℤ) or a subset of ℤ defined as a range.
+An [`integer`](integer.md) value-set is either the entire infinite mathematical set “the integers” (ℤ) or a subset of ℤ defined as a range.
 
 ```ts
-type IntegerValueSet = {
+type IntegerLattice<
+  Min extends bigint | undefined,
+  Max extends bigint | undefined,
+> = {
   type: 'integer'
-  min?: `${bigint}`
-  max?: `${bigint}`
-}
+} & (Min extends undefined
+  ? { min?: undefined }
+  : { min: `${Min}` & tags.Pattern<'^-?\\d+$'> }) &
+  (Max extends undefined
+    ? { max?: undefined }
+    : { max: `${Max}` & tags.Pattern<'^-?\\d+$'> })
 ```
 
-[Click here](./integer.md) for more details
+[Click here](integer.md) for more details
 
 ## `real`
 
-An [`real`](./real.md) value-set is either the entire infinite mathematical set “the reals” (ℝ) or a subset of ℝ defined as a range.
+An [`real`](real.md) value-set is either the entire infinite mathematical set “the reals” (ℝ) or a subset of ℝ defined as a range.
 
 ```ts
-type RealValueSet = {
+type RealLattice = {
   type: 'real'
   min?: string // numeric, can be arbitrarity big
   max?: string // numeric, can be arbitrarity big
 }
 ```
 
-[Click here](./real.md) for more details
+[Click here](real.md) for more details
 
 ## `truthvalue`
 
 The three values of three-valued (Kleene K3) truth.
 
 ```ts
-type TruthValueSet = {
+type TruthvalueLattice<T extends truthvalue[]> = {
   type: 'truthvalue'
-  values: ('false' | 'ambiguous' | 'true')[]
+  values: T
 }
 ```
 
-[Click here](./truthvalue.md) for more details
+[Click here](truthvalue.md) for more details
 
 ## `string`
 
 An unconstrained string value.
 
 ```ts
-type StringValueSet = { type: 'string' }
+type StringLattice = { type: 'string'; value?: string }
 ```
 
-[Click here](./string.md) for more details
+[Click here](string.md) for more details
 
 ## `rc-type`
 
 A set allowing all instances of a reference counted type (including inheritance). The `name` `MUST` identify a type that is available in the current scope.
 
 ```ts
-type RCTypeValueSet = {
+type RCTypeLattice = {
   type: 'rc-type'
   namespace?: string
   name: string
 }
 ```
-[Click here](./rc-type.md) for more details
+
+[Click here](rc-type.md) for more details

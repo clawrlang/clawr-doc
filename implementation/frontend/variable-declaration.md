@@ -16,7 +16,8 @@ CIR definition:
 type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
   name: string
-  valueSet: ValueSet
+  namespace?: string
+  lattice: Lattice
   initialValue: Expression
 }
 ```
@@ -35,9 +36,8 @@ class VariableDeclaration {
   static create(fields: {
     isImmutable: boolean
     name: string
-    valueSet: ExplicitValueSet | UnspecifiedType
+    lattice: LatticeDeclaration
     initialValue: Expression
   }): VariableDeclaration
 }
 ```
-

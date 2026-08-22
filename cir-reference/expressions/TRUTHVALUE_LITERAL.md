@@ -7,13 +7,15 @@
 A `TRUTHVALUE_LITERAL` is a simple three-state truth value.
 
 ```ts
-type TruthLiteral = {
+type TruthLiteral<Value extends truthvalue> = {
   kind: 'TRUTHVALUE_LITERAL'
-  value: 'false' | 'ambiguous' | 'true'
+  value: TruthvalueLattice<[Value]>
 }
 ```
 
-The `value` can be either of `"false"`, `"ambiguous"` or `"true"`. The `ambiguous` state is considered neither completely true nor completely false. When used in control-flow, both `ambiguous` and `NOT ambiguous` are considered equivalent to `false`.
+The `value` is a singleton set containing either one of the values `"false"`, `"ambiguous"` or `"true"`.
+
+The `ambiguous` state is considered neither completely true nor completely false. When used in control-flow, both `ambiguous` and `NOT ambiguous` are considered equivalent to `false`.
 
 ## Rules for Frontend
 

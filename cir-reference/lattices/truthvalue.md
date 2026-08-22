@@ -3,7 +3,7 @@
 
 # `truthvalue`
 
-[CIR](../README.md) : [ValueSets](./README.md)
+[CIR](../README.md) : [Lattices](./README.md)
 
 A set of truth-values.
 
@@ -12,10 +12,12 @@ Rather than a simple Boolean type, Clawr considers a three-valued truth:
 TypeScript declaration:
 
 ```ts
-type TruthValueSet = {
+type TruthvalueLattice<T extends truthvalue[]> = {
   type: 'truthvalue'
-  values: ('false' | 'ambiguous' | 'true')[]
+  values: T
 }
+
+type truthvalue = 'false' | 'ambiguous' | 'true'
 ```
 
 JSON Schema:
@@ -41,9 +43,9 @@ JSON Schema:
 }
 ```
 
-There is still a `boolean` “type.” but it is not a type in the same way as ordinary 
+There is still a `boolean` “type.” but it is not a type in the same way as ordinary
 
-Clawr employs sets and lattices to determine value compatibility. 
+Clawr employs sets and lattices to determine value compatibility.
 
 ```clawr
 subset boolean = truthvalue(false|true)

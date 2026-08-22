@@ -4,7 +4,7 @@
 
 [CIR](../README.md) : [Expressions](./README.md)
 
-A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as an *expression* always references a function *with* a `resultValueSet`.
+A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as an _expression_ always references a function _with_ a `lattice`.
 
 ```ts
 type FunctionCall = {
@@ -31,7 +31,7 @@ type Receiver = {
     }
 )
 
-type Storage = VariableReference | FieldReference
+type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
 
 The `receiver` property — if specified — indicates that the called function is a method and the `self` of the call is the receiver.

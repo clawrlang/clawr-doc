@@ -10,9 +10,10 @@ Increment the reference count of an allocation. The reference count of the `obje
 type MemoryRetention = {
   kind: 'RETAIN'
   object: Storage
+  value: RCTypeLattice
 }
 
-type Storage = VariableReference | FieldReference
+type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
 
 ## Rules for Frontend

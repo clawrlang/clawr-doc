@@ -3,7 +3,7 @@
 
 # `string`
 
-[CIR](../README.md) : [ValueSets](./README.md)
+[CIR](../README.md) : [Lattices](./README.md)
 
 An unconstrained string value. A “string” is a sequence of characters and the `string` value-set is the set of all possible sequences.
 
@@ -12,7 +12,7 @@ There is no way to construct a subset at this time, though future ideas include 
 TypeScript declaration:
 
 ```ts
-type StringValueSet = { type: 'string' }
+type StringLattice = { type: 'string'; value?: string }
 ```
 
 JSON Schema:
