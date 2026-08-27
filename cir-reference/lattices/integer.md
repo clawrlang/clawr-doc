@@ -3,7 +3,7 @@
 
 # `integer`
 
-[CIR](../README.md) : [Lattices](cir-reference/lattices/README.md)
+[CIR](../README.md) : [Lattices](./README.md)
 
 The `integer` lattice represents the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 
