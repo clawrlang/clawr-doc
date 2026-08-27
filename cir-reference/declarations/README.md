@@ -11,7 +11,8 @@ Declarations are added to the top scope of a module in the `ClawrModule.declarat
 type Declaration = (
   | VariableDeclaration
   | FunctionDeclaration
-  | TypeDeclaration
+  | RCTypeDeclaration
+  | ProtocolDeclaration
 ) & { namespace?: string }
 
 type ClawrModule = {
@@ -53,6 +54,20 @@ type CanonicalName = { name: string; namespace?: string }
 ```
 
 [Click here](RC_TYPE_DECL.md) for more details
+
+## `PROTOCOL_DECL`
+
+The `PROTOCOL_DECL` defines a type that stores its internal data in fields. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
+
+```ts
+type ProtocolDeclaration = {
+  kind: 'PROTOCOL_DECL'
+  name: string
+  slots: FunctionSignature[]
+}
+```
+
+[Click here](PROTOCOL_DECL.md) for more details
 
 ## `VARIABLE_DECL`
 

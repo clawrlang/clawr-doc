@@ -34,11 +34,11 @@ type ClawrModule = {
 The `declarations` property [declares](declarations/README.md) the (internal and external) types, functions and variables that the module defines.
 
 ```ts
-type Declaration = { namespace?: string } & (
+type Declaration =
   | VariableDeclaration
   | FunctionDeclaration
-  | TypeDeclaration
-)
+  | RCTypeDeclaration
+  | ProtocolDeclaration
 ```
 
 The `startBlock` defines the [statements](./statements/README.md) that are executed when the program runs.
