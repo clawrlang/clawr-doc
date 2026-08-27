@@ -68,7 +68,7 @@ Simple `data` structure:
 
 ```json
 {
-  "kind": "TYPE_DESC",
+  "kind": "RC_TYPE_DECL",
   "name": "MyDataStructure",
   "namespace": "my_namespace",
   "fields": [
