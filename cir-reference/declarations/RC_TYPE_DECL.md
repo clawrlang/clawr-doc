@@ -17,6 +17,13 @@ type RCTypeDeclaration = {
     name: string
     lattice: Lattice
   }[]
+  conformances?: {
+    protocol: CanonicalName
+    fulfillments: {
+      requirement: FunctionName
+      implementation: FunctionName
+    }[]
+  }[]
 } & (
   | {
       base?: CanonicalName
@@ -25,7 +32,7 @@ type RCTypeDeclaration = {
       dispatchTable?: {
         slot: FunctionSignature
         declaredIn: CanonicalName
-        implementedBy?: CanonicalName
+        implementation?: CanonicalName
       }[]
     }
   | {}

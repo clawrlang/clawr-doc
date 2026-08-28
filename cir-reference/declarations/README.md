@@ -36,6 +36,13 @@ type RCTypeDeclaration = {
     name: string
     lattice: Lattice
   }[]
+  conformances?: {
+    protocol: CanonicalName
+    fulfillments: {
+      requirement: FunctionName
+      implementation: FunctionName
+    }[]
+  }[]
 } & (
   | {
       base?: CanonicalName
@@ -44,7 +51,7 @@ type RCTypeDeclaration = {
       dispatchTable?: {
         slot: FunctionSignature
         declaredIn: CanonicalName
-        implementedBy?: CanonicalName
+        implementation?: CanonicalName
       }[]
     }
   | {}
@@ -63,7 +70,7 @@ The `PROTOCOL_DECL` defines a type that stores its internal data in fields. The 
 type ProtocolDeclaration = {
   kind: 'PROTOCOL_DECL'
   name: string
-  slots: FunctionSignature[]
+  requirements: FunctionSignature[]
 }
 ```
 

@@ -18,18 +18,19 @@ type FunctionCall = {
   arguments: Expression[]
 }
 
-type Receiver = {
-  object: Storage
-} & (
+type Receiver =
   | {
+      object: Expression & { value: RCTypeLattice | ProtocolLattice }
       dispatch: 'direct'
-      type: CanonicalName
     }
   | {
+      object: Expression & { value: RCTypeLattice }
       dispatch: 'inherited'
-      declaredIn: CanonicalName
     }
-)
+  | {
+      object: Expression & { value: ProtocolDeclaration }
+      dispatch: 'conformance'
+    }
 
 type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
