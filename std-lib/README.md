@@ -3,7 +3,7 @@
 
 # Standard Library
 
-The Clawr standard library contains some basic functionality.
+The Clawr standard library is implemented by the backend. It contains some basic functionality. The backend/runtime `MUST` add implementation for all these declarations.
 
 ## `copy(of:)`
 
@@ -26,7 +26,7 @@ ref y = copy(of: x) // SHARED variable
 
 ### Rules for Frontend
 
-- The CIR `MUST` wrap the returned value in as `AS_SHARED` structure if the assignment target is a `SHARED` (`ref`) variable/field/parameter. It `MUST NOT` wrap in `AS_SHARED` if the target is `ISOLATED`.
+- The CIR `MUST` wrap the returned value in an `AS_SHARED` structure if the assignment target is a `SHARED` (`ref`) variable/field/parameter. It `MUST NOT` wrap `AS_SHARED` if the target is `ISOLATED`.
 
 ### Rules for Backend
 
@@ -36,13 +36,7 @@ ref y = copy(of: x) // SHARED variable
 
 ## `Equatable`
 
-> [!warning]
->
-> **Not Implemented**
->
-> Awaiting `trait` support
-
-Values that can be compared for equality (`==`).
+Values that can be compared for equality (`==`) against another value of the same type.
 
 ```clawr
 trait Equatable {
@@ -54,38 +48,66 @@ trait Equatable {
 
 > [!warning]
 >
-> **Not Implemented**
+> **Not Implemented** — Needs design work
 >
-> Awaiting `trait` support
-> Needs design work
+> Unsure how this should work. A `HashCode` cannot be defined by the Clawr specification or the frontend — it `MUST` be platform (i.e. backend) specific. But it must also be usable in sets and dictionaries. So the hash-lookup algorithm must also be backend specific.
 
 Values that can be used in hash-sets and as keys in dictionaries.
 
 ```clawr
 trait HashEquatable: Equatable {
-  func hashCode() -> integer
+  func hashCode(using builder: HashBuilder) -> HashCode
 }
 ```
 
 This should be redesigned to force the use of a `HashCode` algorithm that is implemented by the runtime. Combining hash-codes from multiple fields should perform a mixing operation that makes similar hashes unlikely. E.g. `hash = (hash * 31 + value) % size`. The implementation should generate the prime factor at program launch so that it cannot be used maliciously.
 
-## `HasStringRepresentation`
+### Rules for Backend
 
-> [!warning]
->
-> **Not Implemented**
->
-> Awaiting `trait` support
+- The algorithm `MUST` randomize parameters such as prime factors at program launch.
+
+## `HashCode`
+
+Backend-defined type (or subset). `MAY` be an alias for `integer(0..<2^64)`, or some other range. `MAY` be a `data` or `object` type. `MAY` be a `bword` or `tword`. `MAY` be implemented in any way that suits the backend. The exact implementation is irrelevant as long as it is comparable and can be used for hash lookups.
+
+```clawr
+extern type HashCode: Equatable
+```
+
+## `HashBuilder`
+
+Backend-provided service that mixes multiple `HashCode` values into a single value.
+
+```clawr
+// Defined by runtime
+role HashBuilder {
+  func add(_ code: HashCode)
+  func mixedValue() -> HashCode
+}
+```
+
+```clawr
+// Defined by frontend?
+companion HashBuilder {
+  extern companion func new() -> HashBuilder
+
+  func mix(...values: HashCode) -> HashCode {
+    const builder = HashBuilder.new()
+    for (const value in values) builder.add(value)
+    return builder.mixedValue()
+  }
+}
+```
+
+## `HasStringRepresentation`
 
 Values that can be used in interpolated `string` literals and `print`ed to the console.
 
 ```clawr
 trait HasStringRepresentation {
-  func toString() -> string
+  func stringRepresentation() -> string
 }
 ```
-
-`asString()`? `description()`?
 
 ## `Identifiable`
 
