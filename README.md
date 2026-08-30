@@ -5,13 +5,14 @@
 
 Clawr is a language with three main goals: clarity, a focus on modelling, and easy refactoring. The name is a portmanteau of the word “clarity,” and a lion’s roar (or “rawr”). The fact that the first four letters spell out the word _claw_ is a nice bonus.
 
-This repository contains documentation for the Clawr language. The documentation is separated into four sections:
+This repository contains documentation for the Clawr language. The documentation is separated into several sections:
 
 - [Learning the Language](./tutorials/README.md)
 - [Language Reference](./lang-reference/README.md)
 - [Standard Library Reference](./std-lib/README.md)
 - [IDE Extensions](./ide-reference/README.md)
 - [CIR Reference](./cir-reference/README.md)
+- [Architecture Decision Records](./adr/README.md)
 
 The [Language Reference](./lang-reference/README.md) details the syntax and semantics of Clawr source code.
 
