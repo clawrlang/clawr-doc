@@ -27,6 +27,8 @@ Another problem is that the solution forces shared mutable state — at least w
 
 ## A Better Mental Model: Drawers and Boxes
 
+Isolated (`const`/`mut`) variables are like drawers in a dresser: you can only fit one drawer in each slot, so they cannot (conceptually) refer to the same data. `SHARED` (`ref`/`mutref`) variables are like hands (or other manipulators) reaching for boxes on the floor. An immutable hand is stuck to a box, but other hands can still reach for the same box — and manipulate its contents. A `ref` field is like a hand reaching out of its container, and whichever box it touches will not be `ISOLATED` even if the hand’s container is.
+
 Function calls have long employed stack-based memory allocation. [^algol] A section of system memory is dedicated to _the stack_, and the rest is called _the heap_.
 
 [^algol]: ALGOL 60 is often credited with formalising the notion of a "block-structured" language with nested scopes that map naturally onto a stack.
