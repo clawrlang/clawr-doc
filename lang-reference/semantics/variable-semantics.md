@@ -97,7 +97,7 @@ state:
 }
 
 companion BowlingGame {
-    func start() -> BowlingGame => { rolls: [] }
+    func start() -> BowlingGame => { rolls: [] }
 }
 ```
 

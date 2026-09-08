@@ -31,7 +31,7 @@ In the source code, each parameter is defined by an optional label. In the CIR, 
 
 The `name` is how the parameter is referenced in the function body, and the `lattice` identifies the type of the variable. It is a `Lattice` — not a simple type name — to allow the backend to make custom storage optimisation.
 
-The `lattice` — like parameter value-sets — is a hint to allow the backend to lower the function definition with an appropriate storage type. An `undefined`/`null` `lattice` indicates that the function returns no result (`void` in C-like languages).
+The `lattice` — like parameter value-sets — is a hint to allow the backend to lower the function definition with an appropriate storage type. An `undefined`/`null` `lattice` indicates that the function returns no result (`void` in C-like languages).
 
 ## Rules for Frontend
 

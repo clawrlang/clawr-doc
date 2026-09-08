@@ -35,7 +35,7 @@ type Receiver =
 type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 ```
 
-The `receiver` property — if specified — indicates that the called function is a method and the `self` of the call is the receiver.
+The `receiver` property — if specified — indicates that the called function is a method and the `self` of the call is the receiver.
 
 The `name` property indicates the `baseName` and `labels` of the called function. Two functions in the same `namespace` — or two methods on the same `object` — `MAY` have the same `baseName` if they have a differently named `labels`.
 

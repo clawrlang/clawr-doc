@@ -25,5 +25,5 @@ The `value` property is singleton set containing a single integer value (`max` =
 - The value `MAY` be serialized as machine-code data if the value fits the physical representation.
 - The value `MAY` be used to construct a reference-counted structure.
 - If the value is too large for fixed-size representation it `MUST` be serialized as an arbitrarily sized integer.
-- The physical representation is not limited to binary — or even ternary — but `MAY` use whichever base the target platform uses natively.
+- The physical representation is not limited to binary — or even ternary — but `MAY` use whichever base the target platform uses natively.
 - The representation `MUST` unambiguously and faithfully represent the integer indicated by the `value` property.

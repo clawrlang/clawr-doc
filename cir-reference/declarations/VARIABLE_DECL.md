@@ -47,4 +47,4 @@ The `inititalValue` property indicates the starting value of the variable.
 > Mutability and `const`ness are presumed to be inconsequential to the process of lowering. Immutability is enforced by the frontend and not a concern for the backend. All variables `MUST` be lowered in a way that allows mutation.
 
 > [!tip]
-> If lowering via C, the backend might use `__attribute__((constructor))` to initialize module-level variables in executables, and use guarded `static` variables for libraries.
+> If lowering via C, the backend might use `__attribute__((constructor))` to initialize module-level variables in executables, and use guarded `static` variables for libraries.

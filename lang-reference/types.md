@@ -37,7 +37,7 @@ Instead, the programmer defines ranges that the value must remain in. The compil
 A `const` `integer` is a value that is known exactly. Depending on context, the value might be stored efficiently or just injected into the machine code using the representation that best fits the use location, much like `#define` in C.
 
 ```clawr
-mut count: integer 
+mut count: integer
 // Arbitrary size. This could have a googol digits if there
 // were computers that could handle it.
 
@@ -55,7 +55,7 @@ const x = 42
 
 A number is just a conceptual idea (think [ZFC](https://en.wikipedia.org/wiki/Zermelo–Fraenkel_set_theory) [^anotherroof] or the [Peano axioms](https://en.wikipedia.org/wiki/Peano_axioms)). We represent numbers in many different ways: binary, decimal, octal, hexadecimal, Roman… Apart from Roman, the listed examples are all positional (positive) base systems. Any value can be written uniquely on the form $a_0 \cdot b^0 + a_1 \cdot b^1 + a_2 \cdot b^2 + …$ We could choose any number as our base, $b$. A popular alternative to binary hardware is _balanced ternary_ (-1, 0, +1). We do not have to limit ourselves to positive numbers, and an odd base is ideal for centering the zero. This documentation has a [dedicated section](../ternary/numbers.md) that delves deeper into [ternary numbers](../ternary/numbers.md) and arithmetics.
 
-[^anotherroof]: ZFC has been beautifully explained by [Another Roof](https://youtu.be/dKtsjQtigag?si=Ct1JHi-778aodsSi) on YouTube. This video — and the series it starts — is a recommended watch for anyone who wants to understand the logical foundation of mathematics.
+[^anotherroof]: ZFC has been beautifully explained by [Another Roof](https://youtu.be/dKtsjQtigag?si=Ct1JHi-778aodsSi) on YouTube. This video — and the series it starts — is a recommended watch for anyone who wants to understand the logical foundation of mathematics.
 
 I do not like the idea of material implication. I sometimes see mathematicians equate the expressions $a \Rightarrow b$ with $\neg a \lor b$.
 
@@ -66,7 +66,7 @@ A computer that uses ternary chipsets might be created in the future. The agnost
 > [!warning]
 >
 > Not Implemented
-> The design and representation of `real` numbers might change 
+> The design and representation of `real` numbers might change
 
 The `real` type supports any number in $\mathbb{R}$. It can, in theory, hold arbitrarily large values with arbitrary precision. Like `integer`, `real` numbers can be stored in an optimal way if the number is well known. The default precision uses 50 decimal digits.
 

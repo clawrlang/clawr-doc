@@ -21,13 +21,13 @@ Even this tiny example has several components:
 
 A _statement_ is the main tool for a program. Statements are the instructions describing what the program is supposed to do. A statement can output text to the console (as our `print` function does here), but it can also update the application state, persist data in a database, draw an image on the screen, send data across the Internet, or many other things. It is virtually unlimited what a statement might do. As long as hardware exists to physically perform the task it might launch a rocket into space, start an entry burn near Mars, move a rover around on the surface…
 
-Statements often need values to operate with. These values are in the form of _expressions_. The simplest possible expression is a _literal_. A literal is a direct notation of some value. A `string` in this case is simply a representation of text — a string of characters. Other literals include explicit numbers and truth-values. (And `data` literals which we will talk more about in the next part.)
+Statements often need values to operate with. These values are in the form of _expressions_. The simplest possible expression is a _literal_. A literal is a direct notation of some value. A `string` in this case is simply a representation of text — a string of characters. Other literals include explicit numbers and truth-values. (And `data` literals which we will talk more about in the next part.)
 
 ## A Small Refactoring
 
 The same example can be refactored [^refact] to use an intermediate constant, like this:
 
-[^refact]: The term “refactoring” is often used loosely to mean structural redesign. It was however popularized and formally [defined](https://martinfowler.com/bliki/DefinitionOfRefactoring.html) by Martin Fowler in the book [*Refactoring: Improving the Design of Existing Code*](https://martinfowler.com/books/refactoring.html) to refer to a disciplined practice that does not visibly alter behavior. That is how the term will be used here too.
+[^refact]: The term “refactoring” is often used loosely to mean structural redesign. It was however popularized and formally [defined](https://martinfowler.com/bliki/DefinitionOfRefactoring.html) by Martin Fowler in the book [_Refactoring: Improving the Design of Existing Code_](https://martinfowler.com/books/refactoring.html) to refer to a disciplined practice that does not visibly alter behavior. That is how the term will be used here too.
 
 ```clawr
 @main {
@@ -47,9 +47,9 @@ Here is an example that defines multiple constants:
   const area = 2 * pi * radius
   const volume = pi * radius^2
 
-  print("The area of a circle with radius 1:")  
+  print("The area of a circle with radius 1:")
   print(area)
-  print("The volume of the same circle:")  
+  print("The volume of the same circle:")
   print(volume)
 }
 ```

@@ -11,15 +11,15 @@ But there is an important difference between human and programming languages. Hu
 
 [^compiler]: Of course, the nice human-readable programming language is not what the computer sees. It sees something called machine-code. There is a translation step that is performed ahead of time to generate that code. That step is called compilation. But that does not invalidate the need for unambiguity in the source.
 
-It may be tempting to define a programming language by its execution — what runtime it uses, what memory model it assumes, what standard library it ships with — but those are implementation details, not the language itself. They are not semantics. Semantics is the *abstract* meaning of the code, not the *concrete execution* of it.
+It may be tempting to define a programming language by its execution — what runtime it uses, what memory model it assumes, what standard library it ships with — but those are implementation details, not the language itself. They are not semantics. Semantics is the _abstract_ meaning of the code, not the _concrete execution_ of it.
 
 Java is often described as more than a syntax: it is the JRE, the JDK, the ecosystem. Yet when Google adopted Java as the official language for Android, it replaced much of that ecosystem with its own SDK. The language remained recognizably Java, but the platform underneath had changed.
 
 Clawr takes this separation further. Clawr is defined by its syntax and the meaning of each statement and expression—not by a runtime, not by an ABI, not by a memory management strategy. Those may vary. The language itself is the fixed point.
 
 > [!note]
-> In practice, a language will probably have to imply or assume some constraints on memory management — Clawrs intermediate representation e.g. assumes reference-counting — and on other technical details as well. But those are not what *defines the language*. They are *concessions to pragmatism*.
+> In practice, a language will probably have to imply or assume some constraints on memory management — Clawrs intermediate representation e.g. assumes reference-counting — and on other technical details as well. But those are not what _defines the language_. They are _concessions to pragmatism_.
 >
-> If it is possible to implement a backend that employs GC instead of ARC — or some new invention as yet unknown — that would be absolutely valid. And if that requires some redesigns to the CIR, it might be worth making that change.
+> If it is possible to implement a backend that employs GC instead of ARC — or some new invention as yet unknown — that would be absolutely valid. And if that requires some redesigns to the CIR, it might be worth making that change.
 
 This section details the syntax and semantics of the Clawr language.

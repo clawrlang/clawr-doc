@@ -3,7 +3,7 @@
 
 # Clawr Variable Semantics
 
-Value semantics and reference semantics are fundamental tools for understanding imperative programs. In Clawr, this choice is part of each variable declaration. The `const`, `mut`, `ref` and `mutref` keywords determine how the variable interacts with other variables. A `const` variable may never change in any respect, a `mut` variable may be modified, but only through direct reference, and a `ref`/`mutref` variable is a pointer to shared data — potentially over multiple threads — which can change surprisingly from one code statement to the next.
+Value semantics and reference semantics are fundamental tools for understanding imperative programs. In Clawr, this choice is part of each variable declaration. The `const`, `mut`, `ref` and `mutref` keywords determine how the variable interacts with other variables. A `const` variable may never change in any respect, a `mut` variable may be modified, but only through direct reference, and a `ref`/`mutref` variable is a pointer to shared data — potentially over multiple threads — which can change surprisingly from one code statement to the next.
 
 > [!note]
 > This document provides conceptual metaphors for the different kinds of variable declarations in Clawr. If you want a more practical explanation of how variables work, you should consider reading the [Variable Semantics](variable-semantics.md) document. Or you can start here and read that next.
@@ -15,7 +15,7 @@ Value semantics and reference semantics are fundamental tools for understanding 
 | `ref`    | Shared mutable entity                    |
 | `mutref` | Shared mutable entity, can be reassigned |
 
-But just mapping keywords to terms like “isolated” and “shared” might not be enough to understand how they truly work. What does it _mean_ that a `mut` variable is isolated? A mental model — a vivid metaphor — might be a better didactic tool.
+But just mapping keywords to terms like “isolated” and “shared” might not be enough to understand how they truly work. What does it _mean_ that a `mut` variable is isolated? A mental model — a vivid metaphor — might be a better didactic tool.
 
 ## The Traditional OOP Mental Model
 
@@ -23,7 +23,7 @@ In traditional object-oriented languages (Java, JavaScript, Python, C++, etc.), 
 
 This mental model is a direct reflection of the implementation. The problem is that the implementation cannot change. We cannot improve on the implementation if the implementation itself _is_ the model.
 
-Another problem is that the solution forces shared mutable state — at least without special workarounds. Shared mutable state increases complexity and causes bugs. You should avoid it when you can. It is what scared functional programmers into abolishing statefulness altogether, which might be a tad extreme.
+Another problem is that the solution forces shared mutable state — at least without special workarounds. Shared mutable state increases complexity and causes bugs. You should avoid it when you can. It is what scared functional programmers into abolishing statefulness altogether, which might be a tad extreme.
 
 ## A Better Mental Model: Drawers and Boxes
 
@@ -47,7 +47,7 @@ But each drawer is locked to a dedicated slot in the dresser. You couldn’t pos
 
 Not all variables contain their data directly. Some may contain only an address to a value, a.k.a. a _pointer_. Pointers are typically used to indicate some memory on _the heap_. The heap allows memory to be allocated on demand, but that memory has to be explicitly freed when no longer in use, or it “leaks.” (The stack on the other hand is deallocated automatically and never leaks.)
 
-You can think of values on the heap as boxes. Unlike a drawer — which has a specific slot — a box might be assembled and placed just about anywhere.
+You can think of values on the heap as boxes. Unlike a drawer — which has a specific slot — a box might be assembled and placed just about anywhere.
 
 Any single box can be referenced by multiple variables. You could think of these variables as hands reaching out to grab or assemble a box in a random location. The data container is the box, not the hand. The hand might touch any box; it is not limited to specific locations. At any time, you can follow the hand to the box it is currently holding and then look inside it and/or manipulate its contents.
 
@@ -87,7 +87,7 @@ A `mut` drawer is supposed to be unchanged unless referenced directly. A hand wo
 >
 > The `ref` keyword is analogous to `class` types in languages like Java, C# and Swift. They often refer to the box metaphor as “reference semantics.”
 >
-> The `mut` keyword is analogous to `struct` types in languages like Swift and C#. They use the term “value semantics.” Java does not support isolated mutation at all.
+> The `mut` keyword is analogous to `struct` types in languages like Swift and C#. They use the term “value semantics.” Java does not support isolated mutation at all.
 >
 > The `const` keyword is analogous to `let` variables with `struct` types in Swift. The best equivalent in C# might be a `readonly struct`. In Java, this could only be implemented using `final` on every single field, making every instance of the type immutable.
 
