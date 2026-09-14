@@ -38,14 +38,16 @@ Records so far:
 - [ADR-006](./adr-006.md): Three-valued Truth
 - [ADR-007](./adr-007.md): Three-valued Logic Operators
 - [ADR-008](./adr-008.md): Encapsulation vs Data
-- [ADR-009](./adr-009.md): Protocol Types
+- [ADR-009](./adr-009.md): Interface Types
 - [ADR-010](./adr-010.md): Serializable `data`
 - [ADR-011](./adr-011.md): Ad Hoc Data Structures
 - [ADR-012](./adr-012.md): Parameters Labels and Ordering
 - [ADR-013](./adr-013.md): Currying on Labels
 - [ADR-014](./adr-014.md): Traits and Static
+- [ADR-015](./adr-015.md): Basic ARC Rules
+- [ADR-016](./adr-016.md): Backend-Managed Boxing of Unboxed Primitives
 
-Draft ideas with minimum detail:
+Draft ideas with no ADR number:
 
 - [XXX-X01](./drafts/x-1.md): `subset`
 - [XXX-X02](./drafts/x-2.md): Multi-Module Programs and Libraries
@@ -61,4 +63,9 @@ Draft ideas with minimum detail:
 - [XXX-X13](./drafts/x-13.md): List Comprehensions and Generators
 - [ADA Inspirations](./drafts/clawr-ada.md)
 - [Visibility](./drafts/visibility.md)
+- [The `integer` Combinatorial Explosion](./drafts/bigint.md)
+- [Debug Information in the CIR](./drafts/debug.md)
+- [Disposing `service`](./drafts/deinit.md)
+- [External Access Only Through `service`](./drafts/services.md)
+- [Weak References](./drafts/weak-ref.md)
 - [Miscellaneous](./drafts/misc.md)
