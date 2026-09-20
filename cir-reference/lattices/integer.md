@@ -10,6 +10,7 @@ The `integer` lattice represents the (countably infinite) mathematical set known
 ```ts
 type IntegerLattice<Min extends bigint, Max extends bigint> = {
   type: 'integer'
+  boxed?: true
   min?: `${Min}`
   max?: `${Max}`
 }

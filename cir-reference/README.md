@@ -38,7 +38,7 @@ type Declaration =
   | VariableDeclaration
   | FunctionDeclaration
   | RCTypeDeclaration
-  | ProtocolDeclaration
+  | InterfaceDeclaration
 ```
 
 The `startBlock` defines the [statements](./statements/README.md) that are executed when the program runs.
@@ -51,6 +51,7 @@ type Statement =
   | Return
   | VariableDeclaration
   | Assign
+  | SelfAssign
 ```
 
 There are also [expressions](./expressions/README.md) that are used as arguments to the statements (and to other expressions).
@@ -58,11 +59,12 @@ There are also [expressions](./expressions/README.md) that are used as arguments
 ```ts
 type Expression =
   | StringLiteral
-  | IntegerLiteral
-  | TruthLiteral
+  | IntegerLiteral<bigint>
+  | TruthvalueLiteral<truthvalue>
   | MemoryAllocation
   | MemoryRetention
   | AsShared
+  | Box
   | VariableReference
   | FieldReference
   | (FunctionCall & { value: Lattice })
@@ -72,9 +74,10 @@ Types, functions and variables use [lattices](./lattices/README.md) to constrain
 
 ```ts
 type Lattice =
-  | IntegerLattice
-  | RealLattice
-  | TruthvalueLattice
+  | IntegerLattice<bigint, bigint>
+  | RealLattice<decimal, decimal>
+  | TruthvalueLattice<truthvalue[]>
   | StringLattice
   | RCTypeLattice
+  | InterfaceLattice
 ```

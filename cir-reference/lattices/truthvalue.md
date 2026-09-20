@@ -14,6 +14,7 @@ TypeScript declaration:
 ```ts
 type TruthvalueLattice<Values extends truthvalue[]> = {
   type: 'truthvalue'
+  boxed?: true
   values: Values
 }
 

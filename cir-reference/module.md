@@ -14,6 +14,7 @@ type ClawrModule = {
   declarations?: Declaration[]
 }
 ```
+
 ## Rules for Frontend
 
 - A module `MAY` include zero or one `startBlock` nodes.

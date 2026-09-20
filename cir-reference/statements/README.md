@@ -81,6 +81,26 @@ type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 
 [Click here](./ASSIGN.md) for more details
 
+### `SELF_ASSIGN`
+
+Initialize the fields of the `self` entity.
+
+```ts
+type SelfAssign = {
+  kind: 'SELF_ASSIGN'
+  value: {
+    kind: 'DATA'
+    fields: {
+      name: string
+      value: Expression
+    }[]
+    value: RCTypeLattice
+  }
+}
+```
+
+[Click here](./SELF_ASSIGN.md) for more details
+
 ## `VARIABLE_DECL`
 
 The variable declaration can also be used as a `Statement`. In other words, it `MAY` appear in a function body and in the `startBlock` of a module.

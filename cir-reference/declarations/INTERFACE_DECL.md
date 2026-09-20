@@ -1,20 +1,19 @@
 <!-- markdownlint-disable MD041 MD033 -->
 <img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
 
-# `PROTOCOL_DECL`
+# `INTERFACE_DECL`
 
 [CIR](../README.md) : [Declarations](./README.md)
 
-The `PROTOCOL_DECL` node defines a contract type (`trait`/`role`). The type lists method `requirements` for interactions without mandating the implementation of said interactions.
+The `INTERFACE_DECL` node defines a contract type (`trait`/`role`). The type lists method `requirements` for interactions without mandating the implementation of said interactions.
 
 Clawr separates these types in two variants: `trait` and `role`, with varying invocation rules. This distinction is however not reflected in the CIR.
 
 ```ts
-type ProtocolDeclaration = {
-  kind: 'PROTOCOL_DECL'
+type InterfaceDeclaration = {
+  kind: 'INTERFACE_DECL'
   name: string
   requirements: FunctionSignature[]
-  companionRequirements?: FunctionSignature[]
 }
 ```
 
@@ -28,7 +27,7 @@ Simple `data` structure:
 
 ```json
 {
-  "kind": "PROTOCOL_DECL",
+  "kind": "INTERFACE_DECL",
   "name": "MyTrait",
   "namespace": "my_namespace",
   "requirements": [

@@ -18,7 +18,7 @@ type RCTypeDeclaration = {
     lattice: Lattice
   }[]
   conformances?: {
-    protocol: CanonicalName
+    interface: CanonicalName
     fulfillments: {
       requirement: FunctionName
       implementation: FunctionName
@@ -28,7 +28,7 @@ type RCTypeDeclaration = {
   | {
       base?: CanonicalName
       methods: FunctionDeclaration[]
-      initializers?: (FunctionDeclaration & { lattice?: undefined })[]
+      initializers: (FunctionDeclaration & { lattice?: undefined })[]
       dispatchTable?: {
         slot: FunctionSignature
         declaredIn: CanonicalName
@@ -39,6 +39,7 @@ type RCTypeDeclaration = {
 )
 
 type CanonicalName = { name: string; namespace?: string }
+type FunctionName = { baseName: string; labels: string[] }
 ```
 
 The break in the definition above indicates that some types (`object`/`service`) include `methods`, and those types may include the optional properties `base`, `initializers` and `dispatchTable`. A type without `methods` ( `data` syntax) cannot include those properties. _All_ types however have both `name` and `fields`.

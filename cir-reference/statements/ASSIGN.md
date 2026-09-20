@@ -25,17 +25,3 @@ The `value` property indicates the returned value.
 ## Rules for Backend
 
 -
-
-### `VARIABLE_DECL`
-
-```ts
-type VariableDeclaration = {
-  kind: 'VARIABLE_DECL'
-  name: string
-  namespace?: string
-  lattice: Lattice
-  initialValue: Expression
-}
-```
-
-The variable declaration can also be used as a `Statement`. In other words, it `MAY` appear in a function body and in the `startBlock` of a module.

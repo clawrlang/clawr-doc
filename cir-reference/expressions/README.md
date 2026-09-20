@@ -13,10 +13,11 @@ Every expression has a `value` property. This is a `Lattice` that includes every
 type Expression =
   | StringLiteral
   | IntegerLiteral<bigint>
-  | TruthLiteral<truthvalue>
+  | TruthvalueLiteral<truthvalue>
   | MemoryAllocation
   | MemoryRetention
   | AsShared
+  | Box
   | VariableReference
   | FieldReference
   | (FunctionCall & { value: Lattice })
@@ -53,7 +54,7 @@ type IntegerLiteral<Value extends bigint> = {
 A `TRUTHVALUE_LITERAL` is a simple three-state truth value
 
 ```ts
-type TruthLiteral<Value extends truthvalue> = {
+type TruthvalueLiteral<Value extends truthvalue> = {
   kind: 'TRUTHVALUE_LITERAL'
   value: TruthvalueLattice<[Value]>
 }
@@ -88,8 +89,6 @@ An `ALLOCATION` allocates memory for a reference-counted entity.
 ```ts
 type MemoryAllocation = {
   kind: 'ALLOCATION'
-  type: CanonicalName
-  base?: CanonicalName
   isolationLevel: IsolationLevel
   fields: {
     name: string
@@ -97,9 +96,11 @@ type MemoryAllocation = {
   }[]
   value: RCTypeLattice
 }
+
+type IsolationLevel = 'ISOLATED' | 'SHARED'
 ```
 
-[Click here](./CALL.md) for details
+[Click here](./ALLOCATION.md) for details
 
 ## `RETAIN`
 
@@ -130,6 +131,20 @@ type AsShared = {
 ```
 
 [Click here](./AS_SHARED.md) for details
+
+## `BOX`
+
+A `BOX` is reference-counted wrapper for a primitive value.
+
+```ts
+type Box = {
+  kind: 'BOX'
+  expression: Expression
+  value: Lattice & { boxed: true }
+}
+```
+
+[Click here](./BOX.md) for details
 
 ## `VARIABLE_REF`
 

@@ -12,8 +12,7 @@ type Declaration = (
   | VariableDeclaration
   | FunctionDeclaration
   | RCTypeDeclaration
-  | ProtocolDeclaration
-) & { namespace?: string }
+  | InterfaceDeclaration
 
 type ClawrModule = {
   $schema: 'http://clawr.lang/schema/cir/DRAFT-0'
@@ -32,12 +31,13 @@ The `RC_TYPE_DECL` defines a type that stores its internal data in fields. The t
 type RCTypeDeclaration = {
   kind: 'RC_TYPE_DECL'
   name: string
+  namespace?: string
   fields: {
     name: string
     lattice: Lattice
   }[]
   conformances?: {
-    protocol: CanonicalName
+    interface: CanonicalName
     fulfillments: {
       requirement: FunctionName
       implementation: FunctionName
@@ -47,7 +47,7 @@ type RCTypeDeclaration = {
   | {
       base?: CanonicalName
       methods: FunctionDeclaration[]
-      initializers?: (FunctionDeclaration & { lattice?: undefined })[]
+      initializers: (FunctionDeclaration & { lattice?: undefined })[]
       dispatchTable?: {
         slot: FunctionSignature
         declaredIn: CanonicalName
@@ -58,23 +58,25 @@ type RCTypeDeclaration = {
 )
 
 type CanonicalName = { name: string; namespace?: string }
+type FunctionName = { baseName: string; labels: string[] }
 ```
 
 [Click here](RC_TYPE_DECL.md) for more details
 
-## `PROTOCOL_DECL`
+## `INTERFACE_DECL`
 
-The `PROTOCOL_DECL` defines a type that stores its internal data in fields. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
+The `INTERFACE_DECL` node defines a contract type (`trait`/`role`). The type lists method `requirements` for interactions without mandating the implementation of said interactions. Clawr separates these types in two variants: `trait` and `role`, with varying invocation rules. This distinction is however not reflected in the CIR.
 
 ```ts
-type ProtocolDeclaration = {
-  kind: 'PROTOCOL_DECL'
+type InterfaceDeclaration = {
+  kind: 'INTERFACE_DECL'
   name: string
+  namespace?: string
   requirements: FunctionSignature[]
 }
 ```
 
-[Click here](PROTOCOL_DECL.md) for more details
+[Click here](INTERFACE_DECL.md) for more details
 
 ## `VARIABLE_DECL`
 

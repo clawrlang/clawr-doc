@@ -14,6 +14,7 @@ An [`integer`](integer.md) lattice either spans the entire infinite mathematical
 ```ts
 type IntegerLattice<Min extends bigint, Max extends bigint> = {
   type: 'integer'
+  boxed?: true
   min?: `${Min}`
   max?: `${Max}`
 }
@@ -26,10 +27,11 @@ type IntegerLattice<Min extends bigint, Max extends bigint> = {
 An [`real`](real.md) value-set is either the entire infinite mathematical set “the reals” (ℝ) or a subset of ℝ defined as a range.
 
 ```ts
-type RealLattice = {
+type RealLattice<Min extends decimal, Max extends decimal> = {
   type: 'real'
-  min?: string // numeric, can be arbitrarity big
-  max?: string // numeric, can be arbitrarity big
+  boxed?: true
+  min?: `${Min}`
+  max?: `${Max}`
 }
 ```
 
@@ -42,8 +44,11 @@ The three values of three-valued (Kleene K3) truth.
 ```ts
 type TruthvalueLattice<Values extends truthvalue[]> = {
   type: 'truthvalue'
+  boxed?: true
   values: Values
 }
+
+type truthvalue = 'false' | 'ambiguous' | 'true'
 ```
 
 [Click here](truthvalue.md) for more details
@@ -71,3 +76,17 @@ type RCTypeLattice = {
 ```
 
 [Click here](rc-type.md) for more details
+
+## `interface`
+
+A set allowing all values/entities that conform to an interface (`trait` or `role`). The `name` `MUST` identify a type that is available in the current scope.
+
+```ts
+type InterfaceLattice = {
+  type: 'interface'
+  namespace?: string
+  name: string
+}
+```
+
+[Click here](interface.md) for more details

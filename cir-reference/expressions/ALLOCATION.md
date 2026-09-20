@@ -9,8 +9,6 @@ Allocate memory for a reference-counted entity.
 ```ts
 type MemoryAllocation = {
   kind: 'ALLOCATION'
-  type: CanonicalName
-  base?: CanonicalName
   isolationLevel: IsolationLevel
   fields: {
     name: string
@@ -19,7 +17,6 @@ type MemoryAllocation = {
   value: RCTypeLattice
 }
 
-type CanonicalName = { name: string; namespace?: string }
 type IsolationLevel = 'ISOLATED' | 'SHARED'
 ```
 

@@ -12,10 +12,11 @@ If either or both limits is excluded, the value could be any real number (ℝ), 
 TypeScript declaration:
 
 ```ts
-type RealLattice = {
+type RealLattice<Min extends decimal, Max extends decimal> = {
   type: 'real'
-  min?: string // numeric, can be arbitrarity big
-  max?: string // numeric, can be arbitrarity big
+  boxed?: true
+  min?: `${Min}`
+  max?: `${Max}`
 }
 ```
 
