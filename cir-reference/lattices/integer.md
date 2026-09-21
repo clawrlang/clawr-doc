@@ -5,18 +5,17 @@
 
 [CIR](../README.md) : [Lattices](./README.md)
 
-The `integer` lattice represents the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
+The `integer` type consists of the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 
 ```ts
-type IntegerLattice<Min extends bigint, Max extends bigint> = {
+type IntegerRange<Min extends bigint, Max extends bigint> = {
   type: 'integer'
-  boxed?: true
-  min?: `${Min}`
-  max?: `${Max}`
+  min?: `${Min}` // string
+  max?: `${Max}` // string
 }
 ```
 
-The value-set is unlimited by default, representing all of ℤ. A limited subset can be created by specifying an upper bound (`max`) and/or a lower bound (`min`), thereby defining a range of values.
+The range is unlimited by default, representing all of ℤ. A limited range can be created by specifying an upper bound (`max`) and/or a lower bound (`min`).
 
 The `max` and `min` values are base-10 encoded `string`s, not JSON `number`s. The largest integer safely represented as a JSON number is $2^{53}-1$, but an `integer` value-set must be able to represent values of arbitrary size, including e.g. $2^{64}-1$ (max value of `uint64_t`), $3^{81} - 1 \over 2$ (81 bit balanced ternary), and (at least in theory) ridiculously large numbers like googol, googolplex and beyond.
 

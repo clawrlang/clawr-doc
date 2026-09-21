@@ -8,7 +8,7 @@
 A set allowing all values/entities that conform to an interface (`trait` or `role`). The `name` `MUST` identify an [INTERFACE_DECL](../declarations/INTERFACE_DECL.md) declaration that is accessible from the current scope.
 
 ```ts
-type InterfaceLattice = {
+type InterfaceSet = {
   type: 'interface'
   namespace?: string
   name: string

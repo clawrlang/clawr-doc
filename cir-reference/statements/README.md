@@ -110,7 +110,7 @@ type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
   name: string
   namespace?: string
-  lattice: Lattice
+  domain: ValueSet
   initialValue: Expression
 }
 ```

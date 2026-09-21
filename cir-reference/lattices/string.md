@@ -12,5 +12,5 @@ There is no way to construct a subset at this time, though future ideas include 
 TypeScript declaration:
 
 ```ts
-type StringLattice = { type: 'string'; value?: string }
+type StringSet = { type: 'string'; value?: string }
 ```

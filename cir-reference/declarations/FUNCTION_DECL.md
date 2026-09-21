@@ -19,9 +19,9 @@ type FunctionSignature = {
   labels: string[]
   parameters: {
     name: string
-    lattice: Lattice
+    domain: ValueSet
   }[]
-  lattice?: Lattice
+  domain?: ValueSet
 }
 ```
 

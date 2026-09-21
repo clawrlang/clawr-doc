@@ -12,7 +12,7 @@ Clawr considers types as sets and lattices. Every variable has a set of values t
 An [`integer`](integer.md) lattice either spans the entire infinite mathematical set called “the integers” (ℤ) or a subset of ℤ defined as a range.
 
 ```ts
-type IntegerLattice<Min extends bigint, Max extends bigint> = {
+type IntegerRange<Min extends bigint, Max extends bigint> = {
   type: 'integer'
   boxed?: true
   min?: `${Min}`
@@ -27,7 +27,7 @@ type IntegerLattice<Min extends bigint, Max extends bigint> = {
 An [`real`](real.md) value-set is either the entire infinite mathematical set “the reals” (ℝ) or a subset of ℝ defined as a range.
 
 ```ts
-type RealLattice<Min extends decimal, Max extends decimal> = {
+type RealRange<Min extends decimal, Max extends decimal> = {
   type: 'real'
   boxed?: true
   min?: `${Min}`
@@ -42,7 +42,7 @@ type RealLattice<Min extends decimal, Max extends decimal> = {
 The three values of three-valued (Kleene K3) truth.
 
 ```ts
-type TruthvalueLattice<Values extends truthvalue[]> = {
+type TruthvalueSet<Values extends truthvalue[]> = {
   type: 'truthvalue'
   boxed?: true
   values: Values
@@ -58,7 +58,7 @@ type truthvalue = 'false' | 'ambiguous' | 'true'
 An unconstrained string value.
 
 ```ts
-type StringLattice = { type: 'string'; value?: string }
+type StringSet = { type: 'string'; value?: string }
 ```
 
 [Click here](string.md) for more details
@@ -68,7 +68,7 @@ type StringLattice = { type: 'string'; value?: string }
 A set allowing all instances of a reference counted type (including inheritance). The `name` `MUST` identify a type that is available in the current scope.
 
 ```ts
-type RCTypeLattice = {
+type RCTypeSet = {
   type: 'rc-type'
   namespace?: string
   name: string
@@ -82,7 +82,7 @@ type RCTypeLattice = {
 A set allowing all values/entities that conform to an interface (`trait` or `role`). The `name` `MUST` identify a type that is available in the current scope.
 
 ```ts
-type InterfaceLattice = {
+type InterfaceSet = {
   type: 'interface'
   namespace?: string
   name: string

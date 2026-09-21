@@ -31,10 +31,9 @@ The `RC_TYPE_DECL` defines a type that stores its internal data in fields. The t
 type RCTypeDeclaration = {
   kind: 'RC_TYPE_DECL'
   name: string
-  namespace?: string
   fields: {
     name: string
-    lattice: Lattice
+    domain: ValueSet
   }[]
   conformances?: {
     interface: CanonicalName
@@ -47,7 +46,7 @@ type RCTypeDeclaration = {
   | {
       base?: CanonicalName
       methods: FunctionDeclaration[]
-      initializers: (FunctionDeclaration & { lattice?: undefined })[]
+      initializers: (FunctionDeclaration & { domain?: undefined })[]
       dispatchTable?: {
         slot: FunctionSignature
         declaredIn: CanonicalName
@@ -65,7 +64,7 @@ type FunctionName = { baseName: string; labels: string[] }
 
 ## `INTERFACE_DECL`
 
-The `INTERFACE_DECL` node defines a contract type (`trait`/`role`). The type lists method `requirements` for interactions without mandating the implementation of said interactions. Clawr separates these types in two variants: `trait` and `role`, with varying invocation rules. This distinction is however not reflected in the CIR.
+The `INTERFACE_DECL` node defines a polymorphic type (`trait`/`role`). The type lists method `requirements` for interactions without mandating the implementation of said methods. Clawr separates these types in two variants: `trait` and `role`, with varying invocation rules. This distinction is however not reflected in the CIR.
 
 ```ts
 type InterfaceDeclaration = {
@@ -87,7 +86,7 @@ type VariableDeclaration = {
   kind: 'VARIABLE_DECL'
   name: string
   namespace?: string
-  lattice: Lattice
+  domain: ValueSet
   initialValue: Expression
 }
 ```
@@ -110,9 +109,9 @@ type FunctionSignature = {
   labels: string[]
   parameters: {
     name: string
-    lattice: Lattice
+    domain: ValueSet
   }[]
-  lattice?: Lattice
+  domain?: ValueSet
 }
 ```
 

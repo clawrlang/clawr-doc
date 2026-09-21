@@ -12,7 +12,7 @@ Rather than a simple Boolean type, Clawr considers a three-valued truth:
 TypeScript declaration:
 
 ```ts
-type TruthvalueLattice<Values extends truthvalue[]> = {
+type TruthvalueSet<Values extends truthvalue[]> = {
   type: 'truthvalue'
   boxed?: true
   values: Values

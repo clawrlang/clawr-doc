@@ -8,7 +8,7 @@
 A set allowing all instances of a reference counted type (meaning `data`, `object` and `service` types). The `name` `MUST` identify an [RC_TYPE_DECL](../declarations/RC_TYPE_DECL.md) declaration that is accessible from the current scope.
 
 ```ts
-type RCTypeLattice = {
+type RCTypeSet = {
   type: 'rc-type'
   namespace?: string
   name: string

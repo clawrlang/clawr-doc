@@ -21,11 +21,11 @@ type FunctionCall = {
 
 type Receiver =
   | {
-      object: Expression & { value: RCTypeLattice | InterfaceLattice }
+      object: Expression & { value: RCTypeSet | InterfaceSet }
       dispatch: 'direct'
     }
   | {
-      object: Expression & { value: RCTypeLattice }
+      object: Expression & { value: RCTypeSet }
       dispatch: 'inherited'
     }
   | {
