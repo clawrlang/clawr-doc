@@ -27,10 +27,11 @@ Example roles include:
 - Message sending capability (`SMSSender`, `EmailService`…)
 - The _Strategy_ pattern
 
-> [!question]
-> Actually… a `role` _is_ maybe a _Strategy_ by definition. Maybe the keyword should be `strategy` instead of `role`?
+> [!note]
 >
-> No. a `role` is a capability. A `strategy` is an algorithmic variation. A `FriendsGraph` is not a strategy. But every use of the `strategy` pattern must define a `role` (or an abstract`service`).
+> **Do not mistake `role` for the GoF Strategy pattern.**
+>
+> A `role` is a capability. A `strategy` is an algorithmic variation. But every use of the `strategy` pattern must define a `role` (or a `service` type that can be inherited from).
 
 Example traits include:
 
@@ -40,3 +41,19 @@ Example traits include:
 - `Serializable` (as JSON, YAML…)
 - `Hashable`
 - `Categorised`
+
+## A `trait` is only Applicable to Value-Types
+
+Clawr redefines the term “value-type.” In C#, a value-type is a type that uses value semantics as opposed to reference semantics. in Clawr, the only types that are restricted to value semantics are unboxed primitives (and the only types restricted to reference semantics are `service`s).
+
+In Clawr’s terminology, a “value type” is a type that describes *values*. A service that exists to execute processes is not a “value,” and types that describe such capabilities are not “value-types.”
+
+A value is a piece of information: a single *datum* or an aggregate of related *data*. This data may be open (`data` types) or encapsulated (`object`). Instances of values may be `SHARED` (use reference semantics) or `ISOLATED` (use copy semantics). To Clawr, even an *Entity* is a value!
+
+A `trait` is only applicable to value-types, while a `role` applies (primarily) to `service`s. You could say that a value-type is any type that can conform to a `trait`. Or you could say that “a value-type is any type that is not a `service`” (the only types *not* able to conform to `trait`s).
+
+Another perspective is that an `object` is a “value-type” because its methods are restricted to touch its fields only (its own data). It may not reach beyond to access sensors, the internet, the file system… To access the environment, you need a `service`.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../scripts/admonitions.js"></script>
+<link rel="stylesheet" href="../../scripts/admonitions.css">
