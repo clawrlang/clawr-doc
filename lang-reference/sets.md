@@ -56,7 +56,7 @@ Considering types as sets has some benefits:
 3. Speed Optimisation: If values can be proven to always remain small, the `BigInteger` overhead can be skipped.
 4. Memory Optimisation: Several values can be packed into a single addressable unit (Ada style) for reduced memory footprint.
 
-### `boolean` $\subset$ `truthvalue`
+### `boolean` ⊂ `truthvalue`
 
 Most (binary) languages have a Boolean type that can only be either `false` or `true`. Clawr also has a `boolean` type, but in this case it is a `subset` of another type: `truthvalue`. A `truthvalue` is one of three values, `false`, `ambiguous` and `true`. The `boolean` subset removed the `ambiguous` case:
 
