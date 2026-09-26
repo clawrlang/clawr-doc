@@ -116,3 +116,7 @@ When dealing with `mut` variables, a `ref` field becomes like a hand reaching ou
 > Prefer `mut` and `const` fields when possible. Fields without explicit semantics default to `mut`.
 >
 > Neither `mut` nor `const` fields in a `ref` variable can ever cause a problem. The issue only occurs in one direction: when fields are declared `ref`, they always use reference semantics whether the variable they are referenced through is a `ref` or `mut`. It even breaks the `const` promise as a referenced structure can always change.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../scripts/admonitions.js"></script>
+<link rel="stylesheet" href="../../scripts/admonitions.css">

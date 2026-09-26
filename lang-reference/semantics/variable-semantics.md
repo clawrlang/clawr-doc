@@ -228,3 +228,7 @@ Function parameters and return values should also respect semantics:
 There is a [proof of concept repository](https://github.com/clawrlang/clawr-poc) that implements a compiler and runtime for Clawr, demonstrating the variable scope and semantics model described above. Its main focus is showing how the runtime can manage memory with the proposed semantics while providing safety guarantees.
 
 It also implements the other big language idea of Clawr: enforcing [encapsulation vs pure data segregation](../types/object-data.md).
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../scripts/admonitions.js"></script>
+<link rel="stylesheet" href="../../scripts/admonitions.css">

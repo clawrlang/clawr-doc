@@ -23,3 +23,12 @@ Clawr takes this separation further. Clawr is defined by its syntax and the mean
 > If it is possible to implement a backend that employs GC instead of ARC — or some new invention as yet unknown — that would be absolutely valid. And if that requires some redesigns to the CIR, it might be worth making that change.
 
 This section details the syntax and semantics of the Clawr language.
+
+- [Clawr Variable Semantics](./semantics/index.md)
+- [Types are Sets](./sets.md)
+- [Built-in Types in Clawr](./types.md)
+- [User-Defined Types](./user-types/README.md)
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../scripts/admonitions.js"></script>
+<link rel="stylesheet" href="../scripts/admonitions.css">

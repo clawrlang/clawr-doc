@@ -109,3 +109,7 @@ Clawr is compatible with any hardware that has an implemented lowering strategy.
 Numbers are just numbers. While a balanced base (-1, 0, +1) is recommended, Clawr functions just as well on a biased positive base (0, 1, 2). The backend determines the lowering strategy and the frontend will be unaffected. There will be no syntactic or semantic difference to the programmer, and source code can be fully reused.
 
 A `truthvalue` is designed for ternary hardware. A ternary trit can represent all three values. On binary hardware a `truthvalue` will need two bits to be able to represent all three values, but when limited to the `boolean` subset (`false`, `true`), the backend might optimise to using a single bit.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../scripts/admonitions.js"></script>
+<link rel="stylesheet" href="../scripts/admonitions.css">
