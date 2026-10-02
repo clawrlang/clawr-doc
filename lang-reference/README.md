@@ -5,7 +5,7 @@
 
 A language is a tool for communication. Human language likely began with gestures, facial expressions, and simple vocalizations. Over time, as our anatomy and social structures evolved, so did our ability to express complex ideas. Eventually, writing allowed knowledge to be recorded and passed across generations.
 
-A programming language, too, is a tool for communication. It communicates instructions to a machine. And, while this might be considered its primary line of communication, it is certainly not the only one. It also read and edited by people. It expresses intent. And like all human writing, it often outlives the moment of its creation.
+A programming language is also a tool for communication. It communicates instructions to a machine. And, while this might be considered its primary line of communication, it is certainly not the only one. It also read and edited by people. It expresses intent. And like all human writing, it often outlives the moment of its creation.
 
 But there is an important difference between human and programming languages. Humans can tolerate ambiguity. We compensate with context, redundancy, and shared assumptions. A computer cannot. It does not infer. It does not read ahead for clues. It must interpret and perform each and every instruction immediately as it reads them. [^compiler] To be useful, a programming language must have a precise syntax and unambiguous semantics.
 
