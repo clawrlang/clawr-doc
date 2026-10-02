@@ -12,6 +12,7 @@ This repository contains documentation for the Clawr language. The documentation
 - [Standard Library Reference](./std-lib/README.md)
 - [IDE Extensions](./ide-reference/README.md)
 - [CIR Reference](./cir-reference/README.md)
+- [Architecture Design Records](./adr/README.md)
 
 The [Language Reference](./lang-reference/README.md) details the syntax and semantics of Clawr source code.
 
