@@ -22,6 +22,8 @@ The [IDE Extensions](./ide-reference/README.md) section provides information abo
 
 The [CIR Reference](./cir-reference/README.md) describes the data structure used to communicate from frontend to backend. The frontend is the tool that reads and interprets a .clawr file and enforces all the semantic rules. The backend is the tool that converts (“lowers”) the CIR into executable machine code. The two tools could be developed by different teams.
 
+The [Architecture Design Records](./adr/README.md) (or “ADRs”) describe the reasoning behind the language design and the general architecture of the compiler.
+
 ## The Clawr Architecture
 
 1. A programmer writes Clawr source code.
@@ -37,7 +39,30 @@ Clawr does _not_ mandate the strategies employed by either the frontend or the b
 
 ## Other Repositories
 
-The main repository for (early) Clawr development is <https://github.com/clawrlang/clawr>. There is also a Visual Studio Code extension at <https://github.com/clawrlang/vscode-extension>.
+The main repository for (early) Clawr development is <https://github.com/clawrlang/clawr>.`
+
+## For Contributors
+
+The ADRs are copied from the main repository using `git subtree`. Perform the following steps to update them from the source.
+
+In preparation, you’ll need a remote that references the Clawr repository and a local branch that tracks `main`. These commands set up a remote named `clawr` and a local branch named `clawr/main` (you will only need to do this once):
+
+```sh
+git remote add clawr https://github.com/clawrlang/clawr.git
+git fetch clawr
+git checkout -b clawr/main clawr/main
+```
+
+To update, check out and synchronise your local `clawr/main` branch and run `git subtree` to update the “true” `main` —  the one that references this repository:
+
+```sh
+git checkout clawr/main
+git pull
+git subtree split --prefix=adr/ -b tmp
+
+git checkout main
+git subtree pull --prefix=adr . tmp
+```
 
 - [MIT License](./LICENSE)
 - [How to contribute](./CONTRIBUTING)
