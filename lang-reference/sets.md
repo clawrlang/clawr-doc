@@ -17,7 +17,7 @@ A subset adds constraints/information about members of the set. If you know that
 
 ## Types as Layout
 
-In C, a type is just a structure laid out in memory. When you name a field, you also define its location in memory relative to its parent structure. And when you want to reference that field, the type system knows the size and offset to access.
+In C, a type is just a structure laid out in memory. When you name a property, you also define its location in memory relative to its parent structure. And when you want to reference that property, the type system knows the size and offset to access.
 
 This is a very concrete and solution-oriented way of thinking. You know that the code runs on a processor, and you know that you have access to memory which is addressed linearly. You know all these technical details, but when you think hard about _them_, you cannot also think hard about _your domain._
 
@@ -39,7 +39,7 @@ C programmers would perhaps answer “64 or 32 bits.” There is no semantics im
 
 A C#, Java or Swift programmer—or really any programmer at all—would probably say something similar. An integer is a numeric value that is used in arithmetics, but it can also be used in bitwise Boolean operations in most other languages, maybe in all of them.
 
-But even if we ignore the discrepancy of treating integers as bitfields, most languages agree that an `integer` is a numeric value that fits in a specific size (width) of binary bits.
+But even if we ignore the discrepancy of treating integers as bitproperties, most languages agree that an `integer` is a numeric value that fits in a specific size (width) of binary bits.
 
 Some languages define a `BigInteger` type that can be any size. It grows arbitrarily as needed. This is useful, but does not significantly change the definition: an `integer` is a number that can fit in the given representation.
 

@@ -5,7 +5,7 @@
 
 [CIR](../README.md) : [Statements](./README.md)
 
-An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and fields. When assigning a variable/field to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated (using `ENSURE_UNIQUE`) before the change is applied.
+An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and properties. When assigning a variable/property to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated (using `ENSURE_UNIQUE`) before the change is applied.
 
 ```ts
 type EnsureUnique = {
@@ -13,17 +13,19 @@ type EnsureUnique = {
   object: Storage
 }
 
-type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
+type Storage =
+  | Omit<VariableReference, 'domain'>
+  | Omit<PropertyReference, 'domain'>
 ```
 
 ## Rules for Frontend
 
-- The `object` property `MUST` reference an `ISOLATED` variable or field.
-- The operation `MUST` be injected before any assignment to the fields of an `ISOLATED` (`const`/`mut`) referenced-counted variable or field.
-- The operation `MUST` be injected before calling a `mutating:` method on an `ISOLATED` (`const`/`mut`) referenced-counted variable or field.
+- The `object` property `MUST` reference an `ISOLATED` variable or property.
+- The operation `MUST` be injected before any assignment to the properties of an `ISOLATED` (`const`/`mut`) referenced-counted variable or property.
+- The operation `MUST` be injected before calling a `mutating:` method on an `ISOLATED` (`const`/`mut`) referenced-counted variable or property.
 - The operation `MAY` be elided/removed by optimization if the reference count is already provably 1 (e.g. if `ENSURE_UNIQUE` has already been performed due to a previous mutation).
 - The operation `MUST NOT` be injected for non-reference-counted values.
-- The operation `MUST NOT` be injected for `SHARED` (`ref`/`mutref`) variables or fields.
+- The operation `MUST NOT` be injected for `SHARED` (`ref`/`mutref`) variables or properties.
 
 ### Notes on Optimization
 
@@ -33,10 +35,10 @@ type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
 
 - If the reference-count of the `object` is greater than one, a copy `MUST` be made.
 - If the reference-count is exactly one, copying `MUST NOT` be made.
-- The variable/field indicated by the `object` property `MUST` be modified to reference the new allocation.
+- The variable/property indicated by the `object` property `MUST` be modified to reference the new allocation.
 - The new allocation `MUST` have a reference count of exactly 1.
 - The reference count of the original allocation `MUST` be decremented by exactly 1.
 
 ### Notes on Optimization
 
-`ISOLATED` variables and fields `MAY` be stored on the stack which would render copy-on-write strategies impossible. In that case values `MUST` be copied immediately by the `ASSIGN` operation, and `ENSURE_UNIQUE` `MUST` be ignored as a no-op.
+`ISOLATED` variables and properties `MAY` be stored on the stack which would render copy-on-write strategies impossible. In that case values `MUST` be copied immediately by the `ASSIGN` operation, and `ENSURE_UNIQUE` `MUST` be ignored as a no-op.

@@ -4,7 +4,7 @@
 
 [CIR](../README.md) : [Expressions](./README.md)
 
-Assign a value to a variable or a field.
+Assign a value to a variable or a property.
 
 ```ts
 type Assign = {
@@ -13,7 +13,9 @@ type Assign = {
   value: Expression
 }
 
-type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
+type Storage =
+  | Omit<VariableReference, 'value'>
+  | Omit<PropertyReference, 'value'>
 ```
 
 The `value` property indicates the returned value.

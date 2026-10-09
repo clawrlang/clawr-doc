@@ -10,14 +10,14 @@ The runtime value of a variable.
 type VariableReference = {
   kind: 'VARIABLE_REF'
   name: string
-  value: Lattice
+  domain: ValueSet
 }
 ```
 
 ## Rules for Frontend
 
 - The `name` `MUST` indicate a variable declared in the current scope or a parent scope.
-- The `value` `MUST` be a subset (sub-lattice) of the variable’s declared lattice.
+- The `domain` `MUST` be a subset of the variable’s declared domain.
 
 ## Rules for Backend
 

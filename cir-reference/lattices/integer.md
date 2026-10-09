@@ -8,8 +8,9 @@
 The `integer` type consists of the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 
 ```ts
-type IntegerRange<Min extends bigint, Max extends bigint> = {
+type IntegerRange<Min extends bigint = bigint, Max extends bigint = bigint> = {
   type: 'integer'
+  boxed?: true
   min?: `${Min}` // string
   max?: `${Max}` // string
 }

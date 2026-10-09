@@ -4,22 +4,22 @@
 
 [CIR](../README.md) : [Expressions](./README.md)
 
-The runtime value of a field.
+The runtime value of a property.
 
 ```ts
-type FieldReference = {
-  kind: 'FIELD_REF'
+type PropertyReference = {
+  kind: 'PROPERTY_REF'
   object: Expression
-  field: string
-  value: Lattice
+  property: string
+  domain: ValueSet
 }
 ```
 
 ## Rules for Frontend
 
 - The `object` property `MUST` indicate a value that has an [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md) type.
-- The `field` property `MUST` match the name of a declared field in the corresponding [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md).
-- The `value` `MUST` be a subset (sub-lattice) of the field’s declared lattice.
+- The `property` property `MUST` match the name of a declared property in the corresponding [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md).
+- The `domain` `MUST` be the property’s declared domain.
 
 ## Rules for Backend
 

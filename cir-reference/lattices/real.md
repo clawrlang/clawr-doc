@@ -12,11 +12,11 @@ If either or both limits is excluded, the value could be any real number (ℝ), 
 TypeScript declaration:
 
 ```ts
-type RealRange<Min extends decimal, Max extends decimal> = {
+type RealRange<Min extends decimal = decimal, Max extends decimal = decimal> = {
   type: 'real'
   boxed?: true
-  min?: `${Min}`
-  max?: `${Max}`
+  min?: `${Min}` // string
+  max?: `${Max}` // string
 }
 ```
 

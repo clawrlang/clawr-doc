@@ -10,7 +10,7 @@ Upgrade a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 type AsShared = {
   kind: 'AS_SHARED'
   object: FunctionCall & Expression
-  value: RCTypeLattice
+  domain: RCTypeSet
 }
 ```
 

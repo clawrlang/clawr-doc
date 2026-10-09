@@ -24,9 +24,9 @@ Shared mutable state occurs when multiple parts of a program can access and modi
 
 It is caused by assigning one variable to another (`x = y`). Here are some concrete situations that can lead to shared mutable state:
 
-- A variable is assigned to a field of an object or data structure
+- A variable is assigned to a property of an object or data structure
 - A variable is passed as an argument to a function
-- A field is returned from a function
+- A property is returned from a function
 - Multiple threads are started with access to the same variable
 - A variable is captured in a closure
 - A variable is stored in a global context
@@ -73,7 +73,7 @@ Mental Model:
 - `ref` variable: A pointer to an entity. Multiple variables can reference and modify the same entity.
 
 > [!note]
-> We might want to consider additional keywords. For example, we might want to disallow structural mutation on `ref` variables (i.e., only allow calling mutating methods, but not changing fields directly). This would enforce better encapsulation. (Though a `const` copy might be sufficient in that case.)
+> We might want to consider additional keywords. For example, we might want to disallow structural mutation on `ref` variables (i.e., only allow calling mutating methods, but not changing properties directly). This would enforce better encapsulation. (Though a `const` copy might be sufficient in that case.)
 
 Let's explore an example to see why this flexibility is powerful. Consider a bowling game score calculator that needs to track rolls:
 

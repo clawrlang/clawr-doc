@@ -9,11 +9,11 @@ A `STRING_LITERAL` is a simple textual value. The backend `MAY` lower this as a 
 ```ts
 type StringLiteral = {
   kind: 'STRING_LITERAL'
-  value: StringLattice & { value: string }
+  domain: StringSet & { value: string }
 }
 ```
 
-The `value` property is a singleton set that specifies the literal text.
+The `domain` property is a singleton set that specifies the literal text.
 
 ## JSON Shema
 
@@ -22,9 +22,9 @@ The `value` property is a singleton set that specifies the literal text.
   "type": "object",
   "properties": {
     "kind": { "const": "STRING_LITERAL" },
-    "value": { "type": "string" }
+    "domain": { "type": "string" }
   },
-  "required": ["kind", "value"],
+  "required": ["kind", "domain"],
   "additionalProperties": false
 }
 ```

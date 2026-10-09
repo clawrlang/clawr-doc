@@ -12,7 +12,7 @@ Rather than a simple Boolean type, Clawr considers a three-valued truth:
 TypeScript declaration:
 
 ```ts
-type TruthvalueSet<Values extends truthvalue[]> = {
+type TruthvalueSet<Values extends truthvalue[] = truthvalue[]> = {
   type: 'truthvalue'
   boxed?: true
   values: Values
@@ -21,7 +21,7 @@ type TruthvalueSet<Values extends truthvalue[]> = {
 type truthvalue = 'false' | 'ambiguous' | 'true'
 ```
 
-There is still a `boolean` “type,” but it is not a type in the same way as ordinary languages define it. Instead it is a `subset` (or sub-lattice) to the `truthvalue` top lattice.
+There is still a `boolean` “type,” but it is not a type in the same way as ordinary languages define it. Instead it is a `subset` to the `truthvalue` lattice's top set.
 
 ```clawr
 subset boolean = truthvalue(false|true)

@@ -10,11 +10,10 @@ A `BOX` is reference-counted wrapper for a primitive value.
 type Box = {
   kind: 'BOX'
   expression: Expression
-  value: Lattice & { boxed: true }
+  domain: ValueSet & { boxed: true }
 }
 ```
 
 ## Rules for Frontend
 
 ## Rules for Backend
-

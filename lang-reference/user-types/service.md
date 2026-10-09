@@ -15,7 +15,7 @@ A `service` is an `object` with special privileges. A simple `object` is an enca
 
 To reinforce the conceptual difference, contractual types for services are segregated from contract types for `object`/`data` types. They use different terminology (even if they are implemented exactly the same way in the runtime).
 
-A data-oriented structure conforms to `traits`, inherent characteristics that define how its fields can be read, modified and converted. A `service` takes on a `role`, a competence guarantee defining a set of tasks it is capable of performing.
+A data-oriented structure conforms to `traits`, inherent characteristics that define how its properties can be read, modified and converted. A `service` takes on a `role`, a competence guarantee defining a set of tasks it is capable of performing.
 
 | **Type Class**                    | **Conformance** | **Conceptual Semantics**  |
 | --------------------------------- | --------------- | ------------------------- |
@@ -28,12 +28,12 @@ There is no significant runtime difference between an `object` and a `service` (
 
 An `object` can be assigned to `const`, `mut` or `ref` variables as needed. It excels at maintaining isolation constraints using copy-on-write. A `service`, on the other hand, can only ever be _referenced_.
 
-A `service` is an _entity_, not a _variable_. It is an _agent_, not a _data container._ It represents a system resource, not its own identity, and certainly not a “value.” Therefore, it is meaningless to copy-on-write a `service`. It is incoherent to refer to a `service` as immutable. A `service` variable can only be defined as `ref`. Its _configuration_ might be immutable; it might reference copy-on-write _fields_. But the `service` itself must always apply reference semantics.
+A `service` is an _entity_, not a _variable_. It is an _agent_, not a _data container._ It represents a system resource, not its own identity, and certainly not a “value.” Therefore, it is meaningless to copy-on-write a `service`. It is incoherent to refer to a `service` as immutable. A `service` variable can only be defined as `ref`. Its _configuration_ might be immutable; it might reference copy-on-write _properties_. But the `service` itself must always apply reference semantics.
 
 Additionally:
 
-- `object` and `data` types cannot (or at least should not) contain `service` fields,
-- `service` types can reference other services via `ref` fields.
+- `object` and `data` types cannot (or at least should not) contain `service` properties,
+- `service` types can reference other services via `ref` properties.
 
 ```clawr
 // Compiler error examples:

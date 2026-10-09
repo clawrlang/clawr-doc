@@ -9,7 +9,7 @@ Statements are added to the `startBlock` of a module, and to the `body` of a fun
 
 ## ENSURE_UNIQUE
 
-An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend before mutations to preserve state isolation between copy-on-write variables and fields.
+An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend before mutations to preserve state isolation between copy-on-write variables and properties.
 
 ```ts
 type EnsureUnique = {
@@ -67,7 +67,7 @@ type Return = {
 
 ### `ASSIGN`
 
-Assign a value to a variable or a field.
+Assign a value to a variable or a property.
 
 ```ts
 type Assign = {
@@ -76,25 +76,27 @@ type Assign = {
   value: Expression
 }
 
-type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
+type Storage =
+  | Omit<VariableReference, 'value'>
+  | Omit<PropertyReference, 'value'>
 ```
 
 [Click here](./ASSIGN.md) for more details
 
 ### `SELF_ASSIGN`
 
-Initialize the fields of the `self` entity.
+Initialize the properties of the `self` entity.
 
 ```ts
 type SelfAssign = {
   kind: 'SELF_ASSIGN'
   value: {
     kind: 'DATA'
-    fields: {
+    properties?: {
       name: string
       value: Expression
     }[]
-    value: RCTypeLattice
+    value: RCTypeSet
   }
 }
 ```

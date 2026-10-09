@@ -27,7 +27,7 @@ Another problem is that the solution forces shared mutable state — at least wi
 
 ## A Better Mental Model: Drawers and Boxes
 
-Isolated (`const`/`mut`) variables are like drawers in a dresser: you can only fit one drawer in each slot, so they cannot (conceptually) refer to the same data. `SHARED` (`ref`/`mutref`) variables are like hands (or other manipulators) reaching for boxes on the floor. An immutable hand is stuck to a box, but other hands can still reach for the same box — and manipulate its contents. A `ref` field is like a hand reaching out of its container, and whichever box it touches will not be `ISOLATED` even if the hand’s container is.
+Isolated (`const`/`mut`) variables are like drawers in a dresser: you can only fit one drawer in each slot, so they cannot (conceptually) refer to the same data. `SHARED` (`ref`/`mutref`) variables are like hands (or other manipulators) reaching for boxes on the floor. An immutable hand is stuck to a box, but other hands can still reach for the same box — and manipulate its contents. A `ref` property is like a hand reaching out of its container, and whichever box it touches will not be `ISOLATED` even if the hand’s container is.
 
 Function calls have long employed stack-based memory allocation. [^algol] A section of system memory is dedicated to _the stack_, and the rest is called _the heap_.
 
@@ -89,7 +89,7 @@ A `mut` drawer is supposed to be unchanged unless referenced directly. A hand wo
 >
 > The `mut` keyword is analogous to `struct` types in languages like Swift and C#. They use the term “value semantics.” Java does not support isolated mutation at all.
 >
-> The `const` keyword is analogous to `let` variables with `struct` types in Swift. The best equivalent in C# might be a `readonly struct`. In Java, this could only be implemented using `final` on every single field, making every instance of the type immutable.
+> The `const` keyword is analogous to `let` variables with `struct` types in Swift. The best equivalent in C# might be a `readonly struct`. In Java, this could only be implemented using `final` on every single property, making every instance of the type immutable.
 
 ## Why This Matters for Domain Logic
 
@@ -101,18 +101,22 @@ This distinction isn't academic—it directly impacts how you solve problems:
 
 **With `ref` and `mutref` variables**, you explicitly opt into sharing. When you see `ref` in a signature, you know that modifications may be visible elsewhere. You know that modifications may come from some place you cannot see. It is sometimes necessary to maintain one canonical truth shared by all even as it exposes your code to elevated risk. At least it is made explicit and can be avoided when sharing is not intentional/desired.
 
-In languages where the type determines these semantic rules, you have to perform an extra lookup to understand the behaviour of a variable. Are all fields in that structure `readonly`/`final`? Is the type a `struct` or a `class`? In Clawr, you can just glance at the variable declaration and immediately know what guarantees it promises.
+In languages where the type determines these semantic rules, you have to perform an extra lookup to understand the behaviour of a variable. Are all properties in that structure `readonly`/`final`? Is the type a `struct` or a `class`? In Clawr, you can just glance at the variable declaration and immediately know what guarantees it promises.
 
 ## Caveat: Mixing Semantics
 
-I said before that `const` and `mut` variables cannot be manipulated by other references. This is true as long as the fields of your data structures are not `ref`. The recommendation is to make all fields `const` or `mut` to avoid this scenario, but that might not always be feasible.
+I said before that `const` and `mut` variables cannot be manipulated by other references. This is true as long as the properties of your data structures are not `ref`. The recommendation is to make all properties `const` or `mut` to avoid this scenario, but that might not always be feasible.
 
-Just like a `struct` in languages like C# and Swift can contain fields that have `class` types, Clawr types can contain `ref` fields and still be assigned to `const` or `mut` variables. Mixing semantics complicates the metaphor.
+Just like a `struct` in languages like C# and Swift can contain properties that have `class` types, Clawr types can contain `ref` properties and still be assigned to `const` or `mut` variables. Mixing semantics complicates the metaphor.
 
-When dealing with `mut` variables, a `ref` field becomes like a hand reaching out from _inside_ the drawer. It can still refer to an entity shared with other variables. That shared entity is not inside the drawer; only the link is. Therefore, it might still be manipulated in unexpected ways from the `mut` variable’s perspective.
+When dealing with `mut` variables, a `ref` property becomes like a hand reaching out from _inside_ the drawer. It can still refer to an entity shared with other variables. That shared entity is not inside the drawer; only the link is. Therefore, it might still be manipulated in unexpected ways from the `mut` variable’s perspective.
 
 > [!TIP]
 >
-> Prefer `mut` and `const` fields when possible. Fields without explicit semantics default to `mut`.
+> Prefer `mut` and `const` properties when possible. Propertys without explicit semantics default to `mut`.
 >
-> Neither `mut` nor `const` fields in a `ref` variable can ever cause a problem. The issue only occurs in one direction: when fields are declared `ref`, they always use reference semantics whether the variable they are referenced through is a `ref` or `mut`. It even breaks the `const` promise as a referenced structure can always change.
+> Neither `mut` nor `const` properties in a `ref` variable can ever cause a problem. The issue only occurs in one direction: when properties are declared `ref`, they always use reference semantics whether the variable they are referenced through is a `ref` or `mut`. It even breaks the `const` promise as a referenced structure can always change.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../scripts/admonitions.js"></script>
+<link rel="stylesheet" href="../../scripts/admonitions.css">

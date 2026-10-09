@@ -8,7 +8,7 @@
 Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is of some importance (see the rules below). As a rule of thumb, entities must be declared prior to any declarations that reference them.
 
 ```ts
-type Declaration = (
+type Declaration =
   | VariableDeclaration
   | FunctionDeclaration
   | RCTypeDeclaration
@@ -25,13 +25,14 @@ This document lists all declarations and their content.
 
 ## `RC_TYPE_DECL`
 
-The `RC_TYPE_DECL` defines a type that stores its internal data in fields. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
+The `RC_TYPE_DECL` defines a type that stores its internal data in properties. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
 
 ```ts
 type RCTypeDeclaration = {
   kind: 'RC_TYPE_DECL'
   name: string
-  fields: {
+  namespace?: string
+  properties: {
     name: string
     domain: ValueSet
   }[]
@@ -71,7 +72,7 @@ type InterfaceDeclaration = {
   kind: 'INTERFACE_DECL'
   name: string
   namespace?: string
-  requirements: FunctionSignature[]
+  methods: FunctionSignature[]
 }
 ```
 

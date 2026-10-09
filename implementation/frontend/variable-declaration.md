@@ -33,11 +33,22 @@ data:
 
 ```ts
 class VariableDeclaration {
-  static create(fields: {
+  static create({
+    isImmutable,
+    name,
+    isolationLevel,
+    domain,
+    initialValue,
+    span,
+    nameSpan,
+  }: {
     isImmutable: boolean
     name: string
-    lattice: LatticeDeclaration
+    isolationLevel: IsolationLevel
+    domain?: DomainDeclaration
     initialValue: Expression
+    span: SourceCodeSpan
+    nameSpan: SourceCodeSpan
   }): VariableDeclaration
 }
 ```

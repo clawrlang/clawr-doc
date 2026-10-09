@@ -5,14 +5,14 @@
 
 [CIR](../README.md)
 
-Clawr considers types as sets and lattices. Every variable has a set of values that it may store, functions have a set of possible result values, and so on. Every expression has a `Lattice` too, which represents the best knowledge of the expression’s runtime value when executed.
+Clawr considers types as sets and lattices. Every variable has a set of values that it may store, functions have a set of possible result values, and so on. Every expression has a `ValueSet` too, which represents the best knowledge of the expression’s runtime value when executed.
 
 ## `integer`
 
-An [`integer`](integer.md) lattice either spans the entire infinite mathematical set called “the integers” (ℤ) or a subset of ℤ defined as a range.
+An [`integer`](integer.md) value-set either spans the entire infinite mathematical set called “the integers” (ℤ) or a subset of ℤ defined as a range.
 
 ```ts
-type IntegerRange<Min extends bigint, Max extends bigint> = {
+type IntegerRange<Min extends bigint = bigint, Max extends bigint = bigint> = {
   type: 'integer'
   boxed?: true
   min?: `${Min}`
@@ -27,7 +27,7 @@ type IntegerRange<Min extends bigint, Max extends bigint> = {
 An [`real`](real.md) value-set is either the entire infinite mathematical set “the reals” (ℝ) or a subset of ℝ defined as a range.
 
 ```ts
-type RealRange<Min extends decimal, Max extends decimal> = {
+type RealRange<Min extends decimal = decimal, Max extends decimal = decimal> = {
   type: 'real'
   boxed?: true
   min?: `${Min}`
@@ -42,7 +42,7 @@ type RealRange<Min extends decimal, Max extends decimal> = {
 The three values of three-valued (Kleene K3) truth.
 
 ```ts
-type TruthvalueSet<Values extends truthvalue[]> = {
+type TruthvalueSet<Values extends truthvalue[] = truthvalue[]> = {
   type: 'truthvalue'
   boxed?: true
   values: Values

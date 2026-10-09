@@ -98,7 +98,7 @@ Headers are, however, rather complex to use. That might be the main problem with
 
 My current idea is to use a `helper` keyword:
 
-- All `object` and `service` fields are hidden and all `data` fields are public. That cannot change.
+- All `object` and `service` properties are hidden and all `data` properties are public. That cannot change.
 - All methods of an object are public unless marked `helper`. A `helper` method can only be used by other methods of the same `object` (or by factories defined in the same module).
 - Free functions are publicly available. If marked `helper` they cannot be accessed outside their package/target.
 - Types are publicly available. If marked `helper` they cannot be accessed outside their package/target.

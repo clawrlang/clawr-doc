@@ -15,12 +15,14 @@ type Release = {
   object: Storage
 }
 
-type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
+type Storage =
+  | Omit<VariableReference, 'value'>
+  | Omit<PropertyReference, 'value'>
 ```
 
 - The reference count of the `object` must be decremented by exactly 1.
 - If the reference count reaches 0, the `object` `MUST` be deallocated.
 - The backend/runtime `MUST` allow `RELEASE(null)` without crashing.
-- The backend `MAY` assign `null` to the variable/field to avoid zombie references.
+- The backend `MAY` assign `null` to the variable/property to avoid zombie references.
 
 If the runtime is implemented using stack-allocated values for `ISOLATED` variables, this instruction may be disregarded. (Would that require including the semantics as a property?)

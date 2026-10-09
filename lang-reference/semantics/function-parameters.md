@@ -3,7 +3,7 @@
 
 # Function Parameters
 
-Function parameters have the [same semantics](./variable-semantics.md) as ordinary variables and fields. Plus a fifth mode that allows values of any semantic flavour to be passed.
+Function parameters have the [same semantics](./variable-semantics.md) as ordinary variables and properties. Plus a fifth mode that allows values of any semantic flavour to be passed.
 
 A `const` or `mut` parameter can only accept `ISOLATED` arguments. The `const` keyword means that the variable is immutable in the function body, while `mut` allows a copy of the argument to be modified in isolation.
 

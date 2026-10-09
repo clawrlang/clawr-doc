@@ -4,7 +4,7 @@
 
 [CIR](../README.md) : [Expressions](./README.md)
 
-A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as an _expression_ always references a function _with_ a `lattice`.
+A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as an _expression_ always references a function _with_ a `domain`.
 
 ```ts
 type FunctionCall = {
@@ -16,24 +16,26 @@ type FunctionCall = {
     labels: string[]
   }
   arguments: Expression[]
-  value: Lattice
+  domain: ValueSet
 }
 
 type Receiver =
   | {
-      object: Expression & { value: RCTypeSet | InterfaceSet }
+      object: Expression & { domain: RCTypeSet | InterfaceSet }
       dispatch: 'direct'
     }
   | {
-      object: Expression & { value: RCTypeSet }
+      object: Expression & { domain: RCTypeSet }
       dispatch: 'inherited'
     }
   | {
-      object: Expression & { value: InterfaceDeclaration }
+      object: Expression & { domain: InterfaceDeclaration }
       dispatch: 'conformance'
     }
 
-type Storage = Omit<VariableReference, 'value'> | Omit<FieldReference, 'value'>
+type Storage =
+  | Omit<VariableReference, 'domain'>
+  | Omit<PropertyReference, 'domain'>
 ```
 
 The `receiver` property — if specified — indicates that the called function is a method and the `self` of the call is the receiver.
@@ -49,8 +51,8 @@ The `dispatch` property of the `receiver` indicate how the method is called: dir
 - At least one of `namespace` or `receiver` `MUST` be `undefined`/`null`.
 - If the called function exists in a `namespace` or a `companion`, that `MUST` be named in the `namespace` property.
 - The called function `MUST NOT` have a `void` return type
-- The `CALL` expression `MUST` be `ASSIGN`ed to a variable of field, or used as an argument in another `CALL` expression or statement.
-- The `value` `MUST` be a subset (sub-lattice) of the function’s declared lattice.
+- The `CALL` expression `MUST` be `ASSIGN`ed to a variable of property, or used as an argument in another `CALL` expression or statement.
+- The `value` `MUST` be a subset of the function’s declared domain.
 
 ## Rules for Backend
 

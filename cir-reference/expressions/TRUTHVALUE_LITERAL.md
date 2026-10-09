@@ -7,9 +7,9 @@
 A `TRUTHVALUE_LITERAL` is a simple three-state truth value.
 
 ```ts
-type TruthvalueLiteral<Value extends truthvalue> = {
+type TruthvalueLiteral<Value extends truthvalue = truthvalue> = {
   kind: 'TRUTHVALUE_LITERAL'
-  value: TruthvalueLattice<[Value]>
+  domain: TruthvalueSet<[Value]>
 }
 ```
 

@@ -59,25 +59,25 @@ There are also [expressions](./expressions/README.md) that are used as arguments
 ```ts
 type Expression =
   | StringLiteral
-  | IntegerLiteral<bigint>
-  | TruthvalueLiteral<truthvalue>
+  | IntegerLiteral
+  | TruthvalueLiteral
   | MemoryAllocation
   | MemoryRetention
   | AsShared
   | Box
   | VariableReference
-  | FieldReference
-  | (FunctionCall & { value: Lattice })
+  | PropertyReference
+  | (FunctionCall & { value: ValueSet })
 ```
 
 Types, functions and variables use [lattices](./lattices/README.md) to constrain what data is passed around the program.
 
 ```ts
-type Lattice =
-  | IntegerLattice<bigint, bigint>
-  | RealLattice<decimal, decimal>
-  | TruthvalueLattice<truthvalue[]>
-  | StringLattice
-  | RCTypeLattice
-  | InterfaceLattice
+type ValueSet =
+  | IntegerRange
+  | RealRange
+  | TruthvalueSet
+  | StringSet
+  | RCTypeSet
+  | InterfaceSet
 ```

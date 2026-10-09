@@ -50,7 +50,7 @@ An `INTERFACE_DECL` is a contract that promises that the object’s interface wi
       "baseName": "f",
       "labels": [],
       "parameters": [],
-      "lattice": {
+      "domain": {
         "type": "integer",
         "min": "0",
         "max": "100"

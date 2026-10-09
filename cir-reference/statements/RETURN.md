@@ -17,10 +17,10 @@ The `value` property indicates the returned value.
 
 ## Rules for Frontend
 
-- If the current scope does not have a `lattice`, the `value` property `MUST` be omitted (or `null`).
-- If the current scope does have a `lattice`, the `value` property `MUST NOT` be omitted (nor `null`).
-- The `value` `MUST` match the `isolationLevel` and `lattice` of the current function.
+- If the current scope does not have a `domain`, the `value` property `MUST` be omitted (or `null`).
+- If the current scope does have a `domain`, the `value` property `MUST NOT` be omitted (nor `null`).
+- The `value` `MUST` match the `isolationLevel` and `domain` of the current function.
 
 ## Rules for Backend
 
-- 
+-

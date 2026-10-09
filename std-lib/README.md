@@ -26,7 +26,7 @@ ref y = copy(of: x) // SHARED variable
 
 ### Rules for Frontend
 
-- The CIR `MUST` wrap the returned value in an `AS_SHARED` structure if the assignment target is a `SHARED` (`ref`) variable/field/parameter. It `MUST NOT` wrap `AS_SHARED` if the target is `ISOLATED`.
+- The CIR `MUST` wrap the returned value in an `AS_SHARED` structure if the assignment target is a `SHARED` (`ref`) variable/property/parameter. It `MUST NOT` wrap `AS_SHARED` if the target is `ISOLATED`.
 
 ### Rules for Backend
 
@@ -60,7 +60,7 @@ trait HashEquatable: Equatable {
 }
 ```
 
-This should be redesigned to force the use of a `HashCode` algorithm that is implemented by the runtime. Combining hash-codes from multiple fields should perform a mixing operation that makes similar hashes unlikely. E.g. `hash = (hash * 31 + value) % size`. The implementation should generate the prime factor at program launch so that it cannot be used maliciously.
+This should be redesigned to force the use of a `HashCode` algorithm that is implemented by the runtime. Combining hash-codes from multiple properties should perform a mixing operation that makes similar hashes unlikely. E.g. `hash = (hash * 31 + value) % size`. The implementation should generate the prime factor at program launch so that it cannot be used maliciously.
 
 ### Rules for Backend
 

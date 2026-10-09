@@ -7,9 +7,9 @@
 An `INTEGER_LITERAL` is a value in the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ). It may be arbitrarily large.
 
 ```ts
-type IntegerLiteral<Value extends bigint> = {
+type IntegerLiteral<Value extends bigint = bigint> = {
   kind: 'INTEGER_LITERAL'
-  value: IntegerLattice<Value, Value>
+  domain: IntegerRange<Value, Value>
 }
 ```
 
@@ -17,7 +17,7 @@ The `value` property is singleton set containing a single integer value (`max` =
 
 # Rules for Frontend
 
-- The `value` property `MUST` contain singleton set.
+- The `domain` property `MUST` contain singleton set.
 - The represented value `MAY` be arbitrarily large.
 
 # Rules for Backend

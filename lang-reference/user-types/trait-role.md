@@ -40,3 +40,19 @@ Example traits include:
 - `Serializable` (as JSON, YAML…)
 - `Hashable`
 - `Categorised`
+
+## A `trait` is only Applicable to Value-Types
+
+Clawr redefines the term “value-type.” In C#, a value-type is a type that uses value semantics as opposed to reference semantics. in Clawr, the only types that are restricted to value semantics are unboxed primitives (and the only types restricted to reference semantics are `service`s).
+
+In Clawr’s terminology, a “value type” is a type that describes _values_. A service that exists to execute processes is not a “value,” and types that describe such capabilities are not “value-types.”
+
+A value is a piece of information: a single _datum_ or an aggregate of related _data_. This data may be open (`data` types) or encapsulated (`object`). Instances of values may be `SHARED` (use reference semantics) or `ISOLATED` (use copy semantics). To Clawr, even an _Entity_ is a value!
+
+A `trait` is only applicable to value-types, while a `role` applies (primarily) to `service`s. You could say that a value-type is any type that can conform to a `trait`. Or you could say that “a value-type is any type that is not a `service`” (the only types _not_ able to conform to `trait`s).
+
+Another perspective is that an `object` is a “value-type” because its methods are restricted to touch its properties only (its own data). It may not reach beyond to access sensors, the internet, the file system… To access the environment, you need a `service`.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../scripts/admonitions.js"></script>
+<link rel="stylesheet" href="../../scripts/admonitions.css">

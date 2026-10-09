@@ -8,7 +8,7 @@
 
 The `data` construct is useful when gathering related data elements. It is however primarily meant for communication protocols and large-data computation. When collecting information — protecting invariants — open access to raw data is not recommended. It is better to encapsulate that data in an `object`.
 
-While a `data` structure is defined by its content (fields), an `object` is defined by its behaviour (methods):
+While a `data` structure is defined by its content (properties), an `object` is defined by its behaviour (methods):
 
 ```clawr
 object Money {
@@ -36,7 +36,7 @@ An `object` is instantiated like a `data` structure:
 const hoverConversionPrice: Money = { dollars 39_999, cents: 99 }
 ```
 
-This syntax however explicitly names the constituents of the internal `state` (the fields). Because coupling to internal structures is anathema, the data literal syntax is not available except in specific locations. Instead, you should create factories that can be called from anywhere. Sometimes labelled a “static method,” a factory is a function in a `companion` namespace. It has to be defined in the same module (file), and have the same name as the `object` itself.
+This syntax however explicitly names the constituents of the internal `state` (the properties). Because coupling to internal structures is anathema, the data literal syntax is not available except in specific locations. Instead, you should create factories that can be called from anywhere. Sometimes labelled a “static method,” a factory is a function in a `companion` namespace. It has to be defined in the same module (file), and have the same name as the `object` itself.
 
 ```clawr
 companion Money {
@@ -56,31 +56,31 @@ Money.of(dollars: 39_999, cents: 99)
 
 ```clawr
 object Super {
-  func field() => self.field
+  func property() => self.property
 mutating:
-  func setField(_ value: integer) {
-    self.field = value
+  func setProperty(_ value: integer) {
+    self.property = value
   }
 inheritance:
-  func constructAsSuper(field: integer) => { field }
+  func constructAsSuper(property: integer) => { property }
 state:
-  field: integer
+  property: integer
 }
 
 object Sub: Super {
-  func subField() => self.field
+  func subProperty() => self.property
 mutating:
-  func setSubfield(_ value: integer) {
-    self.field = value
+  func setSubproperty(_ value: integer) {
+    self.property = value
   }
 state:
-  field: integer // the Sub can name fields independently of Super
+  property: integer // the Sub can name properties independently of Super
 }
 
 namespace Sub {
   func new(sub: integer, sup: integer) => {
-    Super.constructAsSuper(field: super,
-    field: sub)
+    Super.constructAsSuper(property: super,
+    property: sub)
   }
 }
 
@@ -88,13 +88,13 @@ namespace Sub {
     const o = Sub.new(sub: 2, sup: 3)
     mut p = o // copy of o
 
-    o.setField(1)
-    p.setSubField(4)
+    o.setProperty(1)
+    p.setSubProperty(4)
 
-    print(o.field())
-    print(o.subField())
-    print(p.field())
-    print(p.subField())
+    print(o.property())
+    print(o.subProperty())
+    print(p.property())
+    print(p.subProperty())
 }
 ```
 
@@ -153,24 +153,24 @@ An “entity” is a mutable `object` that has an identifier.
 
 ```clawr
 object O {
-  func field() => self.field
+  func property() => self.property
 mutating:
-  func setField(_ value: integer) {
-    self.field = value
+  func setProperty(_ value: integer) {
+    self.property = value
   }
 inheritance:
-  func constructAsSuper(field: integer) => { field }
+  func constructAsSuper(property: integer) => { property }
 state:
-  field: integer
+  property: integer
 }
 
 object Sub {}
 
 // Single “instance” (mutable, not COW). No need for `mutating:` section
 companion Sub {
-  func new(field: integer) => { O.constructAsSuper(field: field) }
+  func new(property: integer) => { O.constructAsSuper(property: property) }
 state:
-  staticField: integer
+  staticProperty: integer
 }
 
 // Always `ref` (mutable, not COW). No need for `mutating:` section
@@ -179,7 +179,7 @@ service S {
   func write(value: string) {}
 inheritance:
 state:
-  stateField: integer
+  stateProperty: integer
 }
 ```
 
