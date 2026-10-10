@@ -19,6 +19,8 @@ Many design decisions are made implicitly by the TDD principle “make it work.�
 
 [Tenets](./tenets.md)
 
+[Terminology](./terminology.md)
+
 Statuses used in this documentation:
 
 - ✍🏼 **Draft**: A rough sketch of an idea
@@ -50,24 +52,28 @@ Records so far:
 - [ADR-018](./adr-018.md): `object` Initialization
 - [ADR-019](./adr-019.md): `namespace`
 - [ADR-020](./adr-020.md): Singleton `service`
+- [ADR-021](./adr-021.md): Binary Operators and Precedence
+- [ADR-022](./adr-022.md): `integer` Exponentiation
+- [ADR-023](./adr-023.md): `integer` Division
+- [ADR-024](./adr-024.md): The `integer` Combinatorial Explosion
+- [ADR-025](./adr-025.md): The `real` Datatype
 
 Draft ideas with no ADR number:
 
-- [XXX-X01](./drafts/x-1.md): `subset`
-- [XXX-X02](./drafts/x-2.md): Multi-Module Programs and Libraries
-- [XXX-X03](./drafts/x-3.md): Nested Functions and Lambdas
-- [XXX-X04](./drafts/x-4.md): Discard Label `_`
-- [XXX-X05](./drafts/x-5.md): Spread Operator
-- [XXX-X06](./drafts/x-6.md): Varargs Functions
-- [XXX-X07](./drafts/x-7.md): Threads and Processes
-- [XXX-X08](./drafts/x-8.md): Purity
-- [XXX-X10](./drafts/x-10.md): Unions and Enumerated Types
-- [XXX-X11](./drafts/x-11.md): Ternary Fields on Binary Hardware
-- [XXX-X12](./drafts/x-12.md): Real Numbers
-- [XXX-X13](./drafts/x-13.md): List Comprehensions and Generators
+- [`subset`](./drafts/subset.md)
+- [Multi-Module Programs and Libraries](./drafts/multi-module.md)
+- [Nested Functions and Lambdas](./drafts/lambdas.md)
+- [Discard Label `_`](./drafts/discard-label.md)
+- [Spread Operator](./drafts/spread-operator.md)
+- [Varargs Functions](./drafts/varargs.md)
+- [Threads and Processes](./drafts/threads.md)
+- [Purity](./drafts/purity.md)
+- [Unions and Enumerated Types](./drafts/union-enum.md)
+- [Ternary Fields on Binary Hardware](./drafts/fields.md)
+- [Unconstrained `real`](./drafts/unconstrained-real.md)
+- [List Comprehensions and Generators](./drafts/list-comprehension.md)
 - [ADA Inspirations](./drafts/clawr-ada.md)
 - [Visibility](./drafts/visibility.md)
-- [The `integer` Combinatorial Explosion](./drafts/bigint.md)
 - [Debug Information in the CIR](./drafts/debug.md)
 - [Disposing `service`](./drafts/deinit.md)
 - [External Access Only Through `service`](./drafts/services.md)
@@ -77,3 +83,4 @@ Draft ideas with no ADR number:
 - [Published Schema](./drafts/published-schema.md)
 - [Miscellaneous](./drafts/misc.md)
 - [`helper` Keyword](./drafts/helper.md)
+- [Syntax and `trait`s](./drafts/syntax-traits.md)

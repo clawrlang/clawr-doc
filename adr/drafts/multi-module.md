@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD041 MD033 -->
 <img src="../images/rawry.png" alt="Rawry" style="float: right; margin: 10px;">
 
-# ADR-X02: Multi-Module Programs and Libraries
+# Multi-Module Programs and Libraries
 
 [ADRs](../README.md)
 
@@ -74,7 +74,7 @@ Adopt the Rust/Cargo model, which is the one that has been most thoroughly press
 
 2. **A package is a named, versioned collection of CIR modules plus a manifest.** The package has a stable identity: `(name, major-version)` or `(name, version)` depending on how strict you want. Modules are namespaced inside the package.
 
-3. **Type identity is `(package-id, module, name)`.** Not `(namespace, name)`. Add a package field to `RCTypeSet` and `InterfaceSet`.
+3. **Type identity is `(package-id, module, name)`.** Not `(namespace, name)`. Add a package property to `RCTypeSet` and `InterfaceSet`.
 
 4. **Semver-compatible versions unify; incompatible versions coexist.** Two packages depending on stdlib `1.x` share one stdlib. If one needs `2.x`, you get both, and the types are distinct. This is what Rust does and it works.
 
