@@ -47,11 +47,11 @@ The break in the definition above indicates that some types (`object`/`service`)
 
 The `base` property indicates the direct supertype in an inheritance structure. While inheritance is generally not recommended, the inheritance structure `MAY` be arbitrarily long, each subtype referencing its immediate ancestor in a linked list of `base` references.
 
-The `dispatchTable` array lists polymorphic methods by their method signature (`slot`). These methods `MAY` be called directly or through a dispatch process that selects a different implementation depending on which instance is called. See the [`CALL`](#CALL) node for details regarding invocation. The `declaredIn` property references the earliest ancestor type that first declared the slot. The `implementedBy` property references the type that defines the implementation used by the current type.
+The `dispatchTable` array lists polymorphic methods by their method signature (`slot`). These methods `MAY` be called directly or through a dispatch process that selects a different implementation depending on which instance is called. See the [`CALL`](../expressions/call) node for details regarding invocation. The `declaredIn` property references the earliest ancestor type that first declared the slot. The `implementedBy` property references the type that defines the implementation used by the current type.
 
 ## Rules for Frontend
 
-- `RC_TYPE_DECL declarations `MAY` incur cyclic references inside a module (a single source/CIR file).
+- `RC_TYPE_DECL` declarations `MAY` incur cyclic references inside a module (a single source/CIR file).
 - They `MUST NOT` cause cyclic references between modules.
   - **_TODO_** Should that only be between libraries/packages? Packages should never be allowed to form cycles anyway so it may be a moot rule in that case.
 - The `initializers` are methods that are called when the type is used as a supertype. When allocated/instantiated, the subtype `MUST` always call an initializer from the supertype, after initializing all its own properties.
