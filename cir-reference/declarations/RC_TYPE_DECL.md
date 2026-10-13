@@ -9,45 +9,15 @@ The `RC_TYPE_DECL` node defines a reference-counted type that stores its state i
 
 Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is reflected in the CIR only in so much as disallowing certain properties unless the `methods` property is included.
 
-```ts
-type RCTypeDeclaration = {
-  kind: 'RC_TYPE_DECL'
-  name: string
-  namespace?: string
-  properties: {
-    name: string
-    domain: ValueSet
-  }[]
-  conformances?: {
-    interface: CanonicalName
-    fulfillments: {
-      requirement: FunctionName
-      implementation: FunctionName
-    }[]
-  }[]
-} & (
-  | {
-      base?: CanonicalName
-      methods: FunctionDeclaration[]
-      initializers: (FunctionDeclaration & { domain?: undefined })[]
-      dispatchTable?: {
-        slot: FunctionSignature
-        declaredIn: CanonicalName
-        implementation?: CanonicalName
-      }[]
-    }
-  | {}
-)
-
-type CanonicalName = { name: string; namespace?: string }
-type FunctionName = { baseName: string; labels: string[] }
+```json
+{ "$ref": "../cir.schema.json#/$defs/RCTypeDeclaration" }
 ```
 
 The break in the definition above indicates that some types (`object`/`service`) include `methods`, and those types may include the optional properties `base`, `initializers` and `dispatchTable`. A type without `methods` ( `data` syntax) cannot include those properties. _All_ types however have both `name` and `properties`.
 
 The `base` property indicates the direct supertype in an inheritance structure. While inheritance is generally not recommended, the inheritance structure `MAY` be arbitrarily long, each subtype referencing its immediate ancestor in a linked list of `base` references.
 
-The `dispatchTable` array lists polymorphic methods by their method signature (`slot`). These methods `MAY` be called directly or through a dispatch process that selects a different implementation depending on which instance is called. See the [`CALL`](../expressions/call) node for details regarding invocation. The `declaredIn` property references the earliest ancestor type that first declared the slot. The `implementedBy` property references the type that defines the implementation used by the current type.
+The `dispatchTable` array lists polymorphic methods by their method signature (`slot`). These methods `MAY` be called directly or through a dispatch process that selects a different implementation depending on which instance is called. See the [`CALL`](../expressions/CALL.md) node for details regarding invocation. The `declaredIn` property references the earliest ancestor type that first declared the slot. The `implementation` property references the type that defines the implementation used by the current type.
 
 ## Rules for Frontend
 
@@ -57,7 +27,7 @@ The `dispatchTable` array lists polymorphic methods by their method signature (`
 - The `initializers` are methods that are called when the type is used as a supertype. When allocated/instantiated, the subtype `MUST` always call an initializer from the supertype, after initializing all its own properties.
 - Each `RC_TYPE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes variables and functions.
 - The `dispatchTable` of a subtype `MUST` include entries with the same `slot` values as defined by its supertype in the same order before adding new entries.
-- The `declaredIn` and `implementedBy` properties of the `dispatchTable` `MUST` each refer to either the type itself or a type accessible through the `base` property. That type `MUST` include a method with the same signature as the corresponding `slot`.
+- The `declaredIn` and `implementation` properties of the `dispatchTable` `MUST` each refer to either the type itself or a type accessible through the `base` property. That type `MUST` include a method with the same signature as the corresponding `slot`.
 - The `properties` of a supertype/ancestor `MAY` repeat the same name(s) as the `properties` of a subtype/descendant.
 - The frontend `MUST` forbid the cedilla (`¸`), ogonek (`˛`) and caron (`ˇ`) characters in all identifiers.
 
@@ -83,7 +53,7 @@ Simple `data` structure:
   "properties": [
     {
       "name": "myProperty",
-      "domain": { "type": "integer" }
+      "type": { "universe": "integer" }
     }
   ]
 }
@@ -98,8 +68,8 @@ Supertype with one virtual-dispatch method:
   "properties": [
     {
       "name": "property",
-      "domain": {
-        "type": "integer",
+      "type": {
+        "universe": "integer",
         "min": "0",
         "max": "100"
       }
@@ -111,8 +81,8 @@ Supertype with one virtual-dispatch method:
       "baseName": "f",
       "labels": [],
       "parameters": [],
-      "domain": {
-        "type": "integer",
+      "returnType": {
+        "universe": "integer",
         "min": "0",
         "max": "100"
       },
@@ -120,12 +90,14 @@ Supertype with one virtual-dispatch method:
         {
           "kind": "RETURN",
           "value": {
-            "kind": "FIELD_REF",
+            "kind": "PROPERTY_REF",
             "object": {
               "kind": "VARIABLE_REF",
-              "name": "self"
+              "name": "self",
+              "type": { "universe": "rc-type", "name": "Super" }
             },
-            "property": "property"
+            "property": "property",
+            "type": { "universe": "integer", "min": "0", "max": "100" }
           }
         }
       ]
@@ -136,11 +108,12 @@ Supertype with one virtual-dispatch method:
       "kind": "FUNCTION_DECL",
       "baseName": "init",
       "labels": ["property"],
+      "returnType": { "universe": "void" },
       "parameters": [
         {
           "name": "property",
-          "domain": {
-            "type": "integer",
+          "type": {
+            "universe": "integer",
             "min": "0",
             "max": "100"
           }
@@ -156,6 +129,7 @@ Supertype with one virtual-dispatch method:
           "value": {
             "kind": "ALLOCATION",
             "type": {
+              "universe": "rc-type",
               "name": "Super"
             },
             "isolationLevel": "ISOLATED",
@@ -164,7 +138,8 @@ Supertype with one virtual-dispatch method:
                 "name": "property",
                 "value": {
                   "kind": "VARIABLE_REF",
-                  "name": "property"
+                  "name": "property",
+                  "type": { "universe": "integer", "min": "0", "max": "100" }
                 }
               }
             ]
@@ -179,8 +154,8 @@ Supertype with one virtual-dispatch method:
         "baseName": "f",
         "labels": [],
         "parameters": [],
-        "domain": {
-          "type": "integer",
+        "returnType": {
+          "universe": "integer",
           "min": "0",
           "max": "100"
         }
@@ -188,7 +163,7 @@ Supertype with one virtual-dispatch method:
       "declaredIn": {
         "name": "Super"
       },
-      "implementedBy": {
+      "implementation": {
         "name": "Super"
       }
     }
@@ -208,8 +183,8 @@ Subtype without overrides:
   "properties": [
     {
       "name": "property",
-      "domain": {
-        "type": "integer",
+      "type": {
+        "universe": "integer",
         "min": "0",
         "max": "100"
       }
@@ -221,8 +196,8 @@ Subtype without overrides:
       "baseName": "f",
       "labels": [],
       "parameters": [],
-      "domain": {
-        "type": "integer",
+      "returnType": {
+        "universe": "integer",
         "min": "43",
         "max": "43"
       },
@@ -230,12 +205,14 @@ Subtype without overrides:
         {
           "kind": "RETURN",
           "value": {
-            "kind": "FIELD_REF",
+            "kind": "PROPERTY_REF",
             "object": {
               "kind": "VARIABLE_REF",
-              "name": "self"
+              "name": "self",
+              "type": { "universe": "rc-type", "name": "Sub1" }
             },
-            "property": "property"
+            "property": "property",
+            "type": { "universe": "integer", "min": "0", "max": "100" }
           }
         }
       ]
@@ -247,8 +224,8 @@ Subtype without overrides:
         "baseName": "f",
         "labels": [],
         "parameters": [],
-        "domain": {
-          "type": "integer",
+        "returnType": {
+          "universe": "integer",
           "min": "0",
           "max": "100"
         }
@@ -256,7 +233,7 @@ Subtype without overrides:
       "declaredIn": {
         "name": "Super"
       },
-      "implementedBy": {
+      "implementation": {
         "name": "Sub1"
       }
     }
@@ -281,8 +258,8 @@ Subtype that overrides a method:
         "baseName": "f",
         "labels": [],
         "parameters": [],
-        "domain": {
-          "type": "integer",
+        "returnType": {
+          "universe": "integer",
           "min": "0",
           "max": "100"
         }
@@ -290,7 +267,7 @@ Subtype that overrides a method:
       "declaredIn": {
         "name": "Super"
       },
-      "implementedBy": {
+      "implementation": {
         "name": "Super"
       }
     }

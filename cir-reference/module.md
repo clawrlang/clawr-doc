@@ -7,12 +7,8 @@
 
 A _module_ is a single .clawr code file. The file `MAY` contain a single `@main {}` block for running the program. The frontend `MUST` add this block as `startBlock` in the CIR.
 
-```ts
-type ClawrModule = {
-  $schema: 'http://clawr.lang/schema/cir/DRAFT-0'
-  startBlock?: Statement[]
-  declarations?: Declaration[]
-}
+```json
+{ "$ref": "./cir.schema.json" }
 ```
 
 ## Rules for Frontend
@@ -32,14 +28,23 @@ type ClawrModule = {
 
 ```json
 {
+  "$schema": "http://clawr.lang/schema/cir/DRAFT-0",
   "startBlock": [
     {
-      "type": "EXEC",
+      "kind": "CALL",
       "name": {
         "baseName": "print",
         "labels": []
       },
-      "arguments": [{ "kind": "INTEGER_LITERAL", "value": "42" }]
+      "arguments": [
+        {
+          "kind": "INTEGER_LITERAL",
+          "type": {
+            "universe": "integer",
+            "value": "42"
+          }
+        }
+      ]
     }
   ]
 }

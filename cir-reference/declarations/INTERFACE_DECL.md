@@ -9,13 +9,8 @@ The `INTERFACE_DECL` node defines a polymorphic type. The type lists method `req
 
 Clawr separates these types into two variants: `trait` and `role`, with varying invocation rules. This distinction is, however, not reflected in the CIR.
 
-```ts
-type InterfaceDeclaration = {
-  kind: 'INTERFACE_DECL'
-  name: string
-  namespace?: string
-  methods: FunctionSignature[]
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/InterfaceDeclaration" }
 ```
 
 The `name` and `namespace` properties uniquely identify the type.
@@ -50,8 +45,8 @@ An `INTERFACE_DECL` is a contract that promises that the object’s interface wi
       "baseName": "f",
       "labels": [],
       "parameters": [],
-      "domain": {
-        "type": "integer",
+      "returnType": {
+        "universe": "integer",
         "min": "0",
         "max": "100"
       }

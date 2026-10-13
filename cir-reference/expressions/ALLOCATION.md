@@ -6,21 +6,11 @@
 
 Allocate memory for a reference-counted entity.
 
-```ts
-type MemoryAllocation = {
-  kind: 'ALLOCATION'
-  isolationLevel: IsolationLevel
-  properties?: {
-    name: string
-    value: Expression
-  }[]
-  domain: RCTypeSet
-}
-
-type IsolationLevel = 'ISOLATED' | 'SHARED'
+```json
+{ "$ref": "../cir.schema.json#/$defs/Allocation" }
 ```
 
-The `type` property includes a `name` and `namespace` that identifies the type of the new entity.
+The `type` property includes a `name` and optional `namespace` that identifies the type of the new entity.
 
 The `base` property — if specified — indicates that the type is a subtype of a different type which might affect how to perform memory allocation.
 

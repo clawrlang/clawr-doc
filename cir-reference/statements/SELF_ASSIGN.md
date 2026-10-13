@@ -6,21 +6,11 @@
 
 Initialize the properties of the `self` entity.
 
-```ts
-type SelfAssign = {
-  kind: 'SELF_ASSIGN'
-  value: {
-    kind: 'DATA'
-    properties?: {
-      name: string
-      value: Expression
-    }[]
-    value: RCTypeSet
-  }
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/SelfAssignment" }
 ```
 
-The `value` property indicates the type of `self`. In the case of inheritance, the indicated type is one type in the inheritance hierarchy and the owning type of the properties being initialized.
+The `value.type` property identifies the type of `self`. In the case of inheritance, the indicated type is one type in the inheritance hierarchy and the owning type of the properties being initialized.
 
 ## Rules for Frontend
 

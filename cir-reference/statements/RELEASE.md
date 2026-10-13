@@ -9,15 +9,8 @@ The `RELEASE` statement decrements the reference count of a memory allocation wh
 
 See also: [`ALLOCATION`](../expresssions/ALLOCATION.md), [`RETAIN`](../expressions/RETAIN.md), [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md)
 
-```ts
-type Release = {
-  kind: 'RELEASE'
-  object: Storage
-}
-
-type Storage =
-  | Omit<VariableReference, 'value'>
-  | Omit<PropertyReference, 'value'>
+```json
+{ "$ref": "../cir.schema.json#/$defs/Release" }
 ```
 
 - The reference count of the `object` must be decremented by exactly 1.

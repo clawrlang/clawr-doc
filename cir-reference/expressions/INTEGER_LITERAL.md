@@ -6,18 +6,15 @@
 
 An `INTEGER_LITERAL` is a value in the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ). It may be arbitrarily large.
 
-```ts
-type IntegerLiteral<Value extends bigint = bigint> = {
-  kind: 'INTEGER_LITERAL'
-  domain: IntegerRange<Value, Value>
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/IntegerLiteral" }
 ```
 
 The `value` property is singleton set containing a single integer value (`max` == `min`).
 
 # Rules for Frontend
 
-- The `domain` property `MUST` contain singleton set.
+- The `type` property `MUST` contain a singleton set.
 - The represented value `MAY` be arbitrarily large.
 
 # Rules for Backend

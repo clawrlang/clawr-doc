@@ -6,20 +6,17 @@
 
 Return early from a `void` function or return a value from a query function.
 
-```ts
-type Return = {
-  kind: 'RETURN'
-  value?: Expression
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/Return" }
 ```
 
 The `value` property indicates the returned value.
 
 ## Rules for Frontend
 
-- If the current scope does not have a `domain`, the `value` property `MUST` be omitted (or `null`).
-- If the current scope does have a `domain`, the `value` property `MUST NOT` be omitted (nor `null`).
-- The `value` `MUST` match the `isolationLevel` and `domain` of the current function.
+- If the current function has `returnType: {"universe":"void"}`, the `value` property `MUST` be omitted.
+- If the current function has a non-void `returnType`, the `value` property `MUST NOT` be omitted.
+- The `value` `MUST` match the `isolationLevel` and `returnType` of the current function.
 
 ## Rules for Backend
 

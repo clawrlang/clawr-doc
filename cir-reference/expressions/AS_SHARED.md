@@ -6,12 +6,8 @@
 
 Upgrade a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 
-```ts
-type AsShared = {
-  kind: 'AS_SHARED'
-  object: FunctionCall & Expression
-  domain: RCTypeSet
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/AsShared" }
 ```
 
 ## Rules for Frontend

@@ -6,11 +6,8 @@
 
 A `TRUTHVALUE_LITERAL` is a simple three-state truth value.
 
-```ts
-type TruthvalueLiteral<Value extends truthvalue = truthvalue> = {
-  kind: 'TRUTHVALUE_LITERAL'
-  domain: TruthvalueSet<[Value]>
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/TruthvalueLiteral" }
 ```
 
 The `value` is a singleton set containing either one of the values `"false"`, `"ambiguous"` or `"true"`.

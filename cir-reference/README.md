@@ -11,20 +11,16 @@ Clawr is hardware agnostic and the same frontend should be reusable for multiple
 
 This document uses [RFC 2119](https://www.rfc-editor.org/info/rfc2119/) ([BCP 14](https://www.rfc-editor.org/info/bcp14/)) terminology. The backend `MAY` freely define its own lowering strategy and optimizations. It `MUST` however honour the semantics defined in this document.
 
-The CIR is defined using TypeScript in <https://github.com/clawrlang/clawr/blob/main/src/cir/index.ts>. That code is duplicated here for easy reference but it might be out of sync. Please refer to the source for the official truth.
+The [CIR JSON Schema](https://raw.githubusercontent.com/clawrlang/clawr/refs/heads/main/packages/cir/cir.schema.json) defines the serialized format documented here.
 
-There is no official JSON schema at this time, but a preliminary schema identifier has been invented: `"http://clawr.lang/schema/cir/DRAFT-0"`. If we can secure that domain name, we can export the definitions to the JSON schema format and publish it on that URL. Alternatively, we could secure a different domain name and update the `$schema` property accordingly.
+The headings in this reference use the serialized discriminator values: `kind` for nodes and `universe` for value-sets. The schema organizes its definitions under `$defs` names, which do not always match those values, so the mapping may not be obvious when browsing the schema alone. Each snippet points to the relevant definition; its `properties.kind.const` or `properties.universe.const` constraint identifies the matching heading.
 
 ## Module Root
 
 A _module_ is a single .clawr code file. The file `MAY` contain a single `@main {}` block for running the program. It also `MAY` contain type, function and variable [`declarations`](declarations/README.md).
 
-```ts
-type ClawrModule = {
-  $schema: 'http://clawr.lang/schema/cir/DRAFT-0'
-  startBlock?: Statement[]
-  declarations?: Declaration[]
-}
+```json
+{ "$ref": "./cir.schema.json" }
 ```
 
 [Click here](./module.md) for details
@@ -33,51 +29,24 @@ type ClawrModule = {
 
 The `declarations` property [declares](declarations/README.md) the (internal and external) types, functions and variables that the module defines.
 
-```ts
-type Declaration =
-  | VariableDeclaration
-  | FunctionDeclaration
-  | RCTypeDeclaration
-  | InterfaceDeclaration
+```json
+{ "$ref": "./cir.schema.json#/$defs/Declaration" }
 ```
 
 The `startBlock` defines the [statements](./statements/README.md) that are executed when the program runs.
 
-```ts
-type Statement =
-  | EnsureUnique
-  | Release
-  | FunctionCall
-  | Return
-  | VariableDeclaration
-  | Assign
-  | SelfAssign
+```json
+{ "$ref": "./cir.schema.json#/$defs/Statement" }
 ```
 
 There are also [expressions](./expressions/README.md) that are used as arguments to the statements (and to other expressions).
 
-```ts
-type Expression =
-  | StringLiteral
-  | IntegerLiteral
-  | TruthvalueLiteral
-  | MemoryAllocation
-  | MemoryRetention
-  | AsShared
-  | Box
-  | VariableReference
-  | PropertyReference
-  | (FunctionCall & { value: ValueSet })
+```json
+{ "$ref": "./cir.schema.json#/$defs/Expression" }
 ```
 
 Types, functions and variables use [lattices](./lattices/README.md) to constrain what data is passed around the program.
 
-```ts
-type ValueSet =
-  | IntegerRange
-  | RealRange
-  | TruthvalueSet
-  | StringSet
-  | RCTypeSet
-  | InterfaceSet
+```json
+{ "$ref": "./cir.schema.json#/$defs/ValueSet" }
 ```

@@ -9,8 +9,8 @@ An unconstrained string value. A “string” is a sequence of characters and th
 
 There is no way to construct a subset at this time, though future ideas include singleton sets (knowing the value precisely), and strings matching a regular expression.
 
-TypeScript declaration:
+The schema accepts either an unconstrained string set or a singleton value:
 
-```ts
-type StringSet = { type: 'string'; value?: string }
+```json
+{ "$ref": "../cir.schema.json#/$defs/StringSet" }
 ```

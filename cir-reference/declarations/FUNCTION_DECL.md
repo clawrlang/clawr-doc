@@ -5,33 +5,74 @@
 
 [CIR](../README.md) : [Declarations](./README.md)
 
-A `FUNCTION_DECL` defines a “free function” in the module, a “static” `companion` method, or a method on an `object`/`service` type. A function's unique name is defined by its `baseName` and its labels (plus the optional `namespace` that exists on all declarations).
+A `FUNCTION_DECL` defines a “free function” in the module or a method on an `object`/`service` type. A function's unique name is defined by its `baseName` and its labels, plus the optional `namespace`.
 
-```ts
-type FunctionDeclaration = {
-  kind: 'FUNCTION_DECL'
-  namespace?: string
-  body: Statement[]
-} & FunctionSignature
+## Shape
 
-type FunctionSignature = {
-  baseName: string
-  labels: string[]
-  parameters: {
-    name: string
-    domain: ValueSet
-  }[]
-  domain?: ValueSet
-}
-```
+| Field        | Required | Type                              | Meaning                                   |
+| ------------ | -------- | --------------------------------- | ----------------------------------------- |
+| `kind`       | yes      | `"FUNCTION_DECL"`                 | Declaration discriminator.                |
+| `baseName`   | yes      | `string`                          | Function base name.                       |
+| `namespace`  | no       | `string`                          | Optional namespace (not for methods).     |
+| `labels`     | yes      | `string[]`                        | Labels; part of the unique function name. |
+| `parameters` | yes      | `Parameter[]`                     | Each parameter has `name` and `type`.     |
+| `returnType` | yes      | <code>ValueSet &#124; Void</code> | `{"universe":"void"}` means no result.    |
+| `body`       | yes      | `Statement[]`                     | Function body.                            |
 
 A function's unique name is defined by its `baseName` and its `labels` (plus the optional `namespace` that exists on all module-scoped declarations).
 
-In the source code, each parameter is defined by an optional label. In the CIR, those `labels` are considered part of the function name.
+In the source code, each parameter is defined by an optional label. In the CIR, those `labels` are considered part of the unique, canonical function name.
 
-The `name` is how the parameter is referenced in the function body, and the `domain` identifies the type of the variable. It is a `ValueSet` — not a simple type name — to allow the backend to make custom storage optimisation.
+The parameter `name` is how it is referenced in the function body, and its `type` identifies the parameter's value-set. It is a value-set — not a simple type name — to allow the backend to make custom storage optimisation.
 
-The function's `domain` — like parameter value-sets — is a hint to allow the backend to lower the function definition with an appropriate storage type. An `undefined`/`null` `domain` indicates that the function returns no result (`void` in C-like languages).
+The function's `returnType` — like parameter value-sets — is a hint to allow the backend to lower the function definition with an appropriate storage type. A `returnType` of `{"universe":"void"}` indicates that the function returns no result (`void` in C-like languages).
+
+## Example
+
+```json
+{
+  "kind": "FUNCTION_DECL",
+  "baseName": "log",
+  "labels": ["message"],
+  "parameters": [
+    {
+      "name": "message",
+      "type": { "universe": "string" }
+    }
+  ],
+  "returnType": { "universe": "void" },
+  "body": []
+}
+```
+
+> [!info] Relevant JSON Schema excerpt
+>
+> ```jsonc
+> "FunctionDeclaration": {
+>   "oneOf": [
+>     { "$ref": "#/$defs/FunctionDeclarationVoid" },
+>     { "$ref": "#/$defs/FunctionDeclarationNonvoid" }
+>   ]
+> },
+>
+> "FunctionDeclCommon": {
+>   "allOf": [
+>     { "$ref": "#/$defs/FunctionSignatureCommon" },
+>     {
+>       "type": "object",
+>       "properties": {
+>         "kind": { "const": "FUNCTION_DECL" },
+>         "body": {
+>           "type": "array",
+>           "items": { "$ref": "#/$defs/Statement" }
+>         },
+>         "namespace": { "type": "string" }
+>       },
+>       "required": ["kind", "body"]
+>     }
+>   ]
+> }
+> ```
 
 ## Rules for Frontend
 
@@ -44,3 +85,7 @@ The function's `domain` — like parameter value-sets — is a hint to allow the
 - The `body` statements `MUST` be executed in the order they appear or in an order that is semantically equivalent.
 - For the sake of optimization, the `body` statements `MAY` be executed in a different order than they appear, provided that the semantic meaning is not affected.
 - When mangling a function name, the backend `MUST` use a naming scheme that includes all labels, but is unlikely to cause collisions with programmer-defined names. The backend `MAY` use the cedilla (`¸`) character to separate labels from each other, and from the `baseName`. The frontend `MUST` forbid that character in Clawr identifiers.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

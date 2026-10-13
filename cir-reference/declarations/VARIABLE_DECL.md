@@ -9,19 +9,13 @@ A `VARIABLE_DECL` defines a variable. Variables store values as the application 
 
 `VARIABLE_DECL` `MAY` be used as a statement (a local variable in a function) or as a module-level declaration (available to all code in the module and — through a namespace reference — to the entire application).
 
-```ts
-type VariableDeclaration = {
-  kind: 'VARIABLE_DECL'
-  name: string
-  namespace?: string
-  domain: ValueSet
-  initialValue: Expression
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/VariableDeclaration" }
 ```
 
 The `name` property names the variable.
 
-The `domain` property identifies the type of the variable. Its intent is to help the backend declare an appropriate storage type for lowering.
+The `type` property identifies the variable's value-set. Its intent is to help the backend declare an appropriate storage type for lowering.
 
 The `inititalValue` property indicates the starting value of the variable.
 
@@ -32,7 +26,7 @@ The `inititalValue` property indicates the starting value of the variable.
 - Each `VARIABLE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes types and functions.
 - A local variable `MAY` shadow another variable defined in the parent scope. Shadowed variables become effectively inaccessible as if replaced by their shadows. But when the shadowing scope is exited, the shadowed variables are once again there.
 - The frontend `MUST` forbid the cedilla (`¸`), ogonek (`˛`) and caron (`ˇ`) characters in all identifiers.
-- The `initialValue` expression must be compatible with the `domain`.
+- The `initialValue` expression must be compatible with the `type`.
 
 ## Rules for Backend
 
@@ -40,7 +34,7 @@ The `inititalValue` property indicates the starting value of the variable.
 - Global variables in an executable `MUST` be initialized before the `startBody` statements are executed.
 - Global variables in a library `MUST` be initialized before any (other) library code is executed.
 - The `initialValue` is an expression that `MUST` be called and assigned to the variable when it is declared. The backend `MAY` serialise the value as machine code data if it is simple enough.
-- The backend `MAY` optimize the storage of the variable if its possible values are small enough, but it `MUST` use a storage size that can fit all possible values as declared by the `domain` (as long as there is enough available memory). An unconstrained `integer` for example will need arbitrary precision, while an `integer` with `max` and `min` values might fit inside a `uint64_t` (C type), or even a single `byte`.
+- The backend `MAY` optimize the storage of the variable if its possible values are small enough, but it `MUST` use a storage size that can fit all possible values as declared by the `type` (as long as there is enough available memory). An unconstrained `integer` for example will need arbitrary precision, while an `integer` with `max` and `min` values might fit inside a `uint64_t` (C type), or even a single `byte`.
 
 > [!note]
 >

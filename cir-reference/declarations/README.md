@@ -7,18 +7,10 @@
 
 Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is of some importance (see the rules below). As a rule of thumb, entities must be declared prior to any declarations that reference them.
 
-```ts
-type Declaration =
-  | VariableDeclaration
-  | FunctionDeclaration
-  | RCTypeDeclaration
-  | InterfaceDeclaration
+The module root is defined by [`cir.schema.json`](../cir.schema.json); its `declarations` items use the following schema:
 
-type ClawrModule = {
-  $schema: 'http://clawr.lang/schema/cir/DRAFT-0'
-  startBlock?: Statement[]
-  declarations?: Declaration[]
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/Declaration" }
 ```
 
 This document lists all declarations and their content.
@@ -27,38 +19,8 @@ This document lists all declarations and their content.
 
 The `RC_TYPE_DECL` defines a type that stores its internal data in properties. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
 
-```ts
-type RCTypeDeclaration = {
-  kind: 'RC_TYPE_DECL'
-  name: string
-  namespace?: string
-  properties: {
-    name: string
-    domain: ValueSet
-  }[]
-  conformances?: {
-    interface: CanonicalName
-    fulfillments: {
-      requirement: FunctionName
-      implementation: FunctionName
-    }[]
-  }[]
-} & (
-  | {
-      base?: CanonicalName
-      methods: FunctionDeclaration[]
-      initializers: (FunctionDeclaration & { domain?: undefined })[]
-      dispatchTable?: {
-        slot: FunctionSignature
-        declaredIn: CanonicalName
-        implementation?: CanonicalName
-      }[]
-    }
-  | {}
-)
-
-type CanonicalName = { name: string; namespace?: string }
-type FunctionName = { baseName: string; labels: string[] }
+```json
+{ "$ref": "../cir.schema.json#/$defs/RCTypeDeclaration" }
 ```
 
 [Click here](RC_TYPE_DECL.md) for more details
@@ -67,13 +29,8 @@ type FunctionName = { baseName: string; labels: string[] }
 
 The `INTERFACE_DECL` node defines a polymorphic type (`trait`/`role`). The type lists method `requirements` for interactions without mandating the implementation of said methods. Clawr separates these types in two variants: `trait` and `role`, with varying invocation rules. This distinction is however not reflected in the CIR.
 
-```ts
-type InterfaceDeclaration = {
-  kind: 'INTERFACE_DECL'
-  name: string
-  namespace?: string
-  methods: FunctionSignature[]
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/InterfaceDeclaration" }
 ```
 
 [Click here](INTERFACE_DECL.md) for more details
@@ -82,14 +39,8 @@ type InterfaceDeclaration = {
 
 A variable in the module scope. The variable will be accessible to all functions and methods defined in the module.
 
-```ts
-type VariableDeclaration = {
-  kind: 'VARIABLE_DECL'
-  name: string
-  namespace?: string
-  domain: ValueSet
-  initialValue: Expression
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/VariableDeclaration" }
 ```
 
 [Click here](VARIABLE_DECL.md) for more details
@@ -98,22 +49,8 @@ type VariableDeclaration = {
 
 A `FUNCTION_DECL` defines a “free function” in the module, a “static” `companion` method, or a method on an `object`/`service` type.
 
-```ts
-type FunctionDeclaration = {
-  kind: 'FUNCTION_DECL'
-  namespace?: string
-  body: Statement[]
-} & FunctionSignature
-
-type FunctionSignature = {
-  baseName: string
-  labels: string[]
-  parameters: {
-    name: string
-    domain: ValueSet
-  }[]
-  domain?: ValueSet
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/FunctionDeclaration" }
 ```
 
 [Click here](FUNCTION_DECL.md) for more details

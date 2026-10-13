@@ -9,15 +9,10 @@ A range of real values. A constant integer (e.g. a `const` variable or a literal
 
 If either or both limits is excluded, the value could be any real number (ℝ), and the backend `MUST` use arbitrary precision to store the value. If both limits are set, the backend `MAY` use an optimised storage type for the value.
 
-TypeScript declaration:
+The schema accepts either a bounded/unbounded range or a singleton value:
 
-```ts
-type RealRange<Min extends decimal = decimal, Max extends decimal = decimal> = {
-  type: 'real'
-  boxed?: true
-  min?: `${Min}` // string
-  max?: `${Max}` // string
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/RealSet" }
 ```
 
 ## Rules for Frontend

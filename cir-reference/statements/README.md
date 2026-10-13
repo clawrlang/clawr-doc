@@ -11,11 +11,8 @@ Statements are added to the `startBlock` of a module, and to the `body` of a fun
 
 An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend before mutations to preserve state isolation between copy-on-write variables and properties.
 
-```ts
-type EnsureUnique = {
-  kind: 'ENSURE_UNIQUE'
-  object: Storage
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/EnsureUnique" }
 ```
 
 [Click here](ENSURE_UNIQUE.md) for more details
@@ -24,11 +21,8 @@ type EnsureUnique = {
 
 The [`RELEASE`](./RELEASE.md) statement decrements the reference count of a block of memory.
 
-```ts
-type Release = {
-  kind: 'RELEASE'
-  object: Storage
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/Release" }
 ```
 
 [Click here](./RELEASE.md) for more details
@@ -37,17 +31,8 @@ type Release = {
 
 A `CALL` expression executes a function.
 
-```ts
-type FunctionCall = {
-  kind: 'CALL'
-  receiver?: Receiver
-  name: {
-    namespace?: string
-    baseName: string
-    labels: string[]
-  }
-  arguments: Expression[]
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/FunctionCallStatement" }
 ```
 
 [Click here](./CALL.md) for more details
@@ -56,11 +41,8 @@ type FunctionCall = {
 
 Return early from a `void` function or return a value from a query function.
 
-```ts
-type Return = {
-  kind: 'RETURN'
-  value?: Expression
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/Return" }
 ```
 
 [Click here](./RETURN.md) for more details
@@ -69,16 +51,8 @@ type Return = {
 
 Assign a value to a variable or a property.
 
-```ts
-type Assign = {
-  kind: 'ASSIGN'
-  target: Storage
-  value: Expression
-}
-
-type Storage =
-  | Omit<VariableReference, 'value'>
-  | Omit<PropertyReference, 'value'>
+```json
+{ "$ref": "../cir.schema.json#/$defs/Assign" }
 ```
 
 [Click here](./ASSIGN.md) for more details
@@ -87,18 +61,8 @@ type Storage =
 
 Initialize the properties of the `self` entity.
 
-```ts
-type SelfAssign = {
-  kind: 'SELF_ASSIGN'
-  value: {
-    kind: 'DATA'
-    properties?: {
-      name: string
-      value: Expression
-    }[]
-    value: RCTypeSet
-  }
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/SelfAssignment" }
 ```
 
 [Click here](./SELF_ASSIGN.md) for more details
@@ -107,14 +71,8 @@ type SelfAssign = {
 
 The variable declaration can also be used as a `Statement`. In other words, it `MAY` appear in a function body and in the `startBlock` of a module.
 
-```ts
-type VariableDeclaration = {
-  kind: 'VARIABLE_DECL'
-  name: string
-  namespace?: string
-  domain: ValueSet
-  initialValue: Expression
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/VariableDeclaration" }
 ```
 
 [Click here](./VARIABLE_DECL.md) for more details

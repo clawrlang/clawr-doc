@@ -6,12 +6,8 @@
 
 A `BOX` is reference-counted wrapper for a primitive value.
 
-```ts
-type Box = {
-  kind: 'BOX'
-  expression: Expression
-  domain: ValueSet & { boxed: true }
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/Box" }
 ```
 
 ## Rules for Frontend

@@ -11,13 +11,8 @@ Clawr considers types as sets and lattices. Every variable has a set of values t
 
 An [`integer`](integer.md) value-set either spans the entire infinite mathematical set called “the integers” (ℤ) or a subset of ℤ defined as a range.
 
-```ts
-type IntegerRange<Min extends bigint = bigint, Max extends bigint = bigint> = {
-  type: 'integer'
-  boxed?: true
-  min?: `${Min}`
-  max?: `${Max}`
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/IntegerSet" }
 ```
 
 [Click here](integer.md) for more details
@@ -26,13 +21,8 @@ type IntegerRange<Min extends bigint = bigint, Max extends bigint = bigint> = {
 
 An [`real`](real.md) value-set is either the entire infinite mathematical set “the reals” (ℝ) or a subset of ℝ defined as a range.
 
-```ts
-type RealRange<Min extends decimal = decimal, Max extends decimal = decimal> = {
-  type: 'real'
-  boxed?: true
-  min?: `${Min}`
-  max?: `${Max}`
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/RealSet" }
 ```
 
 [Click here](real.md) for more details
@@ -41,14 +31,8 @@ type RealRange<Min extends decimal = decimal, Max extends decimal = decimal> = {
 
 The three values of three-valued (Kleene K3) truth.
 
-```ts
-type TruthvalueSet<Values extends truthvalue[] = truthvalue[]> = {
-  type: 'truthvalue'
-  boxed?: true
-  values: Values
-}
-
-type truthvalue = 'false' | 'ambiguous' | 'true'
+```json
+{ "$ref": "../cir.schema.json#/$defs/TruthvalueSet" }
 ```
 
 [Click here](truthvalue.md) for more details
@@ -57,8 +41,8 @@ type truthvalue = 'false' | 'ambiguous' | 'true'
 
 An unconstrained string value.
 
-```ts
-type StringSet = { type: 'string'; value?: string }
+```json
+{ "$ref": "../cir.schema.json#/$defs/StringSet" }
 ```
 
 [Click here](string.md) for more details
@@ -67,12 +51,8 @@ type StringSet = { type: 'string'; value?: string }
 
 A set allowing all instances of a reference counted type (including inheritance). The `name` `MUST` identify a type that is available in the current scope.
 
-```ts
-type RCTypeSet = {
-  type: 'rc-type'
-  namespace?: string
-  name: string
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/RCTypeSet" }
 ```
 
 [Click here](rc-type.md) for more details
@@ -81,12 +61,8 @@ type RCTypeSet = {
 
 A set allowing all values/entities that conform to an interface (`trait` or `role`). The `name` `MUST` identify a type that is available in the current scope.
 
-```ts
-type InterfaceSet = {
-  type: 'interface'
-  namespace?: string
-  name: string
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/InterfaceSet" }
 ```
 
 [Click here](interface.md) for more details

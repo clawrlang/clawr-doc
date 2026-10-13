@@ -6,16 +6,8 @@
 
 Assign a value to a variable or a property.
 
-```ts
-type Assign = {
-  kind: 'ASSIGN'
-  target: Storage
-  value: Expression
-}
-
-type Storage =
-  | Omit<VariableReference, 'value'>
-  | Omit<PropertyReference, 'value'>
+```json
+{ "$ref": "../cir.schema.json#/$defs/Assign" }
 ```
 
 The `value` property indicates the returned value.

@@ -4,37 +4,10 @@
 
 [CIR](../README.md) : [Expressions](./README.md)
 
-A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as an _expression_ always references a function _with_ a `domain`.
+A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as a statement references a function with a `returnType` of `{"universe":"void"}`.
 
-```ts
-type FunctionCall = {
-  kind: 'CALL'
-  receiver?: Receiver
-  name: {
-    namespace?: string
-    baseName: string
-    labels: string[]
-  }
-  arguments: Expression[]
-}
-
-type Receiver =
-  | {
-      object: Expression & { value: RCTypeSet | InterfaceSet }
-      dispatch: 'direct'
-    }
-  | {
-      object: Expression & { value: RCTypeSet }
-      dispatch: 'inherited'
-    }
-  | {
-      object: Expression & { value: InterfaceDeclaration }
-      dispatch: 'conformance'
-    }
-
-type Storage =
-  | Omit<VariableReference, 'domain'>
-  | Omit<PropertyReference, 'domain'>
+```json
+{ "$ref": "../cir.schema.json#/$defs/FunctionCallStatement" }
 ```
 
 The `receiver` property — if specified — indicates that the called function is a method and the `self` of the call is the receiver.

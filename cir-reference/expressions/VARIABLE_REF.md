@@ -6,18 +6,14 @@
 
 The runtime value of a variable.
 
-```ts
-type VariableReference = {
-  kind: 'VARIABLE_REF'
-  name: string
-  domain: ValueSet
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/VariableReference" }
 ```
 
 ## Rules for Frontend
 
 - The `name` `MUST` indicate a variable declared in the current scope or a parent scope.
-- The `domain` `MUST` be a subset of the variable’s declared domain.
+- The `type` `MUST` be a subset of the variable’s declared `type`.
 
 ## Rules for Backend
 

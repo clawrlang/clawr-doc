@@ -6,16 +6,8 @@
 
 Increment the reference count of an allocation. The reference count of the `object` `MUST` be increased by exactly one.
 
-```ts
-type MemoryRetention = {
-  kind: 'RETAIN'
-  object: Storage
-  domain: RCTypeSet
-}
-
-type Storage =
-  | Omit<VariableReference, 'domain'>
-  | Omit<PropertyReference, 'domain'>
+```json
+{ "$ref": "../cir.schema.json#/$defs/Retain" }
 ```
 
 ## Rules for Frontend

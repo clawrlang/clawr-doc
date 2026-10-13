@@ -6,25 +6,8 @@
 
 A `STRING_LITERAL` is a simple textual value. The backend `MAY` lower this as a simple string if it can avoid dereferencing it as a zombie. It also `MAY` add reference counting or other mechanisms to ensure that the value is deallocated when no longer used.
 
-```ts
-type StringLiteral = {
-  kind: 'STRING_LITERAL'
-  domain: StringSet & { value: string }
-}
-```
-
-The `domain` property is a singleton set that specifies the literal text.
-
-## JSON Shema
-
 ```json
-{
-  "type": "object",
-  "properties": {
-    "kind": { "const": "STRING_LITERAL" },
-    "domain": { "type": "string" }
-  },
-  "required": ["kind", "domain"],
-  "additionalProperties": false
-}
+{ "$ref": "../cir.schema.json#/$defs/StringLiteral" }
 ```
+
+The `type` property is a singleton set that specifies the literal text.

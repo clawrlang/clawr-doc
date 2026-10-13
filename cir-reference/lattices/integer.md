@@ -7,13 +7,8 @@
 
 The `integer` type consists of the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 
-```ts
-type IntegerRange<Min extends bigint = bigint, Max extends bigint = bigint> = {
-  type: 'integer'
-  boxed?: true
-  min?: `${Min}` // string
-  max?: `${Max}` // string
-}
+```json
+{ "$ref": "../cir.schema.json#/$defs/IntegerSet" }
 ```
 
 The range is unlimited by default, representing all of ℤ. A limited range can be created by specifying an upper bound (`max`) and/or a lower bound (`min`).

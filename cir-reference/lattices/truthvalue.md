@@ -9,16 +9,8 @@ A set of truth-values.
 
 Rather than a simple Boolean type, Clawr considers a three-valued truth:
 
-TypeScript declaration:
-
-```ts
-type TruthvalueSet<Values extends truthvalue[] = truthvalue[]> = {
-  type: 'truthvalue'
-  boxed?: true
-  values: Values
-}
-
-type truthvalue = 'false' | 'ambiguous' | 'true'
+```json
+{ "$ref": "../cir.schema.json#/$defs/TruthvalueSet" }
 ```
 
 There is still a `boolean` “type,” but it is not a type in the same way as ordinary languages define it. Instead it is a `subset` to the `truthvalue` lattice's top set.
