@@ -19,6 +19,8 @@ A `FUNCTION_DECL` defines a “free function” in the module or a method on an 
 | `returnType` | yes      | <code>ValueSet &#124; Void</code> | `{"universe":"void"}` means no result.    |
 | `body`       | yes      | `Statement[]`                     | Function body.                            |
 
+> [!info] Table: the properties of a `FUNCTION__DECL`
+
 A function's unique name is defined by its `baseName` and its `labels` (plus the optional `namespace` that exists on all module-scoped declarations).
 
 In the source code, each parameter is defined by an optional label. In the CIR, those `labels` are considered part of the unique, canonical function name.

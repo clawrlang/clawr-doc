@@ -9,19 +9,26 @@ The `INTERFACE_DECL` node defines a polymorphic type. The type lists method `req
 
 Clawr separates these types into two variants: `trait` and `role`, with varying invocation rules. This distinction is, however, not reflected in the CIR.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/InterfaceDeclaration" }
-```
+## Shape
+
+| Field       | Required | Type                  | Meaning                                      |
+| ----------- | -------- | --------------------- | -------------------------------------------- |
+| `kind`      | yes      | `"INTERFACE_DECL"`    | Declaration discriminator.                   |
+| `name`      | yes      | `string`              | Type name.                                   |
+| `namespace` | no       | `string`              | Optional namespace.                          |
+| `methods`   | yes      | `FunctionSignature[]` | Methods that must exist on conforming types. |
+
+> [!info] Table: the properties of an `INTERFACE_DECL`
 
 The `name` and `namespace` properties uniquely identify the type.
 
 The `methods` property lists a set of method signatures (name and return-type) that define interactions with conforming entities.
 
-### Polymorphic Interface
+## Polymorphic Interface
 
 An interface is an interaction surface. An object’s interface depends on your vantage point. An object has full access to its own state, but other objects — of different types — see only its public methods.
 
-An `INTERFACE_DECL` is a contract that promises that the object’s interface will include certain named interaction points (methods). It does not say anything about the implementation or behavior of the methods, only that they must exist. Polymorphism allows multiple different behaviors to be accessed by the same calling code. Many important patterns are based on this:
+An `INTERFACE_DECL` is a contract that promises that the object’s interface will include certain named interaction points (`methods`). It does not say anything about the implementation or behavior of the methods, only that they must exist. Polymorphism allows multiple different behaviors to be accessed by the same calling code. Many important patterns are based on this:
 
 - **Strategy**: choose between different implementations, e.g. an email sender or an SMS sender for notifications.
 - **Composite**: call the same operation on a single object or a larger structure, e.g. a file system where `size()` works on a file or a directory alike.
@@ -54,3 +61,7 @@ An `INTERFACE_DECL` is a contract that promises that the object’s interface wi
   ]
 }
 ```
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">
