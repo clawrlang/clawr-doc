@@ -11,6 +11,8 @@ Clawr separates these types into two variants: `trait` and `role`, with varying 
 
 ## Shape
 
+<!-- shape: InterfaceDeclaration -->
+
 | Field       | Required | Type                  | Meaning                                      |
 | ----------- | -------- | --------------------- | -------------------------------------------- |
 | `kind`      | yes      | `"INTERFACE_DECL"`    | Declaration discriminator.                   |
@@ -18,7 +20,11 @@ Clawr separates these types into two variants: `trait` and `role`, with varying 
 | `namespace` | no       | `string`              | Optional namespace.                          |
 | `methods`   | yes      | `FunctionSignature[]` | Methods that must exist on conforming types. |
 
-> [!info] Table: the properties of an `INTERFACE_DECL`
+> [!info] Table: the properties of the `INTERFACE_DECL` node
+
+<!-- /shape: InterfaceDeclaration -->
+
+<!-- shape: FunctionSignature -->
 
 | Field        | Required | Type                              | Meaning                                   |
 | ------------ | -------- | --------------------------------- | ----------------------------------------- |
@@ -29,6 +35,10 @@ Clawr separates these types into two variants: `trait` and `role`, with varying 
 
 > [!info] Table: the properties of the `FunctionSignature` node
 
+<!-- /shape: FunctionSignature -->
+
+<!-- shape: Parameter -->
+
 | Field  | Required | Type       | Meaning                    |
 | ------ | -------- | ---------- | -------------------------- |
 | `name` | yes      | `string`   | The name of the parameter. |
@@ -36,6 +46,7 @@ Clawr separates these types into two variants: `trait` and `role`, with varying 
 
 > [!info] Table: the properties of the `Parameter` node
 
+<!-- /shape: Parameter -->
 
 The `name` and `namespace` properties uniquely identify the type.
 

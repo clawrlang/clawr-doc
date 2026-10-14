@@ -7,6 +7,8 @@
 
 The `integer` type consists of the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 
+<!-- shape: IntegerSet -->
+
 | Field      | Required | Type        | Meaning                                   |
 | ---------- | -------- | ----------- | ----------------------------------------- |
 | `universe` | yes      | `"integer"` | Declaration discriminator.                |
@@ -16,6 +18,8 @@ The `integer` type consists of the (countably infinite) mathematical set known a
 | `value`    | no       | `string`    | The single value of the set.              |
 
 > [!info] Table: the properties of the `integer` node
+
+<!-- /shape: IntegerSet -->
 
 The range is unlimited by default, representing all of ℤ. A limited range can be created by specifying an upper bound (`max`) and/or a lower bound (`min`).
 

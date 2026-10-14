@@ -6,6 +6,8 @@
 
 Upgrade a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 
+<!-- shape: AsShared -->
+
 | Field    | Required | Type                     | Meaning                           |
 | -------- | -------- | ------------------------ | --------------------------------- |
 | `kind`   | yes      | `"AS_SHARED"`            | Declaration discriminator.        |
@@ -13,6 +15,8 @@ Upgrade a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 | `type`   | yes      | `RCTypeSet`              | The type of the entity.           |
 
 > [!info] Table: the properties of the `AS_SHARED` node
+
+<!-- /shape: AsShared -->
 
 ## Rules for Frontend
 

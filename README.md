@@ -43,6 +43,8 @@ The main repository for (early) Clawr development is <https://github.com/clawrla
 
 ## For Contributors
 
+### Architecture Design Records
+
 The ADRs are copied from the main repository using `git subtree`. Perform the following steps to update them from the source.
 
 In preparation, you’ll need a remote that references the Clawr repository and a local branch that tracks `main`. These commands set up a remote named `clawr` and a local branch named `clawr/main` (you will only need to do this once):
@@ -62,6 +64,17 @@ git subtree split --prefix=adr/ -b tmp
 
 git checkout main
 git subtree pull --prefix=adr . tmp
+```
+
+### Clawr Intermediate Representation
+
+The CIR is defined at <https://raw.githubusercontent.com/clawrlang/clawr/refs/heads/main/packages/cir/cir.schema.json>.
+
+To update the tables download the file to ./cir-reference/cir.schema.json and execute the following script:
+
+```sh
+cd cir-reference/
+node make-md-tables.ts
 ```
 
 - [MIT License](./LICENSE)

@@ -3,7 +3,7 @@
 // Without arguments, a table is generated for every node in the schema: pure `oneOf` collections
 // and fragments that are only composed into other definitions are skipped.
 
-import { readFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
 type Schema = { [keyword: string]: any }
@@ -146,7 +146,7 @@ function shapeTable(name: string): string {
         props.get('kind')?.schemas[0].const ??
         props.get('universe')?.schemas[0].const ??
         name
-    return `${markdownTable(['Field', 'Required', 'Type', 'Meaning'], rows)} \n\n> [!info] Table: the properties of the \`${nodeName}\` node`
+    return `${markdownTable(['Field', 'Required', 'Type', 'Meaning'], rows)}\n\n> [!info] Table: the properties of the \`${nodeName}\` node`
 }
 
 function isCollection(def: Schema): boolean {
@@ -159,23 +159,29 @@ function isCollection(def: Schema): boolean {
     )
 }
 
-function kindsOf(name: string): string | undefined {
-    const kind = collectProperties(getDef(name)).get('kind')
-    return (
-        kind &&
-        JSON.stringify([...new Set(kind.schemas.flatMap(renderType))].sort())
-    )
+// A variant group's members all expose the same value for a shared discriminator (`kind` or `universe`).
+function discriminatorOf(name: string): string | undefined {
+    const props = collectProperties(getDef(name))
+    for (const key of ['kind', 'universe']) {
+        const prop = props.get(key)
+        if (prop) {
+            return JSON.stringify(
+                [...new Set(prop.schemas.flatMap(renderType))].sort(),
+            )
+        }
+    }
+    return undefined
 }
 
-// A collection whose members all share the same `kind` is one node with variants (e.g. FunctionDeclaration).
+// A collection whose members all share the same discriminator is one node with variants.
 function isVariantGroup(def: Schema): boolean {
     if (!isCollection(def)) return false
-    const kinds = def.oneOf.map((member: Schema) =>
-        kindsOf(defName(member.$ref)),
+    const keys = def.oneOf.map((member: Schema) =>
+        discriminatorOf(defName(member.$ref)),
     )
     return (
-        kinds[0] !== undefined &&
-        kinds.every((k: string | undefined) => k === kinds[0])
+        keys[0] !== undefined &&
+        keys.every((k: string | undefined) => k === keys[0])
     )
 }
 
@@ -218,6 +224,33 @@ function allNodes(): string[] {
         .map(([name]) => name)
 }
 
-const requested = process.argv.slice(2)
-const names = requested.length > 0 ? requested : allNodes()
-console.log(names.map(shapeTable).join('\n\n'))
+// const requested = process.argv.slice(2)
+// const names = requested.length > 0 ? requested : allNodes()
+// console.log(names.map(shapeTable).join('\n\n'))
+
+type Manifest = Record<string /* doc path */, string[] /* def names */>
+
+const manifest: Manifest = JSON.parse(
+    readFileSync(new URL('./docs.manifest.json', import.meta.url), 'utf8'),
+)
+
+for (const [file, names] of Object.entries(manifest)) {
+    let src = readFileSync(file, 'utf8')
+    for (const name of names) {
+        const start = `<!-- shape: ${name} -->`
+        const end = `<!-- /shape: ${name} -->`
+        const i = src.indexOf(start)
+        const j = src.indexOf(end)
+        if (i < 0 || j < 0) {
+            console.error(`markers for ${name} not found in ${file}`)
+            continue
+        }
+        src =
+            src.slice(0, i + start.length) +
+            '\n\n' +
+            shapeTable(name) +
+            '\n\n' +
+            src.slice(j)
+    }
+    writeFileSync(file, src)
+}

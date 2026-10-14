@@ -11,6 +11,8 @@ If either or both limits is excluded, the value could be any real number (ℝ), 
 
 The schema accepts either a bounded/unbounded range or a singleton value:
 
+<!-- shape: RealSet -->
+
 | Field      | Required | Type     | Meaning                                   |
 | ---------- | -------- | -------- | ----------------------------------------- |
 | `universe` | yes      | `"real"` | Declaration discriminator.                |
@@ -20,6 +22,8 @@ The schema accepts either a bounded/unbounded range or a singleton value:
 | `value`    | no       | `string` | The single value of the set.              |
 
 > [!info] Table: the properties of the `real` node
+
+<!-- /shape: RealSet -->
 
 ## Rules for Frontend
 

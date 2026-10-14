@@ -6,6 +6,8 @@
 
 Allocate memory for a reference-counted entity.
 
+<!-- shape: Allocation -->
+
 | Field            | Required | Type                    | Meaning                                                           |
 | ---------------- | -------- | ----------------------- | ----------------------------------------------------------------- |
 | `kind`           | yes      | `"ALLOCATION"`          | Declaration discriminator.                                        |
@@ -15,12 +17,18 @@ Allocate memory for a reference-counted entity.
 
 > [!info] Table: the properties of the `ALLOCATION` node
 
+<!-- /shape: Allocation -->
+
+<!-- shape: PropertyInitializer -->
+
 | Field   | Required | Type         | Meaning                   |
 | ------- | -------- | ------------ | ------------------------- |
 | `name`  | yes      | `string`     | The name of the property. |
 | `value` | yes      | `Expression` | The type of the property. |
 
 > [!info] Table: the properties of the `PropertyInitializer` node
+
+<!-- /shape: PropertyInitializer -->
 
 The `type` property includes a `name` and optional `namespace` that identifies the type of the new entity.
 

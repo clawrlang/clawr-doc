@@ -11,6 +11,8 @@ Statements are added to the `startBlock` of a module, and to the `body` of a fun
 
 An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend before mutations to preserve state isolation between copy-on-write variables and properties.
 
+<!-- shape: EnsureUnique -->
+
 | Field    | Required | Type              | Meaning                                        |
 | -------- | -------- | ----------------- | ---------------------------------------------- |
 | `kind`   | yes      | `"ENSURE_UNIQUE"` | Declaration discriminator.                     |
@@ -18,11 +20,15 @@ An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend bef
 
 > [!info] Table: the properties of the `ENSURE_UNIQUE` node
 
+<!-- /shape: EnsureUnique -->
+
 [Click here](ENSURE_UNIQUE.md) for more details
 
 ## `RELEASE`
 
 The [`RELEASE`](./RELEASE.md) statement decrements the reference count of a block of memory.
+
+<!-- shape: Release -->
 
 | Field    | Required | Type        | Meaning                                 |
 | -------- | -------- | ----------- | --------------------------------------- |
@@ -31,11 +37,15 @@ The [`RELEASE`](./RELEASE.md) statement decrements the reference count of a bloc
 
 > [!info] Table: the properties of the `RELEASE` node
 
+<!-- /shape: Release -->
+
 [Click here](./RELEASE.md) for more details
 
 ## `CALL`
 
 A `CALL` expression executes a function.
+
+<!-- shape: FunctionCallStatement -->
 
 | Field       | Required | Type           | Meaning                                |
 | ----------- | -------- | -------------- | -------------------------------------- |
@@ -46,11 +56,15 @@ A `CALL` expression executes a function.
 
 > [!info] Table: the properties of the `CALL` node
 
+<!-- /shape: FunctionCallStatement -->
+
 [Click here](./CALL.md) for more details
 
 ## `RETURN`
 
 Return early from a `void` function or return a value from a query function.
+
+<!-- shape: Return -->
 
 | Field   | Required | Type         | Meaning                            |
 | ------- | -------- | ------------ | ---------------------------------- |
@@ -59,11 +73,15 @@ Return early from a `void` function or return a value from a query function.
 
 > [!info] Table: the properties of the `RETURN` node
 
+<!-- /shape: Return -->
+
 [Click here](./RETURN.md) for more details
 
 ### `ASSIGN`
 
 Assign a value to a variable or a property.
+
+<!-- shape: Assign -->
 
 | Field    | Required | Type         | Meaning                        |
 | -------- | -------- | ------------ | ------------------------------ |
@@ -73,11 +91,15 @@ Assign a value to a variable or a property.
 
 > [!info] Table: the properties of the `ASSIGN` node
 
+<!-- /shape: Assign -->
+
 [Click here](./ASSIGN.md) for more details
 
 ### `SELF_INIT`
 
 Initialize the properties of the `self` entity.
+
+<!-- shape: SelfInitialization -->
 
 | Field        | Required | Type                    | Meaning                                           |
 | ------------ | -------- | ----------------------- | ------------------------------------------------- |
@@ -87,11 +109,15 @@ Initialize the properties of the `self` entity.
 
 > [!info] Table: the properties of the `SELF_INIT` node
 
+<!-- /shape: SelfInitialization -->
+
 [Click here](./SELF_INIT.md) for more details
 
 ## `VARIABLE_DECL`
 
 The variable declaration can also be used as a `Statement`. In other words, it `MAY` appear in a function body and in the `startBlock` of a module.
+
+<!-- shape: VariableDeclaration -->
 
 | Field          | Required | Type              | Meaning                            |
 | -------------- | -------- | ----------------- | ---------------------------------- |
@@ -102,6 +128,8 @@ The variable declaration can also be used as a `Statement`. In other words, it `
 | `initialValue` | yes      | `Expression`      | The initial value of the variable. |
 
 > [!info] Table: the properties of the `VARIABLE_DECL` node
+
+<!-- /shape: VariableDeclaration -->
 
 [Click here](./VARIABLE_DECL.md) for more details
 

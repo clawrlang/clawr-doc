@@ -11,6 +11,8 @@ Clawr considers types as sets and lattices. Every variable has a set of values t
 
 An [`integer`](integer.md) value-set either spans the entire infinite mathematical set called “the integers” (ℤ) or a subset of ℤ defined as a range.
 
+<!-- shape: IntegerSet -->
+
 | Field      | Required | Type        | Meaning                                   |
 | ---------- | -------- | ----------- | ----------------------------------------- |
 | `universe` | yes      | `"integer"` | Declaration discriminator.                |
@@ -21,11 +23,15 @@ An [`integer`](integer.md) value-set either spans the entire infinite mathematic
 
 > [!info] Table: the properties of the `integer` node
 
+<!-- /shape: IntegerSet -->
+
 [Click here](integer.md) for more details
 
 ## `real`
 
 An [`real`](real.md) value-set is either the entire infinite mathematical set “the reals” (ℝ) or a subset of ℝ defined as a range.
+
+<!-- shape: RealSet -->
 
 | Field      | Required | Type     | Meaning                                   |
 | ---------- | -------- | -------- | ----------------------------------------- |
@@ -37,11 +43,15 @@ An [`real`](real.md) value-set is either the entire infinite mathematical set �
 
 > [!info] Table: the properties of the `real` node
 
+<!-- /shape: RealSet -->
+
 [Click here](real.md) for more details
 
 ## `truthvalue`
 
 The three values of three-valued (Kleene K3) truth.
+
+<!-- shape: TruthvalueSet -->
 
 | Field      | Required | Type           | Meaning                        |
 | ---------- | -------- | -------------- | ------------------------------ |
@@ -52,11 +62,15 @@ The three values of three-valued (Kleene K3) truth.
 
 > [!info] Table: the properties of the `truthvalue` node
 
+<!-- /shape: TruthvalueSet -->
+
 [Click here](truthvalue.md) for more details
 
 ## `string`
 
 An unconstrained string value.
+
+<!-- shape: StringSet -->
 
 | Field      | Required | Type       | Meaning                      |
 | ---------- | -------- | ---------- | ---------------------------- |
@@ -65,11 +79,15 @@ An unconstrained string value.
 
 > [!info] Table: the properties of the `string` node
 
+<!-- /shape: StringSet -->
+
 [Click here](string.md) for more details
 
 ## `rc-type`
 
 A set allowing all instances of a reference counted type (including inheritance). The `name` `MUST` identify a type that is available in the current scope.
+
+<!-- shape: RCTypeSet -->
 
 | Field       | Required | Type        | Meaning                    |
 | ----------- | -------- | ----------- | -------------------------- |
@@ -79,11 +97,15 @@ A set allowing all instances of a reference counted type (including inheritance)
 
 > [!info] Table: the properties of the `rc-type` node
 
+<!-- /shape: RCTypeSet -->
+
 [Click here](rc-type.md) for more details
 
 ## `interface`
 
 A set allowing all values/entities that conform to an interface (`trait` or `role`). The `name` `MUST` identify a type that is available in the current scope.
+
+<!-- shape: InterfaceSet -->
 
 | Field       | Required | Type          | Meaning                    |
 | ----------- | -------- | ------------- | -------------------------- |
@@ -92,6 +114,8 @@ A set allowing all values/entities that conform to an interface (`trait` or `rol
 | `name`      | yes      | `string`      | The name of the interface. |
 
 > [!info] Table: the properties of the `interface` node
+
+<!-- /shape: InterfaceSet -->
 
 [Click here](interface.md) for more details
 

@@ -8,6 +8,8 @@ A `VARIABLE_DECL` defines a variable. Variables store values as the application 
 
 `VARIABLE_DECL` `MAY` be used as a statement (a local variable in a function) or as a module-level declaration (available to all code in the module and — through a namespace reference — to the entire application).
 
+<!-- shape: VariableDeclaration -->
+
 | Field          | Required | Type              | Meaning                            |
 | -------------- | -------- | ----------------- | ---------------------------------- |
 | `kind`         | yes      | `"VARIABLE_DECL"` | Declaration discriminator.         |
@@ -17,6 +19,8 @@ A `VARIABLE_DECL` defines a variable. Variables store values as the application 
 | `initialValue` | yes      | `Expression`      | The initial value of the variable. |
 
 > [!info] Table: the properties of the `VARIABLE_DECL` node
+
+<!-- /shape: VariableDeclaration -->
 
 The `name` property names the variable.
 
@@ -47,3 +51,7 @@ The `inititalValue` property indicates the starting value of the variable.
 
 > [!tip]
 > If lowering via C, the backend might use `__attribute__((constructor))` to initialize module-level variables in executables, and use guarded `static` variables for libraries.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

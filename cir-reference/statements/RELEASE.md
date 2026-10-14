@@ -9,12 +9,16 @@ The `RELEASE` statement decrements the reference count of a memory allocation wh
 
 See also: [`ALLOCATION`](../expresssions/ALLOCATION.md), [`RETAIN`](../expressions/RETAIN.md), [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md)
 
+<!-- shape: Release -->
+
 | Field    | Required | Type        | Meaning                                 |
 | -------- | -------- | ----------- | --------------------------------------- |
 | `kind`   | yes      | `"RELEASE"` | Declaration discriminator.              |
 | `object` | yes      | `Storage`   | The variable or field that exits scope. |
 
 > [!info] Table: the properties of the `RELEASE` node
+
+<!-- /shape: Release -->
 
 - The reference count of the `object` must be decremented by exactly 1.
 - If the reference count reaches 0, the `object` `MUST` be deallocated.

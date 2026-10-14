@@ -6,6 +6,8 @@
 
 A `BOX` is reference-counted wrapper for a primitive value.
 
+<!-- shape: Box -->
+
 | Field        | Required | Type         | Meaning                                            |
 | ------------ | -------- | ------------ | -------------------------------------------------- |
 | `kind`       | yes      | `"BOX"`      | Declaration discriminator.                         |
@@ -13,6 +15,8 @@ A `BOX` is reference-counted wrapper for a primitive value.
 | `type`       | yes      | `ValueSet`   | The type of the boxed value (with boxed flag set). |
 
 > [!info] Table: the properties of the `BOX` node
+
+<!-- /shape: Box -->
 
 ## Rules for Frontend
 

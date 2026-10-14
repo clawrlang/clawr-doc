@@ -17,6 +17,8 @@ Every expression has a `type` property. This is a `ValueSet` that includes every
 
 A `STRING_LITERAL` is a simple textual value.
 
+<!-- shape: StringLiteral -->
+
 | Field  | Required | Type               | Meaning                     |
 | ------ | -------- | ------------------ | --------------------------- |
 | `kind` | yes      | `"STRING_LITERAL"` | Declaration discriminator.  |
@@ -24,11 +26,15 @@ A `STRING_LITERAL` is a simple textual value.
 
 > [!info] Table: the properties of the `STRING_LITERAL` node
 
+<!-- /shape: StringLiteral -->
+
 [Click here](./STRING_LITERAL) for details
 
 ## `INTEGER_LITERAL`
 
 An `INTEGER_LITERAL` is a simple integer value. It may be arbitrarily large.
+
+<!-- shape: IntegerLiteral -->
 
 | Field  | Required | Type                | Meaning                                              |
 | ------ | -------- | ------------------- | ---------------------------------------------------- |
@@ -37,11 +43,15 @@ An `INTEGER_LITERAL` is a simple integer value. It may be arbitrarily large.
 
 > [!info] Table: the properties of the `INTEGER_LITERAL` node
 
+<!-- /shape: IntegerLiteral -->
+
 [Click here](./INTEGER_LITERAL) for details
 
 ## `TRUTHVALUE_LITERAL`
 
 A `TRUTHVALUE_LITERAL` is a simple three-state truth value
+
+<!-- shape: TruthvalueLiteral -->
 
 | Field  | Required | Type                   | Meaning                     |
 | ------ | -------- | ---------------------- | --------------------------- |
@@ -50,11 +60,15 @@ A `TRUTHVALUE_LITERAL` is a simple three-state truth value
 
 > [!info] Table: the properties of the `TRUTHVALUE_LITERAL` node
 
+<!-- /shape: TruthvalueLiteral -->
+
 [Click here](./TRUTHVALUE_LITERAL.md) for details
 
 ## `CALL`
 
 A `CALL` expression executes a function and returns its result.
+
+<!-- shape: FunctionCallExpression -->
 
 | Field       | Required | Type           | Meaning                                |
 | ----------- | -------- | -------------- | -------------------------------------- |
@@ -63,15 +77,18 @@ A `CALL` expression executes a function and returns its result.
 | `name`      | yes      | `FunctionName` | The name of the function to call.      |
 | `arguments` | yes      | `Expression[]` | The arguments to send to the function. |
 | `type`      | yes      | `ValueSet`     | The type of the returned value.        |
-|             |          |                |                                        |
 
 > [!info] Table: the properties of the `CALL` node
+
+<!-- /shape: FunctionCallExpression -->
 
 [Click here](./CALL.md) for details
 
 ## `ALLOCATION`
 
 An `ALLOCATION` allocates memory for a reference-counted entity.
+
+<!-- shape: Allocation -->
 
 | Field            | Required | Type                    | Meaning                                                           |
 | ---------------- | -------- | ----------------------- | ----------------------------------------------------------------- |
@@ -82,11 +99,15 @@ An `ALLOCATION` allocates memory for a reference-counted entity.
 
 > [!info] Table: the properties of the `ALLOCATION` node
 
+<!-- /shape: Allocation -->
+
 [Click here](./ALLOCATION.md) for details
 
 ## `RETAIN`
 
 Increment the reference count of an allocation.
+
+<!-- shape: Retain -->
 
 | Field    | Required | Type        | Meaning                          |
 | -------- | -------- | ----------- | -------------------------------- |
@@ -96,11 +117,15 @@ Increment the reference count of an allocation.
 
 > [!info] Table: the properties of the `RETAIN` node
 
+<!-- /shape: Retain -->
+
 [Click here](./RETAIN.md) for details
 
 ## `AS_SHARED`
 
 Upgrades a uniquely referenced `ISOLATED` value to a `SHARED` entity.
+
+<!-- shape: AsShared -->
 
 | Field    | Required | Type                     | Meaning                           |
 | -------- | -------- | ------------------------ | --------------------------------- |
@@ -110,11 +135,15 @@ Upgrades a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 
 > [!info] Table: the properties of the `AS_SHARED` node
 
+<!-- /shape: AsShared -->
+
 [Click here](./AS_SHARED.md) for details
 
 ## `BOX`
 
 A `BOX` is reference-counted wrapper for a primitive value.
+
+<!-- shape: Box -->
 
 | Field        | Required | Type         | Meaning                                            |
 | ------------ | -------- | ------------ | -------------------------------------------------- |
@@ -124,19 +153,25 @@ A `BOX` is reference-counted wrapper for a primitive value.
 
 > [!info] Table: the properties of the `BOX` node
 
+<!-- /shape: Box -->
+
 [Click here](./BOX.md) for details
 
 ## `VARIABLE_REF`
 
 A reference to a local or global [`VARIABLE_DECL`](../declarations/VARIABLE_DECL.md).
 
-| Field  | Required | Type             | Meaning                            |
-| ------ | -------- | ---------------- | ---------------------------------- |
-| `kind` | yes      | `"VARIABLE_REF"` | Declaration discriminator.         |
-| `name` | yes      | `string`         | The name of the declared variable. |
-| `type` | no       | `ValueSet`       | The type of the declared variable. |
+<!-- shape: VariableReference -->
+
+| Field  | Required | Type             | Meaning                              |
+| ------ | -------- | ---------------- | ------------------------------------ |
+| `kind` | yes      | `"VARIABLE_REF"` | Declaration discriminator.           |
+| `name` | yes      | `string`         | The name of the referenced variable. |
+| `type` | yes      | `ValueSet`       | The type of the variable.            |
 
 > [!info] Table: the properties of the `VARIABLE_REF` node
+
+<!-- /shape: VariableReference -->
 
 [Click here](./VARIABLE_REF.md) for details
 
@@ -144,14 +179,18 @@ A reference to a local or global [`VARIABLE_DECL`](../declarations/VARIABLE_DECL
 
 A reference to a property value of an object.
 
+<!-- shape: PropertyReference -->
+
 | Field      | Required | Type             | Meaning                              |
 | ---------- | -------- | ---------------- | ------------------------------------ |
 | `kind`     | yes      | `"PROPERTY_REF"` | Declaration discriminator.           |
 | `object`   | yes      | `Expression`     | The object that owns the property    |
 | `property` | yes      | `string`         | The name of the referenced property. |
-| `type`     | no       | `ValueSet`       | The type of the referenced property. |
+| `type`     | yes      | `ValueSet`       | The type of the referenced property. |
 
 > [!info] Table: the properties of the `PROPERTY_REF` node
+
+<!-- /shape: PropertyReference -->
 
 [Click here](./PROPERTY_REF.md) for details
 

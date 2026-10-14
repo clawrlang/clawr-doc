@@ -7,6 +7,8 @@
 
 A set allowing all values/entities that conform to an interface (`trait` or `role`). The `name` `MUST` identify an [INTERFACE_DECL](../declarations/INTERFACE_DECL.md) declaration that is accessible from the current scope.
 
+<!-- shape: InterfaceSet -->
+
 | Field       | Required | Type          | Meaning                    |
 | ----------- | -------- | ------------- | -------------------------- |
 | `universe`  | yes      | `"interface"` | Declaration discriminator. |
@@ -14,6 +16,8 @@ A set allowing all values/entities that conform to an interface (`trait` or `rol
 | `name`      | yes      | `string`      | The name of the interface. |
 
 > [!info] Table: the properties of the `interface` node
+
+<!-- /shape: InterfaceSet -->
 
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="../../adr/admonitions.js"></script>

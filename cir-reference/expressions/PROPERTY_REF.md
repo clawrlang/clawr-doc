@@ -6,14 +6,18 @@
 
 The runtime value of a property.
 
+<!-- shape: PropertyReference -->
+
 | Field      | Required | Type             | Meaning                              |
 | ---------- | -------- | ---------------- | ------------------------------------ |
 | `kind`     | yes      | `"PROPERTY_REF"` | Declaration discriminator.           |
 | `object`   | yes      | `Expression`     | The object that owns the property    |
 | `property` | yes      | `string`         | The name of the referenced property. |
-| `type`     | no       | `ValueSet`       | The type of the referenced property. |
+| `type`     | yes      | `ValueSet`       | The type of the referenced property. |
 
 > [!info] Table: the properties of the `PROPERTY_REF` node
+
+<!-- /shape: PropertyReference -->
 
 ## Rules for Frontend
 

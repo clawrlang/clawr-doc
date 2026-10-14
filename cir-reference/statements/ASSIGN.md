@@ -6,13 +6,17 @@
 
 Assign a value to a variable or a property.
 
-| Field    | Required | Type         | Meaning                        |     |
-| -------- | -------- | ------------ | ------------------------------ | --- |
-| `kind`   | yes      | `"ASSIGN"`   | Declaration discriminator.     |     |
-| `target` | yes      | `Storage`    | Target to mutate.              |     |
-| `value`  | yes      | `Expression` | Value to assign to the target. |     |
+<!-- shape: Assign -->
+
+| Field    | Required | Type         | Meaning                        |
+| -------- | -------- | ------------ | ------------------------------ |
+| `kind`   | yes      | `"ASSIGN"`   | Declaration discriminator.     |
+| `target` | yes      | `Storage`    | Target to mutate.              |
+| `value`  | yes      | `Expression` | Value to assign to the target. |
 
 > [!info] Table: the properties of the `ASSIGN` node
+
+<!-- /shape: Assign -->
 
 ## Rules for Frontend
 
@@ -21,3 +25,7 @@ Assign a value to a variable or a property.
 ## Rules for Backend
 
 -
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

@@ -7,12 +7,16 @@
 
 An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and properties. When assigning a variable/property to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated (using `ENSURE_UNIQUE`) before the change is applied.
 
+<!-- shape: EnsureUnique -->
+
 | Field    | Required | Type              | Meaning                                        |
 | -------- | -------- | ----------------- | ---------------------------------------------- |
 | `kind`   | yes      | `"ENSURE_UNIQUE"` | Declaration discriminator.                     |
 | `object` | yes      | `Storage`         | The variable or field to isolate for mutation. |
 
 > [!info] Table: the properties of the `ENSURE_UNIQUE` node
+
+<!-- /shape: EnsureUnique -->
 
 ## Rules for Frontend
 

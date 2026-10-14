@@ -9,21 +9,18 @@ A set of truth-values.
 
 Rather than a simple Boolean type, Clawr considers a three-valued truth:
 
+<!-- shape: TruthvalueSet -->
+
 | Field      | Required | Type           | Meaning                        |
 | ---------- | -------- | -------------- | ------------------------------ |
 | `universe` | yes      | `"truthvalue"` | Declaration discriminator.     |
 | `boxed`    | no       | `true`         | Present if the value is boxed. |
-| `values`   | yes      | `Truthvalue[]` | The values in the set.         |
+| `values`   | no       | `Truthvalue[]` | The values in the set.         |
+| `value`    | no       | `Truthvalue`   | The single value in the set.   |
 
 > [!info] Table: the properties of the `truthvalue` node
 
-| Field      | Required | Type           | Meaning                        |
-| ---------- | -------- | -------------- | ------------------------------ |
-| `universe` | yes      | `"truthvalue"` | Declaration discriminator.     |
-| `boxed`    | no       | `true`         | Present if the value is boxed. |
-| `value`    | yes      | `Truthvalue`   | The single value in the set.   |
-
-> [!info] Table: the properties of the `truthvalue` (singleton) node
+<!-- /shape: TruthvalueSet -->
 
 There is still a `boolean` “type,” but it is not a type in the same way as ordinary languages define it. Instead it is a `subset` to the `truthvalue` lattice's top set.
 

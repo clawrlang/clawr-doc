@@ -6,6 +6,8 @@
 
 A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as a statement references a function with a `returnType` of `{"universe":"void"}`.
 
+<!-- shape: FunctionCallStatement -->
+
 | Field       | Required | Type           | Meaning                                |
 | ----------- | -------- | -------------- | -------------------------------------- |
 | `kind`      | yes      | `"CALL"`       | Declaration discriminator.             |
@@ -15,12 +17,20 @@ A Clawr function may or may not have a return value. A `CALL` structure can be u
 
 > [!info] Table: the properties of the `CALL` node
 
+<!-- /shape: FunctionCallStatement -->
+
+<!-- shape: Receiver -->
+
 | Field      | Required | Type                                                          | Meaning                                  |
 | ---------- | -------- | ------------------------------------------------------------- | ---------------------------------------- |
 | `object`   | yes      | `Expression`                                                  | The object whose method to call.         |
 | `dispatch` | yes      | <code>"conformance" &#124; "direct" &#124; "inherited"</code> | The mode of dispatch to call the method. |
 
 > [!info] Table: the properties of the `Receiver` node
+
+<!-- /shape: Receiver -->
+
+<!-- shape: FunctionName -->
 
 | Field       | Required | Type       | Meaning                                         |
 | ----------- | -------- | ---------- | ----------------------------------------------- |
@@ -29,6 +39,8 @@ A Clawr function may or may not have a return value. A `CALL` structure can be u
 | `namespace` | no       | `string`   | Optional namespace.                             |
 
 > [!info] Table: the properties of the `FunctionName` node
+
+<!-- /shape: FunctionName -->
 
 The `receiver` property — if specified — indicates that the called function is a method and the `self` of the call is the receiver.
 

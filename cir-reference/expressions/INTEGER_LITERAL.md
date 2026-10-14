@@ -6,12 +6,16 @@
 
 An `INTEGER_LITERAL` is a value in the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ). It may be arbitrarily large.
 
+<!-- shape: IntegerLiteral -->
+
 | Field  | Required | Type                | Meaning                                              |
 | ------ | -------- | ------------------- | ---------------------------------------------------- |
 | `kind` | yes      | `"INTEGER_LITERAL"` | Declaration discriminator.                           |
 | `type` | yes      | `IntegerSingleton`  | The type of the literal (specified its exact value). |
 
 > [!info] Table: the properties of the `INTEGER_LITERAL` node
+
+<!-- /shape: IntegerLiteral -->
 
 The `value` property is singleton set containing a single integer value (`max` == `min`).
 

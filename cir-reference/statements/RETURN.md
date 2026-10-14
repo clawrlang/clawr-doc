@@ -6,12 +6,16 @@
 
 Return early from a `void` function or return a value from a query function.
 
+<!-- shape: Return -->
+
 | Field   | Required | Type         | Meaning                            |
 | ------- | -------- | ------------ | ---------------------------------- |
 | `kind`  | yes      | `"RETURN"`   | Declaration discriminator.         |
 | `value` | no       | `Expression` | The value to return to the caller. |
 
 > [!info] Table: the properties of the `RETURN` node
+
+<!-- /shape: Return -->
 
 The `value` property indicates the returned value.
 

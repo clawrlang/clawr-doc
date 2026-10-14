@@ -20,8 +20,25 @@ Clawr separates these types in three variants: `data`, `object` and `service`, w
 | `methods`       | no       | `FunctionDeclaration[]`     | The methods of the declared type.                           |
 | `initializers`  | no       | `FunctionDeclarationVoid[]` | Initializer methods of the declared type.                   |
 | `dispatchTable` | no       | `DispatchTableEntry[]`      | Table for looking up interface conformance implementations. |
+<!-- shape: RCTypeDeclaration -->
+
+| Field           | Required | Type                        | Meaning                                                     |
+| --------------- | -------- | --------------------------- | ----------------------------------------------------------- |
+| `kind`          | yes      | `"RC_TYPE_DECL"`            | Declaration discriminator.                                  |
+| `name`          | yes      | `string`                    | The name of the declared type.                              |
+| `namespace`     | no       | `string`                    | Optional namespace.                                         |
+| `properties`    | yes      | `PropertyDeclaration[]`     | The stored properties of the declared type.                 |
+| `conformances`  | no       | `Conformance[]`             | Interfaces the declared type conforms to.                   |
+| `base`          | no       | `CanonicalName`             | The supertype of the declared type.                         |
+| `methods`       | no       | `FunctionDeclaration[]`     | The methods of the declared type.                           |
+| `initializers`  | no       | `FunctionDeclarationVoid[]` | Initializer methods of the declared type.                   |
+| `dispatchTable` | no       | `DispatchTableEntry[]`      | Table for looking up interface conformance implementations. |
 
 > [!info] Table: the properties of the `RC_TYPE_DECL` node
+
+<!-- /shape: RCTypeDeclaration -->
+
+<!-- shape: CanonicalName -->
 
 | Field       | Required | Type     | Meaning             |
 | ----------- | -------- | -------- | ------------------- |
@@ -30,12 +47,20 @@ Clawr separates these types in three variants: `data`, `object` and `service`, w
 
 > [!info] Table: the properties of the `CanonicalName` node
 
+<!-- /shape: CanonicalName -->
+
+<!-- shape: Conformance -->
+
 | Field          | Required | Type            | Meaning                             |
 | -------------- | -------- | --------------- | ----------------------------------- |
 | `interface`    | yes      | `CanonicalName` | The interface the type conforms to. |
 | `fulfillments` | yes      | `Fulfillment[]` | Lookup table for implementations.   |
 
 > [!info] Table: the properties of the `Conformance` node
+
+<!-- /shape: Conformance -->
+
+<!-- shape: DispatchTableEntry -->
 
 | Field            | Required | Type                | Meaning                                                         |
 | ---------------- | -------- | ------------------- | --------------------------------------------------------------- |
@@ -45,12 +70,20 @@ Clawr separates these types in three variants: `data`, `object` and `service`, w
 
 > [!info] Table: the properties of the `DispatchTableEntry` node
 
+<!-- /shape: DispatchTableEntry -->
+
+<!-- shape: Fulfillment -->
+
 | Field            | Required | Type           | Meaning                                              |
 | ---------------- | -------- | -------------- | ---------------------------------------------------- |
 | `requirement`    | yes      | `FunctionName` | The required method name.                            |
 | `implementation` | yes      | `FunctionName` | The name of the method that fulfils the requirement. |
 
 > [!info] Table: the properties of the `Fulfillment` node
+
+<!-- /shape: Fulfillment -->
+
+<!-- shape: FunctionSignature -->
 
 | Field        | Required | Type                              | Meaning                                   |
 | ------------ | -------- | --------------------------------- | ----------------------------------------- |
@@ -61,6 +94,10 @@ Clawr separates these types in three variants: `data`, `object` and `service`, w
 
 > [!info] Table: the properties of the `FunctionSignature` node
 
+<!-- /shape: FunctionSignature -->
+
+<!-- shape: Parameter -->
+
 | Field  | Required | Type       | Meaning                    |
 | ------ | -------- | ---------- | -------------------------- |
 | `name` | yes      | `string`   | The name of the parameter. |
@@ -68,12 +105,18 @@ Clawr separates these types in three variants: `data`, `object` and `service`, w
 
 > [!info] Table: the properties of the `Parameter` node
 
+<!-- /shape: Parameter -->
+
+<!-- shape: PropertyDeclaration -->
+
 | Field  | Required | Type       | Meaning                   |
 | ------ | -------- | ---------- | ------------------------- |
 | `name` | yes      | `string`   | The name of the property. |
 | `type` | yes      | `ValueSet` | The type of the property. |
 
 > [!info] Table: the properties of the `PropertyDeclaration` node
+
+<!-- /shape: PropertyDeclaration -->
 
 The break in the definition above indicates that some types (`object`/`service`) include `methods`, and those types may include the optional properties `base`, `initializers` and `dispatchTable`. A type without `methods` ( `data` syntax) cannot include those properties. _All_ types however have both `name` and `properties`.
 

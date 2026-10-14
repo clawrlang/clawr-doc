@@ -6,12 +6,16 @@
 
 A `TRUTHVALUE_LITERAL` is a simple three-state truth value.
 
+<!-- shape: TruthvalueLiteral -->
+
 | Field  | Required | Type                   | Meaning                     |
 | ------ | -------- | ---------------------- | --------------------------- |
 | `kind` | yes      | `"TRUTHVALUE_LITERAL"` | Declaration discriminator.  |
 | `type` | yes      | `TruthvalueSingleton`  | The type of the expression. |
 
 > [!info] Table: the properties of the `TRUTHVALUE_LITERAL` node
+
+<!-- /shape: TruthvalueLiteral -->
 
 The `value` is a singleton set containing either one of the values `"false"`, `"ambiguous"` or `"true"`.
 

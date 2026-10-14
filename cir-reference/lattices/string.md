@@ -11,12 +11,16 @@ There is no way to construct a subset at this time, though future ideas include 
 
 The schema accepts either an unconstrained string set or a singleton value:
 
+<!-- shape: StringSet -->
+
 | Field      | Required | Type       | Meaning                      |
 | ---------- | -------- | ---------- | ---------------------------- |
 | `universe` | yes      | `"string"` | Declaration discriminator.   |
 | `value`    | no       | `string`   | The single value in the set. |
 
 > [!info] Table: the properties of the `string` node
+
+<!-- /shape: StringSet -->
 
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="../../adr/admonitions.js"></script>

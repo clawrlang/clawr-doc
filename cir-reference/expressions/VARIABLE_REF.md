@@ -6,13 +6,17 @@
 
 The runtime value of a variable.
 
-| Field  | Required | Type             | Meaning                            |
-| ------ | -------- | ---------------- | ---------------------------------- |
-| `kind` | yes      | `"VARIABLE_REF"` | Declaration discriminator.         |
-| `name` | yes      | `string`         | The name of the declared variable. |
-| `type` | no       | `ValueSet`       | The type of the declared variable. |
+<!-- shape: VariableReference -->
+
+| Field  | Required | Type             | Meaning                              |
+| ------ | -------- | ---------------- | ------------------------------------ |
+| `kind` | yes      | `"VARIABLE_REF"` | Declaration discriminator.           |
+| `name` | yes      | `string`         | The name of the referenced variable. |
+| `type` | yes      | `ValueSet`       | The type of the variable.            |
 
 > [!info] Table: the properties of the `VARIABLE_REF` node
+
+<!-- /shape: VariableReference -->
 
 ## Rules for Frontend
 
