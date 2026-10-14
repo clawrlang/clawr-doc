@@ -26,15 +26,10 @@
     "InterfaceDeclaration",
     "FunctionDeclaration"
   ],
+  "./expressions/AND-OR.md": ["LogicalOperation"],
   "./expressions/ALLOCATION.md": ["Allocation", "PropertyInitializer"],
+  "./expressions/arithmetic-operators.md": ["Arithmetic"],
   "./expressions/AS_SHARED.md": ["AsShared"],
-  "./expressions/binary-operators.md": [
-    "Equality",
-    "OrderComparison",
-    "RefComparison",
-    "LogicalOperation",
-    "Arithmetic"
-  ],
   "./expressions/BOX.md": ["Box"],
   "./expressions/CALL.md": [
     "FunctionCallExpression",

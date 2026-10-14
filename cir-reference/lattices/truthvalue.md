@@ -15,7 +15,7 @@ Rather than a simple Boolean type, Clawr considers a three-valued truth:
 | ---------- | -------- | -------------- | ------------------------------ |
 | `universe` | yes      | `"truthvalue"` | Declaration discriminator.     |
 | `boxed`    | no       | `true`         | Present if the value is boxed. |
-| `values`   | no       | `Truthvalue[]` | The values in the set.         |
+| `values`   | no       | `Boolean[]`    | The values in the set.         |
 | `value`    | no       | `Truthvalue`   | The single value in the set.   |
 
 > [!info] Table: the properties of the `truthvalue` node

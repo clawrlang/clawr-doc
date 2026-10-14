@@ -194,9 +194,17 @@ A reference to a property value of an object.
 
 [Click here](./PROPERTY_REF.md) for details
 
-### Binary Operators
+### Arithmetic Operators
 
-[Click here](./binary-operators.md) for details
+[Click here](./arithmetic-operators.md) for details
+
+### Comparison Operators
+
+[Click here](./comparison-operators.md) for details
+
+### Logic Operators
+
+[Click here](./AND-OR.md) for details
 
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="../../adr/admonitions.js"></script>
