@@ -9,9 +9,71 @@ The `RC_TYPE_DECL` node defines a reference-counted type that stores its state i
 
 Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is reflected in the CIR only in so much as disallowing certain properties unless the `methods` property is included.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/RCTypeDeclaration" }
-```
+| Field           | Required | Type                        | Meaning                                                     |
+| --------------- | -------- | --------------------------- | ----------------------------------------------------------- |
+| `kind`          | yes      | `"RC_TYPE_DECL"`            | Declaration discriminator.                                  |
+| `name`          | yes      | `string`                    | The name of the declared type.                              |
+| `namespace`     | no       | `string`                    | Optional namespace.                                         |
+| `properties`    | yes      | `PropertyDeclaration[]`     | The stored properties of the declared type.                 |
+| `conformances`  | no       | `Conformance[]`             | Interfaces the declared type conforms to.                   |
+| `base`          | no       | `CanonicalName`             | The supertype of the declared type.                         |
+| `methods`       | no       | `FunctionDeclaration[]`     | The methods of the declared type.                           |
+| `initializers`  | no       | `FunctionDeclarationVoid[]` | Initializer methods of the declared type.                   |
+| `dispatchTable` | no       | `DispatchTableEntry[]`      | Table for looking up interface conformance implementations. |
+
+> [!info] Table: the properties of the `RC_TYPE_DECL` node
+
+| Field       | Required | Type     | Meaning             |
+| ----------- | -------- | -------- | ------------------- |
+| `name`      | yes      | `string` | The name of a type. |
+| `namespace` | no       | `string` | Optional namespace. |
+
+> [!info] Table: the properties of the `CanonicalName` node
+
+| Field          | Required | Type            | Meaning                             |
+| -------------- | -------- | --------------- | ----------------------------------- |
+| `interface`    | yes      | `CanonicalName` | The interface the type conforms to. |
+| `fulfillments` | yes      | `Fulfillment[]` | Lookup table for implementations.   |
+
+> [!info] Table: the properties of the `Conformance` node
+
+| Field            | Required | Type                | Meaning                                                         |
+| ---------------- | -------- | ------------------- | --------------------------------------------------------------- |
+| `slot`           | yes      | `FunctionSignature` | The requirement.                                                |
+| `declaredIn`     | yes      | `CanonicalName`     | The type that introduces the requirement.                       |
+| `implementation` | no       | `CanonicalName`     | The type (itself or supertype) that implements the requirement. |
+
+> [!info] Table: the properties of the `DispatchTableEntry` node
+
+| Field            | Required | Type           | Meaning                                              |
+| ---------------- | -------- | -------------- | ---------------------------------------------------- |
+| `requirement`    | yes      | `FunctionName` | The required method name.                            |
+| `implementation` | yes      | `FunctionName` | The name of the method that fulfils the requirement. |
+
+> [!info] Table: the properties of the `Fulfillment` node
+
+| Field        | Required | Type                              | Meaning                                   |
+| ------------ | -------- | --------------------------------- | ----------------------------------------- |
+| `baseName`   | yes      | `string`                          | Function base name.                       |
+| `labels`     | yes      | `string[]`                        | Labels; part of the unique function name. |
+| `parameters` | yes      | `Parameter[]`                     | Each parameter has `name` and `type`.     |
+| `returnType` | yes      | <code>ValueSet &#124; Void</code> | `{"universe":"void"}` means no result.    |
+
+> [!info] Table: the properties of the `FunctionSignature` node
+
+| Field  | Required | Type       | Meaning                    |
+| ------ | -------- | ---------- | -------------------------- |
+| `name` | yes      | `string`   | The name of the parameter. |
+| `type` | yes      | `ValueSet` | The type of the parameter. |
+
+> [!info] Table: the properties of the `Parameter` node
+
+| Field  | Required | Type       | Meaning                   |
+| ------ | -------- | ---------- | ------------------------- |
+| `name` | yes      | `string`   | The name of the property. |
+| `type` | yes      | `ValueSet` | The type of the property. |
+
+> [!info] Table: the properties of the `PropertyDeclaration` node
 
 The break in the definition above indicates that some types (`object`/`service`) include `methods`, and those types may include the optional properties `base`, `initializers` and `dispatchTable`. A type without `methods` ( `data` syntax) cannot include those properties. _All_ types however have both `name` and `properties`.
 
@@ -274,3 +336,7 @@ Subtype that overrides a method:
   ]
 }
 ```
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

@@ -16,10 +16,23 @@ A `FUNCTION_DECL` defines a “free function” in the module or a method on an 
 | `namespace`  | no       | `string`                          | Optional namespace (not for methods).     |
 | `labels`     | yes      | `string[]`                        | Labels; part of the unique function name. |
 | `parameters` | yes      | `Parameter[]`                     | Each parameter has `name` and `type`.     |
-| `returnType` | yes      | <code>ValueSet &#124; Void</code> | `{"universe":"void"}` means no result.    |
+| `returnType` | yes      | <code>ValueSet &#124; void</code> | `{"universe":"void"}` means no result.    |
 | `body`       | yes      | `Statement[]`                     | Function body.                            |
 
 > [!info] Table: the properties of a `FUNCTION__DECL`
+
+| Field  | Required | Type       | Meaning                    |
+| ------ | -------- | ---------- | -------------------------- |
+| `name` | yes      | `string`   | The name of the parameter. |
+| `type` | yes      | `ValueSet` | The type of the parameter. |
+
+> [!info] Table: the properties of the `Parameter` node
+
+| Field      | Required | Type     | Meaning                    |
+| ---------- | -------- | -------- | -------------------------- |
+| `universe` | yes      | `"void"` | Declaration discriminator. |
+
+> [!info] Table: the properties of the `void` node
 
 A function's unique name is defined by its `baseName` and its `labels` (plus the optional `namespace` that exists on all module-scoped declarations).
 

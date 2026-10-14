@@ -6,9 +6,12 @@
 
 Return early from a `void` function or return a value from a query function.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/Return" }
-```
+| Field   | Required | Type         | Meaning                            |
+| ------- | -------- | ------------ | ---------------------------------- |
+| `kind`  | yes      | `"RETURN"`   | Declaration discriminator.         |
+| `value` | no       | `Expression` | The value to return to the caller. |
+
+> [!info] Table: the properties of the `RETURN` node
 
 The `value` property indicates the returned value.
 
@@ -21,3 +24,7 @@ The `value` property indicates the returned value.
 ## Rules for Backend
 
 -
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

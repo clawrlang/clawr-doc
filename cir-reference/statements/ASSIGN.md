@@ -6,11 +6,13 @@
 
 Assign a value to a variable or a property.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/Assign" }
-```
+| Field    | Required | Type         | Meaning                        |     |
+| -------- | -------- | ------------ | ------------------------------ | --- |
+| `kind`   | yes      | `"ASSIGN"`   | Declaration discriminator.     |     |
+| `target` | yes      | `Storage`    | Target to mutate.              |     |
+| `value`  | yes      | `Expression` | Value to assign to the target. |     |
 
-The `value` property indicates the returned value.
+> [!info] Table: the properties of the `ASSIGN` node
 
 ## Rules for Frontend
 

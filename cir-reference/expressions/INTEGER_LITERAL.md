@@ -6,9 +6,12 @@
 
 An `INTEGER_LITERAL` is a value in the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ). It may be arbitrarily large.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/IntegerLiteral" }
-```
+| Field  | Required | Type                | Meaning                                              |
+| ------ | -------- | ------------------- | ---------------------------------------------------- |
+| `kind` | yes      | `"INTEGER_LITERAL"` | Declaration discriminator.                           |
+| `type` | yes      | `IntegerSingleton`  | The type of the literal (specified its exact value). |
+
+> [!info] Table: the properties of the `INTEGER_LITERAL` node
 
 The `value` property is singleton set containing a single integer value (`max` == `min`).
 
@@ -24,3 +27,7 @@ The `value` property is singleton set containing a single integer value (`max` =
 - If the value is too large for fixed-size representation it `MUST` be serialized as an arbitrarily sized integer.
 - The physical representation is not limited to binary — or even ternary — but `MAY` use whichever base the target platform uses natively.
 - The representation `MUST` unambiguously and faithfully represent the integer indicated by the `value` property.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

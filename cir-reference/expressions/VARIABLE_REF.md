@@ -6,9 +6,13 @@
 
 The runtime value of a variable.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/VariableReference" }
-```
+| Field  | Required | Type             | Meaning                            |
+| ------ | -------- | ---------------- | ---------------------------------- |
+| `kind` | yes      | `"VARIABLE_REF"` | Declaration discriminator.         |
+| `name` | yes      | `string`         | The name of the declared variable. |
+| `type` | no       | `ValueSet`       | The type of the declared variable. |
+
+> [!info] Table: the properties of the `VARIABLE_REF` node
 
 ## Rules for Frontend
 
@@ -18,3 +22,7 @@ The runtime value of a variable.
 ## Rules for Backend
 
 - The value of the expression `MUST` be the current runtime value of the indicated variable.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

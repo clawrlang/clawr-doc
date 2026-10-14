@@ -6,10 +6,18 @@
 
 A `BOX` is reference-counted wrapper for a primitive value.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/Box" }
-```
+| Field        | Required | Type         | Meaning                                            |
+| ------------ | -------- | ------------ | -------------------------------------------------- |
+| `kind`       | yes      | `"BOX"`      | Declaration discriminator.                         |
+| `expression` | yes      | `Expression` | The primitive value to box.                        |
+| `type`       | yes      | `ValueSet`   | The type of the boxed value (with boxed flag set). |
+
+> [!info] Table: the properties of the `BOX` node
 
 ## Rules for Frontend
 
 ## Rules for Backend
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

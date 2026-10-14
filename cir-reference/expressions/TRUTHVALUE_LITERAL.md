@@ -6,9 +6,12 @@
 
 A `TRUTHVALUE_LITERAL` is a simple three-state truth value.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/TruthvalueLiteral" }
-```
+| Field  | Required | Type                   | Meaning                     |
+| ------ | -------- | ---------------------- | --------------------------- |
+| `kind` | yes      | `"TRUTHVALUE_LITERAL"` | Declaration discriminator.  |
+| `type` | yes      | `TruthvalueSingleton`  | The type of the expression. |
+
+> [!info] Table: the properties of the `TRUTHVALUE_LITERAL` node
 
 The `value` is a singleton set containing either one of the values `"false"`, `"ambiguous"` or `"true"`.
 
@@ -21,3 +24,7 @@ The `ambiguous` state is considered neither completely true nor completely false
 ## Rules for Backend
 
 - The backend `MUST` treat the three different values as separate and mutually unequal.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

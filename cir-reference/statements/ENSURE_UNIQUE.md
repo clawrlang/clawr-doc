@@ -7,9 +7,12 @@
 
 An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and properties. When assigning a variable/property to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated (using `ENSURE_UNIQUE`) before the change is applied.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/EnsureUnique" }
-```
+| Field    | Required | Type              | Meaning                                        |
+| -------- | -------- | ----------------- | ---------------------------------------------- |
+| `kind`   | yes      | `"ENSURE_UNIQUE"` | Declaration discriminator.                     |
+| `object` | yes      | `Storage`         | The variable or field to isolate for mutation. |
+
+> [!info] Table: the properties of the `ENSURE_UNIQUE` node
 
 ## Rules for Frontend
 
@@ -35,3 +38,7 @@ An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-w
 ### Notes on Optimization
 
 `ISOLATED` variables and properties `MAY` be stored on the stack which would render copy-on-write strategies impossible. In that case values `MUST` be copied immediately by the `ASSIGN` operation, and `ENSURE_UNIQUE` `MUST` be ignored as a no-op.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

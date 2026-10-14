@@ -6,9 +6,13 @@
 
 Increment the reference count of an allocation. The reference count of the `object` `MUST` be increased by exactly one.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/Retain" }
-```
+| Field    | Required | Type        | Meaning                          |
+| -------- | -------- | ----------- | -------------------------------- |
+| `kind`   | yes      | `"RETAIN"`  | Declaration discriminator.       |
+| `object` | yes      | `Storage`   | The variable or field to retain. |
+| `type`   | yes      | `RCTypeSet` | The type of the retained entity. |
+
+> [!info] Table: the properties of the `RETAIN` node
 
 ## Rules for Frontend
 
@@ -18,3 +22,7 @@ Increment the reference count of an allocation. The reference count of the `obje
 
 - The reference count of the `object` `MUST` be increased by exactly one.
 - If the runtime is implemented using stack-allocated values for `ISOLATED` variables, this instruction may be disregarded. (Might require including the `isolationLevel` as a property.)
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

@@ -6,9 +6,21 @@
 
 Allocate memory for a reference-counted entity.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/Allocation" }
-```
+| Field            | Required | Type                    | Meaning                                                           |
+| ---------------- | -------- | ----------------------- | ----------------------------------------------------------------- |
+| `kind`           | yes      | `"ALLOCATION"`          | Declaration discriminator.                                        |
+| `isolationLevel` | yes      | `IsolationLevel`        | The isolation level (ISOLATED od SHARED) of the allocated entity. |
+| `properties`     | no       | `PropertyInitializer[]` | Property values for initialization.                               |
+| `type`           | yes      | `RCTypeSet`             | The type of the allocated entity.                                 |
+
+> [!info] Table: the properties of the `ALLOCATION` node
+
+| Field   | Required | Type         | Meaning                   |
+| ------- | -------- | ------------ | ------------------------- |
+| `name`  | yes      | `string`     | The name of the property. |
+| `value` | yes      | `Expression` | The type of the property. |
+
+> [!info] Table: the properties of the `PropertyInitializer` node
 
 The `type` property includes a `name` and optional `namespace` that identifies the type of the new entity.
 
@@ -30,3 +42,7 @@ The `properties` property indicates the initial value of the allocated memory.
 - The backend `MUST` allocate enough memory to store the entire entity, plus whatever additional information it needs for reference counting and other runtime checks.
 - The backend `MAY` use the `isolationLevel` property to aid optimization. If the value is `"ISOLATED"` the backend `MAY` use stack allocation instead of heap allocation. But then it `MUST` dereference `ISOLATED` values accordingly in other expressions.
 - The `properties` property indicates the initial value of the allocated memory. The backend `MUST` populate each property with the value of the corresponding `Expression`.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

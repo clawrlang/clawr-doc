@@ -7,9 +7,15 @@
 
 The `integer` type consists of the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/IntegerSet" }
-```
+| Field      | Required | Type        | Meaning                                   |
+| ---------- | -------- | ----------- | ----------------------------------------- |
+| `universe` | yes      | `"integer"` | Declaration discriminator.                |
+| `boxed`    | no       | `true`      | Present if the value is boxed.            |
+| `min`      | no       | `string`    | The lower bound of the range (inclusive). |
+| `max`      | no       | `string`    | The upper bound of the range (inclusive). |
+| `value`    | no       | `string`    | The single value of the set.              |
+
+> [!info] Table: the properties of the `integer` node
 
 The range is unlimited by default, representing all of ℤ. A limited range can be created by specifying an upper bound (`max`) and/or a lower bound (`min`).
 
@@ -25,6 +31,7 @@ In theory, any integer should be representable. [^memory] In practice, this mean
 
 ## Rules for Frontend
 
+- The `value` property `MUST NOT` be included if either `max` or `min` is included.
 - The `min` and `max` values (if included) `MUST` be encoded using base 10 and be integers.
 - If both `min` and `max` are specified `min` `MUST` be numerically less than or equal to `max`.
 - Static analysis `MUST` ensure that reported value-sets are never exceeded. Any case where that is not guaranteed `MUST` result in an error state before the CIR is handed to the backend.
@@ -40,3 +47,6 @@ MathJax = { tex: { inlineMath: [['$', '$']] } };
 <script id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

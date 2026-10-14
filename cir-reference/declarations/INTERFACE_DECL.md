@@ -20,6 +20,23 @@ Clawr separates these types into two variants: `trait` and `role`, with varying 
 
 > [!info] Table: the properties of an `INTERFACE_DECL`
 
+| Field        | Required | Type                              | Meaning                                   |
+| ------------ | -------- | --------------------------------- | ----------------------------------------- |
+| `baseName`   | yes      | `string`                          | Function base name.                       |
+| `labels`     | yes      | `string[]`                        | Labels; part of the unique function name. |
+| `parameters` | yes      | `Parameter[]`                     | Each parameter has `name` and `type`.     |
+| `returnType` | yes      | <code>ValueSet &#124; Void</code> | `{"universe":"void"}` means no result.    |
+
+> [!info] Table: the properties of the `FunctionSignature` node
+
+| Field  | Required | Type       | Meaning                    |
+| ------ | -------- | ---------- | -------------------------- |
+| `name` | yes      | `string`   | The name of the parameter. |
+| `type` | yes      | `ValueSet` | The type of the parameter. |
+
+> [!info] Table: the properties of the `Parameter` node
+
+
 The `name` and `namespace` properties uniquely identify the type.
 
 The `methods` property lists a set of method signatures (name and return-type) that define interactions with conforming entities.

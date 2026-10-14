@@ -8,9 +8,15 @@ A `VARIABLE_DECL` defines a variable. Variables store values as the application 
 
 `VARIABLE_DECL` `MAY` be used as a statement (a local variable in a function) or as a module-level declaration (available to all code in the module and — through a namespace reference — to the entire application).
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/VariableDeclaration" }
-```
+| Field          | Required | Type              | Meaning                            |
+| -------------- | -------- | ----------------- | ---------------------------------- |
+| `kind`         | yes      | `"VARIABLE_DECL"` | Declaration discriminator.         |
+| `name`         | yes      | `string`          | The name of the declared variable. |
+| `namespace`    | no       | `string`          | Optional namespace.                |
+| `type`         | yes      | `ValueSet`        | The type of the variable.          |
+| `initialValue` | yes      | `Expression`      | The initial value of the variable. |
+
+> [!info] Table: the properties of the `VARIABLE_DECL` node
 
 The `name` property names the variable.
 

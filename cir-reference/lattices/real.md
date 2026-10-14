@@ -11,9 +11,15 @@ If either or both limits is excluded, the value could be any real number (ℝ), 
 
 The schema accepts either a bounded/unbounded range or a singleton value:
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/RealSet" }
-```
+| Field      | Required | Type     | Meaning                                   |
+| ---------- | -------- | -------- | ----------------------------------------- |
+| `universe` | yes      | `"real"` | Declaration discriminator.                |
+| `boxed`    | no       | `true`   | Present if the value is boxed.            |
+| `min`      | no       | `string` | The lower bound of the range (inclusive). |
+| `max`      | no       | `string` | The upper bound of the range (inclusive). |
+| `value`    | no       | `string` | The single value of the set.              |
+
+> [!info] Table: the properties of the `real` node
 
 ## Rules for Frontend
 
@@ -25,3 +31,6 @@ MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
 <script id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

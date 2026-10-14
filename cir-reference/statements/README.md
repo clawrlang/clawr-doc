@@ -11,9 +11,12 @@ Statements are added to the `startBlock` of a module, and to the `body` of a fun
 
 An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend before mutations to preserve state isolation between copy-on-write variables and properties.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/EnsureUnique" }
-```
+| Field    | Required | Type              | Meaning                                        |
+| -------- | -------- | ----------------- | ---------------------------------------------- |
+| `kind`   | yes      | `"ENSURE_UNIQUE"` | Declaration discriminator.                     |
+| `object` | yes      | `Storage`         | The variable or field to isolate for mutation. |
+
+> [!info] Table: the properties of the `ENSURE_UNIQUE` node
 
 [Click here](ENSURE_UNIQUE.md) for more details
 
@@ -21,9 +24,12 @@ An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend bef
 
 The [`RELEASE`](./RELEASE.md) statement decrements the reference count of a block of memory.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/Release" }
-```
+| Field    | Required | Type        | Meaning                                 |
+| -------- | -------- | ----------- | --------------------------------------- |
+| `kind`   | yes      | `"RELEASE"` | Declaration discriminator.              |
+| `object` | yes      | `Storage`   | The variable or field that exits scope. |
+
+> [!info] Table: the properties of the `RELEASE` node
 
 [Click here](./RELEASE.md) for more details
 
@@ -31,9 +37,14 @@ The [`RELEASE`](./RELEASE.md) statement decrements the reference count of a bloc
 
 A `CALL` expression executes a function.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/FunctionCallStatement" }
-```
+| Field       | Required | Type           | Meaning                                |
+| ----------- | -------- | -------------- | -------------------------------------- |
+| `kind`      | yes      | `"CALL"`       | Declaration discriminator.             |
+| `receiver`  | no       | `Receiver`     | The object whose method to call.       |
+| `name`      | yes      | `FunctionName` | The name of the function to call.      |
+| `arguments` | yes      | `Expression[]` | The arguments to send to the function. |
+
+> [!info] Table: the properties of the `CALL` node
 
 [Click here](./CALL.md) for more details
 
@@ -41,9 +52,12 @@ A `CALL` expression executes a function.
 
 Return early from a `void` function or return a value from a query function.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/Return" }
-```
+| Field   | Required | Type         | Meaning                            |
+| ------- | -------- | ------------ | ---------------------------------- |
+| `kind`  | yes      | `"RETURN"`   | Declaration discriminator.         |
+| `value` | no       | `Expression` | The value to return to the caller. |
+
+> [!info] Table: the properties of the `RETURN` node
 
 [Click here](./RETURN.md) for more details
 
@@ -51,28 +65,46 @@ Return early from a `void` function or return a value from a query function.
 
 Assign a value to a variable or a property.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/Assign" }
-```
+| Field    | Required | Type         | Meaning                        |
+| -------- | -------- | ------------ | ------------------------------ |
+| `kind`   | yes      | `"ASSIGN"`   | Declaration discriminator.     |
+| `target` | yes      | `Storage`    | Target to mutate.              |
+| `value`  | yes      | `Expression` | Value to assign to the target. |
+
+> [!info] Table: the properties of the `ASSIGN` node
 
 [Click here](./ASSIGN.md) for more details
 
-### `SELF_ASSIGN`
+### `SELF_INIT`
 
 Initialize the properties of the `self` entity.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/SelfAssignment" }
-```
+| Field        | Required | Type                    | Meaning                                           |
+| ------------ | -------- | ----------------------- | ------------------------------------------------- |
+| `kind`       | yes      | `"SELF_INIT"`           | Declaration discriminator.                        |
+| `type`       | yes      | `RCTypeSet`             | The type of the `self` variable.                  |
+| `properties` | yes      | `PropertyInitializer[]` | Property values for initialization discriminator. |
 
-[Click here](./SELF_ASSIGN.md) for more details
+> [!info] Table: the properties of the `SELF_INIT` node
+
+[Click here](./SELF_INIT.md) for more details
 
 ## `VARIABLE_DECL`
 
 The variable declaration can also be used as a `Statement`. In other words, it `MAY` appear in a function body and in the `startBlock` of a module.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/VariableDeclaration" }
-```
+| Field          | Required | Type              | Meaning                            |
+| -------------- | -------- | ----------------- | ---------------------------------- |
+| `kind`         | yes      | `"VARIABLE_DECL"` | Declaration discriminator.         |
+| `name`         | yes      | `string`          | The name of the declared variable. |
+| `namespace`    | no       | `string`          | Optional namespace.                |
+| `type`         | yes      | `ValueSet`        | The type of the variable.          |
+| `initialValue` | yes      | `Expression`      | The initial value of the variable. |
+
+> [!info] Table: the properties of the `VARIABLE_DECL` node
 
 [Click here](./VARIABLE_DECL.md) for more details
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">

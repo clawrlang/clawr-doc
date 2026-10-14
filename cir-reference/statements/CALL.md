@@ -6,9 +6,29 @@
 
 A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as a statement references a function with a `returnType` of `{"universe":"void"}`.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/FunctionCallStatement" }
-```
+| Field       | Required | Type           | Meaning                                |
+| ----------- | -------- | -------------- | -------------------------------------- |
+| `kind`      | yes      | `"CALL"`       | Declaration discriminator.             |
+| `receiver`  | no       | `Receiver`     | The object whose method to call.       |
+| `name`      | yes      | `FunctionName` | The name of the function to call.      |
+| `arguments` | yes      | `Expression[]` | The arguments to send to the function. |
+
+> [!info] Table: the properties of the `CALL` node
+
+| Field      | Required | Type                                                          | Meaning                                  |
+| ---------- | -------- | ------------------------------------------------------------- | ---------------------------------------- |
+| `object`   | yes      | `Expression`                                                  | The object whose method to call.         |
+| `dispatch` | yes      | <code>"conformance" &#124; "direct" &#124; "inherited"</code> | The mode of dispatch to call the method. |
+
+> [!info] Table: the properties of the `Receiver` node
+
+| Field       | Required | Type       | Meaning                                         |
+| ----------- | -------- | ---------- | ----------------------------------------------- |
+| `baseName`  | yes      | `string`   | The base name of the function.                  |
+| `labels`    | yes      | `string[]` | The parameter labels (part of the unique name). |
+| `namespace` | no       | `string`   | Optional namespace.                             |
+
+> [!info] Table: the properties of the `FunctionName` node
 
 The `receiver` property — if specified — indicates that the called function is a method and the `self` of the call is the receiver.
 
@@ -32,3 +52,7 @@ The `dispatch` property of the `receiver` indicate how the method is called: dir
 - The indicated function `MUST` be called with the specified arguments matching the parameters of the function in declared order.
 - If calling a method, the `receiver` expression `MUST` evaluate to the `object` or `service` the message is sent to.
 - Any `VARIABLE_REF` using the reserved name `"self"` in the body of the method `MUST` evaluate to the `receiver` of the `CALL`.
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../../adr/admonitions.js"></script>
+<link rel="stylesheet" href="../../adr/admonitions.css">
