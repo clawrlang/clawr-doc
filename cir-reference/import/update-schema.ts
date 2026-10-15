@@ -67,7 +67,10 @@ const nodeKey = ({ file, name }: Target) => `${file}#${name}`
 function findDef(name: string, preferredFile?: string): Target {
     if (name.includes('#')) {
         const [file, defName] = name.split('#')
-        const target = { file: file.endsWith('.json') ? file : `${file}.json`, name: defName }
+        const target = {
+            file: file.endsWith('.json') ? file : `${file}.json`,
+            name: defName,
+        }
         getTarget(target)
         return target
     }
@@ -221,107 +224,7 @@ function shapeTable(target: Target): string {
     return `${markdownTable(['Field', 'Required', 'Type', 'Meaning'], rows)}\n\n> [!info] Table: the properties of the \`${nodeName}\` node`
 }
 
-function isCollection(def: Schema): boolean {
-    return (
-        Array.isArray(def.oneOf) &&
-        !def.properties &&
-        !def.allOf &&
-        !def.$ref &&
-        def.oneOf.every((member: Schema) => member.$ref)
-    )
-}
-
-// A variant group's members all expose the same value for a shared discriminator (`kind` or `universe`).
-function discriminatorOf(target: Target): string | undefined {
-    const props = collectProperties(getTarget(target), target.file)
-    for (const key of ['kind', 'universe']) {
-        const prop = props.get(key)
-        if (prop) {
-            return JSON.stringify(
-                [...new Set(prop.schemas.flatMap(renderType))].sort(),
-            )
-        }
-    }
-    return undefined
-}
-
-// A collection whose members all share the same discriminator is one node with variants.
-function isVariantGroup(def: Schema, file: string): boolean {
-    if (!isCollection(def)) return false
-    const keys = def.oneOf.map((member: Schema) =>
-        discriminatorOf(resolveRef(member.$ref, file)),
-    )
-    return (
-        keys[0] !== undefined &&
-        keys.every((k: string | undefined) => k === keys[0])
-    )
-}
-
-// Definitions that are only ever composed into others (via $ref/allOf), never used on their own.
-function findFragments(): Set<string> {
-    const composed = new Set<string>()
-    const used = new Set<string>()
-    const walk = (node: Schema, composition: boolean, file: string) => {
-        if (!node || typeof node !== 'object') return
-        if (node.$ref) {
-            const target = resolveRef(node.$ref, file)
-            if (target.name !== undefined)
-                (composition ? composed : used).add(nodeKey(target))
-        }
-        for (const item of node.allOf ?? []) walk(item, true, file)
-        for (const member of node.oneOf ?? []) walk(member, false, file)
-        for (const prop of Object.values<Schema>(node.properties ?? {}))
-            walk(prop, false, file)
-        if (node.items) walk(node.items, false, file)
-    }
-    for (const [file, root] of schemas) {
-        walk(root, false, file)
-        for (const def of Object.values<Schema>(root.$defs ?? {}))
-            walk(def, true, file)
-    }
-    return new Set([...composed].filter((key) => !used.has(key)))
-}
-
-// Every node definition in every schema file.
-function allNodes(): Target[] {
-    const fragments = findFragments()
-    const entries = [...schemas].flatMap(([file, root]) =>
-        Object.entries<Schema>(root.$defs ?? {}).map(
-            ([name, def]) => ({ target: { file, name }, def }),
-        ),
-    )
-    const hidden = new Set<string>(
-        entries
-            .filter(({ target, def }) => isVariantGroup(def, target.file))
-            .flatMap(({ target, def }) =>
-                def.oneOf.map((member: Schema) =>
-                    nodeKey(resolveRef(member.$ref, target.file)),
-                ),
-            ),
-    )
-    return entries
-        .filter(
-            ({ target, def }) =>
-                !hidden.has(nodeKey(target)) &&
-                !fragments.has(nodeKey(target)) &&
-                (!isCollection(def) || isVariantGroup(def, target.file)) &&
-                collectProperties(def, target.file).size > 0,
-        )
-        .map(({ target }) => target)
-}
-
-// Usage: node make-md-tables.ts [--all]
-// Prints a table for every node with --all; otherwise updates the docs listed in docs.manifest.json.
-if (process.argv.includes('--all')) {
-    console.log(
-        allNodes()
-            .map((target) => `### ${nodeKey(target)}\n\n${shapeTable(target)}`)
-            .join('\n\n'),
-    )
-    process.exit(0)
-}
 type Manifest = Record<string /* doc path */, string[] /* def names */>
-
 const manifest: Manifest = JSON.parse(
     readFileSync(new URL('./docs.manifest.json', import.meta.url), 'utf8'),
 )
