@@ -11,7 +11,7 @@ Allocate memory for a reference-counted entity.
 | Field            | Required | Type                    | Meaning                                                           |
 | ---------------- | -------- | ----------------------- | ----------------------------------------------------------------- |
 | `kind`           | yes      | `"ALLOCATION"`          | Declaration discriminator.                                        |
-| `isolationLevel` | yes      | `IsolationLevel`        | The isolation level (ISOLATED od SHARED) of the allocated entity. |
+| `isolationLevel` | yes      | `IsolationLevel`        | The isolation level (ISOLATED or SHARED) of the allocated entity. |
 | `properties`     | no       | `PropertyInitializer[]` | Property values for initialization.                               |
 | `type`           | yes      | `RCTypeSet`             | The type of the allocated entity.                                 |
 
