@@ -69,10 +69,10 @@ git subtree pull --prefix=adr . tmp
 ### Clawr Intermediate Representation
 
 The CIR is defined in <https://github.com/clawrlang/clawr/tree/main/packages/cir> (multiple JSON files).
-To update the tables download the files to ./cir-reference/import and execute the following script:
+To update the tables download the files to ./cir-reference/.import and execute the following script:
 
 ```sh
-cd cir-reference/import
+cd cir-reference/.import
 node update-schema.ts
 ```
 

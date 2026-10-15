@@ -2,4 +2,7 @@
 node_modules/
 dist/
 .out/
-cir-reference/import/*.json
+cir-reference/.import/*.json
+_site/
+.jekyll-cache/
+Gemfile.lock
