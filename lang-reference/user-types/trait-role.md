@@ -52,7 +52,3 @@ A value is a piece of information: a single _datum_ or an aggregate of related _
 A `trait` is only applicable to value-types, while a `role` applies (primarily) to `service`s. You could say that a value-type is any type that can conform to a `trait`. Or you could say that “a value-type is any type that is not a `service`” (the only types _not_ able to conform to `trait`s).
 
 Another perspective is that an `object` is a “value-type” because its methods are restricted to touch its properties only (its own data). It may not reach beyond to access sensors, the internet, the file system… To access the environment, you need a `service`.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../scripts/admonitions.js"></script>
-<link rel="stylesheet" href="../../scripts/admonitions.css">

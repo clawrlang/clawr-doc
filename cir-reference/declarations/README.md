@@ -99,7 +99,3 @@ A `FUNCTION_DECL` defines a “free function” in the module, a “static” `c
 <!-- /shape: FunctionDeclaration -->
 
 [Click here](FUNCTION_DECL.md) for more details
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

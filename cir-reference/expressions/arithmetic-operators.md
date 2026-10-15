@@ -31,7 +31,3 @@ The inputs `MAY` have mixed ranges. The backend `MUST` perform the operation in 
 
 - The inputs can have mixed ranges. The backend `MUST` perform the operation in a way that matches both the operands' types AND the expression's type.
 - There `MAY` be a need for multiple implementations for each operation and the backend `MUST` select the correct implementation based on the given types.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

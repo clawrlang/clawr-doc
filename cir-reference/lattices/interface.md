@@ -18,7 +18,3 @@ A set allowing all values/entities that conform to an interface (`trait` or `rol
 > [!info] Table: the properties of the `interface` node
 
 <!-- /shape: InterfaceSet -->
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

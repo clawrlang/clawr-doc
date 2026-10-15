@@ -26,7 +26,3 @@ See also: [`ALLOCATION`](../expresssions/ALLOCATION.md), [`RETAIN`](../expressio
 - The backend `MAY` assign `null` to the variable/property to avoid zombie references.
 
 If the runtime is implemented using stack-allocated values for `ISOLATED` variables, this instruction may be disregarded. (Would that require including the semantics as a property?)
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

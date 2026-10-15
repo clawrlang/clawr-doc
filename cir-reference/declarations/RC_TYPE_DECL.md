@@ -368,7 +368,3 @@ Subtype that overrides a method:
   ]
 }
 ```
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

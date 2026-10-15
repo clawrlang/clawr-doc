@@ -116,7 +116,3 @@ When dealing with `mut` variables, a `ref` property becomes like a hand reaching
 > Prefer `mut` and `const` properties when possible. Propertys without explicit semantics default to `mut`.
 >
 > Neither `mut` nor `const` properties in a `ref` variable can ever cause a problem. The issue only occurs in one direction: when properties are declared `ref`, they always use reference semantics whether the variable they are referenced through is a `ref` or `mut`. It even breaks the `const` promise as a referenced structure can always change.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../scripts/admonitions.js"></script>
-<link rel="stylesheet" href="../../scripts/admonitions.css">

@@ -28,7 +28,3 @@ The `ambiguous` state is considered neither completely true nor completely false
 ## Rules for Backend
 
 - The backend `MUST` treat the three different values as separate and mutually unequal.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

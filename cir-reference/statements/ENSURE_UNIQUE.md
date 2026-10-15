@@ -42,7 +42,3 @@ An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-w
 ### Notes on Optimization
 
 `ISOLATED` variables and properties `MAY` be stored on the stack which would render copy-on-write strategies impossible. In that case values `MUST` be copied immediately by the `ASSIGN` operation, and `ENSURE_UNIQUE` `MUST` be ignored as a no-op.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

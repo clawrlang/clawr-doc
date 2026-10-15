@@ -21,7 +21,3 @@ The schema accepts either an unconstrained string set or a singleton value:
 > [!info] Table: the properties of the `string` node
 
 <!-- /shape: StringSet -->
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

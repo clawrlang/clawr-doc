@@ -29,7 +29,3 @@ subset boolean = truthvalue(false|true)
 ```
 
 This means that all `boolean` values are in reality `truthvalue` values. They are simply restricted to the values `true` and `false`. This could perhaps be used to simplify conditions at runtime. I leave the exercise to the backend developer.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

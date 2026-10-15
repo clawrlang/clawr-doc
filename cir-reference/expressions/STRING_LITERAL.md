@@ -18,7 +18,3 @@ A `STRING_LITERAL` is a simple textual value. The backend `MAY` lower this as a 
 <!-- /shape: StringLiteral -->
 
 The `type` property is a singleton set that specifies the literal text.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

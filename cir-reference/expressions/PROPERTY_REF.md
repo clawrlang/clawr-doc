@@ -28,7 +28,3 @@ The runtime value of a property.
 ## Rules for Backend
 
 - The value of the expression `MUST` be the current runtime value of the indicated variable.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

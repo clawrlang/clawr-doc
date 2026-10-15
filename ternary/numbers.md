@@ -123,14 +123,3 @@ If we repeat the same pattern over and over again until the input is zero, we wi
 In the last two steps, we are dead on the midpoint value (by magnitude). That is not ambiguous. Rather, it means that we are exactly at the largest value that can be represented in the remaining positions. In both cases, the input is also negative, so we enter minus-ones in the corresponding positions.
 
 Note that when selecting candidate positions and midpoint for the final two (negative) inputs, the _magnitude_ (or absolute value) of the input is used. (That works for positive inputs as well of course.) Using negative values as they are could not place them between two positive powers of three and it would be unclear what the algorithm should do.
-
-<script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
-  }
-};
-</script>
-<script id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-</script>

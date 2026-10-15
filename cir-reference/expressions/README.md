@@ -205,7 +205,3 @@ A reference to a property value of an object.
 ### Logic Operators
 
 [Click here](./AND-OR.md) for details
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

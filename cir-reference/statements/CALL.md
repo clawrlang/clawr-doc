@@ -64,7 +64,3 @@ The `dispatch` property of the `receiver` indicate how the method is called: dir
 - The indicated function `MUST` be called with the specified arguments matching the parameters of the function in declared order.
 - If calling a method, the `receiver` expression `MUST` evaluate to the `object` or `service` the message is sent to.
 - Any `VARIABLE_REF` using the reserved name `"self"` in the body of the method `MUST` evaluate to the `receiver` of the `CALL`.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

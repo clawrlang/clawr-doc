@@ -118,7 +118,3 @@ A set allowing all values/entities that conform to an interface (`trait` or `rol
 <!-- /shape: InterfaceSet -->
 
 [Click here](interface.md) for more details
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

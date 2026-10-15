@@ -18,7 +18,3 @@ A set allowing all instances of a reference counted type (meaning `data`, `objec
 > [!info] Table: the properties of the `rc-type` node
 
 <!-- /shape: RCTypeSet -->
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

@@ -44,13 +44,3 @@ In theory, any integer should be representable. [^memory] In practice, this mean
 
 - A value-set with either or both `max` and `min` unset or `null` `MUST` be stored as an arbitrarily-sized integer.
 - A value-set with both `max` and `min` set `MAY` be stored as a fixed-width integer, but the chosen storage size `MUST` support the entire range of values.
-
-<script>
-MathJax = { tex: { inlineMath: [['$', '$']] } };
-</script>
-<script id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-</script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

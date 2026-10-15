@@ -21,7 +21,3 @@ A `BOX` is reference-counted wrapper for a primitive value.
 ## Rules for Frontend
 
 ## Rules for Backend
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

@@ -50,7 +50,3 @@ The `properties` property indicates the initial value of the allocated memory.
 - The backend `MUST` allocate enough memory to store the entire entity, plus whatever additional information it needs for reference counting and other runtime checks.
 - The backend `MAY` use the `isolationLevel` property to aid optimization. If the value is `"ISOLATED"` the backend `MAY` use stack allocation instead of heap allocation. But then it `MUST` dereference `ISOLATED` values accordingly in other expressions.
 - The `properties` property indicates the initial value of the allocated memory. The backend `MUST` populate each property with the value of the corresponding `Expression`.
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

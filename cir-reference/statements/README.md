@@ -132,7 +132,3 @@ The variable declaration can also be used as a `Statement`. In other words, it `
 <!-- /shape: VariableDeclaration -->
 
 [Click here](./VARIABLE_DECL.md) for more details
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">

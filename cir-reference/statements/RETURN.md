@@ -28,7 +28,3 @@ The `value` property indicates the returned value.
 ## Rules for Backend
 
 -
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="../../adr/admonitions.js"></script>
-<link rel="stylesheet" href="../../adr/admonitions.css">
