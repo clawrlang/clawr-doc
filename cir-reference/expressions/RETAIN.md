@@ -17,6 +17,7 @@ Increment the reference count of an allocation. The reference count of the `obje
 > [!info] Table: the properties of the `RETAIN` node
 
 <!-- /shape: Retain -->
+
 ## Rules for Frontend
 
 - The `object` `MUST` have a reference-counted type ( [`RC_TYPE_DECL`](../declarations/RC_TYPE_DECL.md))

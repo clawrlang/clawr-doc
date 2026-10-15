@@ -9,17 +9,6 @@ The `RC_TYPE_DECL` node defines a reference-counted type that stores its state i
 
 Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is reflected in the CIR only in so much as disallowing certain properties unless the `methods` property is included.
 
-| Field           | Required | Type                        | Meaning                                                     |
-| --------------- | -------- | --------------------------- | ----------------------------------------------------------- |
-| `kind`          | yes      | `"RC_TYPE_DECL"`            | Declaration discriminator.                                  |
-| `name`          | yes      | `string`                    | The name of the declared type.                              |
-| `namespace`     | no       | `string`                    | Optional namespace.                                         |
-| `properties`    | yes      | `PropertyDeclaration[]`     | The stored properties of the declared type.                 |
-| `conformances`  | no       | `Conformance[]`             | Interfaces the declared type conforms to.                   |
-| `base`          | no       | `CanonicalName`             | The supertype of the declared type.                         |
-| `methods`       | no       | `FunctionDeclaration[]`     | The methods of the declared type.                           |
-| `initializers`  | no       | `FunctionDeclarationVoid[]` | Initializer methods of the declared type.                   |
-| `dispatchTable` | no       | `DispatchTableEntry[]`      | Table for looking up interface conformance implementations. |
 <!-- shape: RCTypeDeclaration -->
 
 | Field           | Required | Type                        | Meaning                                                     |

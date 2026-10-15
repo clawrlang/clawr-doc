@@ -2,7 +2,7 @@
 <img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
 # Logic Operators
 
-Clawr supports three-value (Kleene K3) logic. A `truthvalue`is either `false`, `ambiguous` or `true`. The operations `AND` and `OR` have meaningful behaviours that translate cleanly between Boolean  logic and K3.
+Clawr supports three-value (Kleene K3) logic. A `truthvalue` is either `false`, `ambiguous` or `true`. The operations `AND` and `OR` have meaningful behaviours that translate cleanly between Boolean logic and K3.
 
 There are several ternary-only operations, but they are implemented as functions, not operators.
 
