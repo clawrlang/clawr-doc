@@ -36,6 +36,7 @@ Or if you want the _in medias res_ experience, here are links directly to specif
 - [Inheritance](./inheritance.md)
 
 > [!todo]
+>
 > The documentation here should include a getting-started tutorial and different kinds of educationals that encourage incremental understanding of Clawr, object-oriented programming and outside-in design.
 >
 > - It should encourage purpose-revealing designs and traceability of purpose.

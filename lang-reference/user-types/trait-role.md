@@ -14,6 +14,7 @@ The difference is conceptual. A `trait` hides irrelevant data and emphasises ess
 - A `role` describes a capability, a responsibility. It can be embodied by any type — but typically `service`. Because it is expected to access the environment — a source that cannot be structurally isolated — it may only ever use `SHARED` semantics.
 
 > [!warning]
+>
 > Do not conflate Clawr value types with .Net value types. In .Net, a value type is a type that implies value semantics, and the two terms are conflated by structural necessity.
 >
 > Clawr does not signal value semantics through type declaration keywords, so the two terms serve distinct purposes. Value semantics is chosen individually per variable. A “value type” is a type that is defined by the memory specifically allocated to it. It’s _value_.

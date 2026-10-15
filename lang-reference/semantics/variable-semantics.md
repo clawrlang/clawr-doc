@@ -102,6 +102,7 @@ companion BowlingGame {
 ```
 
 > [!note]
+>
 > This `BowlingGame` type is defined as an `object`, meaning it hides its data structure behind an encapsulation. This will be discussed in a [different document](../types/object-data.md).
 
 Now, when using `BowlingGame`, we can choose the appropriate semantics based on our needs:

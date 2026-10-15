@@ -18,6 +18,7 @@ Java is often described as more than a syntax: it is the JRE, the JDK, the ecosy
 Clawr takes this separation further. Clawr is defined by its syntax and the meaning of each statement and expression—not by a runtime, not by an ABI, not by a memory management strategy. Those may vary. The language itself is the fixed point.
 
 > [!note]
+>
 > In practice, a language will probably have to imply or assume some constraints on memory management — Clawrs intermediate representation e.g. assumes reference-counting — and on other technical details as well. But those are not what _defines the language_. They are _concessions to pragmatism_.
 >
 > If it is possible to implement a backend that employs GC instead of ARC — or some new invention as yet unknown — that would be absolutely valid. And if that requires some redesigns to the CIR, it might be worth making that change.

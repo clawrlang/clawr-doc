@@ -60,6 +60,7 @@ state: topProperty: integer
 ```
 
 > [!tip]
+>
 > There are two syntactic forms for initializers. Use the more compact form that looks like an implicit return function when the type only needs to initialize the properties.
 >
 > The initializer does not technically have a return value. The implicit return form is equivalent to the assign-to-self form, but with no room for secondary setup.

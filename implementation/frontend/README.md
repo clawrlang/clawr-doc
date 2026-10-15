@@ -10,6 +10,7 @@ The [Clawr example compiler](https://github.com/clawrlang/clawr) is separated in
 This section discusses the frontend implementation.
 
 > [!warning]
+>
 > The example compiler is mostly an early proof-of-concept implementation. Do not treat it as official. You should also not assume that production compilers will necessarily be based on it.
 >
 > The only strictly defined “Clawr” is the source code syntax, the CIR, and the semantic meaning therein.

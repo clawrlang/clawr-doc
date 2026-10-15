@@ -28,6 +28,7 @@ The `integer` type supports any number in $\mathbb{Z}$.
 An `integer` value can be arbitrarily large — only limited by the physical size of the computer it is running on, and the time it takes to perform operations on it.
 
 > [!note]
+>
 > It may require a custom backend to do this efficiently enough for frontier mathematics, but the modular nature of Clawr should make custom backends the rule, not the exception.
 
 Other languages typically define fixed-size types such as `u32` and `i64`. These types may still be used behind the scenes if the compiler can prove that the value of the variable stays within the appropriate range, but they are not visible to the programmer.

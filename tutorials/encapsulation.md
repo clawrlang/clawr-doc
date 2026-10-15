@@ -184,6 +184,7 @@ state:
 ```
 
 > [!warning]
+>
 > I’m wavering on whether to use the term `companion` or `namespace` for the container of factory methods.
 >
 > - On the one hand the concept is essentially a namespace that contains free functions (and variables) that are not attached to any specific instance. And that concept could be expanded and generalised to namespaces that do _not_ share a name with any type.

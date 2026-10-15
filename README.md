@@ -35,6 +35,7 @@ The source code syntax and semantics are part of the Clawr definition. So are th
 Clawr does _not_ mandate the strategies employed by either the frontend or the backend.
 
 > [!tip]
+>
 > Clawr is a language specification, not a compiler implementation. There is no _official_ Clawr compiler. While there is an implementation that could be granted official status (or maybe rather **recommended** status), it is limited in scope (binary hardware and only tested on macOS). It can at best be made **one of several** official compilers, each targeting a different hardware/OS platform, each using a different strategy, and each offering different optimizations.
 
 ## Other Repositories

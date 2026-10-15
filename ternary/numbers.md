@@ -4,6 +4,7 @@
 # Balanced Ternary Notation
 
 > [!note]
+>
 > This document assumes that we agree what a number is. I recommend [Another Roof on YouTube](https://youtu.be/dKtsjQtigag?si=Ct1JHi-778aodsSi) if you want a rigorous, yet pedagogic, explanation of [the ZFC definition](https://en.wikipedia.org/wiki/Zermelo–Fraenkel_set_theory).
 
 There are two ternary notation systems, standard and balanced. The standard variation (a.k.a. “biased,” “positive” and “unbalanced”) works exactly like other positional notation systems we may be more familiar with: binary, octal, decimal, dozenal, hexadecimal… It simply uses the integer value $3$ as its base, and the digits $0$, $1$ and $2$.
@@ -19,6 +20,7 @@ The _balanced_ ternary system switches the digit $2$ in standard ternary for a d
 One advantage is in how to construct the negative of a value. It’s a simple matter of flipping the sign on every digit: $+1$ becomes $-1$ and vice versa.
 
 > [!tip]
+>
 > This can make ALUs simpler. Subtraction does not need a dedicated structure of transistors; you can just invert the digits of the subtrahend and then perform addition. (Because $a - b = a + (-b)$.)
 >
 > This is however already standard practice in binary ALUs. The negative is slightly more complex in that it needs to add 1 after flipping all bits, but that addition is done efficiently (for integers) by using the carry-in on the first adder. I have not examined how this affects floating-point values
@@ -100,6 +102,7 @@ So with 7 digits, the largest number we can form is ${3^7 - 1 \over 2} = 1,093$.
 The upper limit from picking the lower power digit and the lower limit from picking the next larger power are near identical. In fact they have a difference of exactly one (without overlap). This is a fact that is inherent to the positional system and the reason why positional systems work in general. [^caveat] We can name one of these values (it does not matter which one, but let’s pick the smaller just to make a choice) the “midpoint value.” This can be seen as a kind of mean between powers of three, and it helps illustrate the algorithm I have in mind.
 
 > [!note]
+>
 > The midpoint value isn't an arithmetic or geometric mean. For example it is consistently closer (in absolute terms) to the smaller candidate than the larger. But it functions much like a mean: it is a balance point between two successive powers of three.
 
 [^caveat]: The rule is incorrect as stated. For example, 19 + 1 ≠ 100. But it works superficially, which is close enough for our purposes.
