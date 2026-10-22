@@ -9,12 +9,12 @@ The inputs `MAY` have mixed ranges. The backend `MUST` perform the operation in 
 
 <!-- shape: Arithmetic -->
 
-| Field   | Required | Type                                                                                                                         | Meaning                     |
-| ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `kind`  | yes      | <code>"ADDITION" &#124; "DIVISION" &#124; "EXPONENTIAL" &#124; "MODULUS" &#124; "MULTIPLICATION" &#124; "SUBTRACTION"</code> | Declaration discriminator.  |
-| `left`  | yes      | `Expression`                                                                                                                 | The left operand.           |
-| `right` | yes      | `Expression`                                                                                                                 | The right operand.          |
-| `type`  | yes      | <code>IntegerSet &#124; RealSet</code>                                                                                       | The type of the expression. |
+| Field   | Required | Type                                                                                                                     | Meaning                     |
+| ------- | -------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------- |
+| `kind`  | yes      | <code>"ADDITION" &#124; "DIVISION" &#124; "POWER" &#124; "REMAINDER" &#124; "MULTIPLICATION" &#124; "SUBTRACTION"</code> | Declaration discriminator.  |
+| `left`  | yes      | `Expression`                                                                                                             | The left operand.           |
+| `right` | yes      | `Expression`                                                                                                             | The right operand.          |
+| `type`  | yes      | <code>IntegerSet &#124; RealSet</code>                                                                                   | The type of the expression. |
 
 > [!info] Table: the properties of the `Arithmetic` node
 

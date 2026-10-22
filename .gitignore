@@ -3,6 +3,7 @@ node_modules/
 dist/
 .out/
 cir-reference/.import/*.json
+!cir-reference/.import/docs.manifest.json
 _site/
 .jekyll-cache/
 Gemfile.lock

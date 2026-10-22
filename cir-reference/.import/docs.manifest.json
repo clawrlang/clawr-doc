@@ -1,0 +1,91 @@
+{
+  "../declarations/FUNCTION_DECL.md": [
+    "FunctionDeclaration",
+    "Parameter",
+    "Void"
+  ],
+  "../declarations/INTERFACE_DECL.md": [
+    "InterfaceDeclaration",
+    "FunctionSignature",
+    "Parameter"
+  ],
+  "../declarations/RC_TYPE_DECL.md": [
+    "RCTypeDeclaration",
+    "CanonicalName",
+    "Conformance",
+    "DispatchTableEntry",
+    "Fulfillment",
+    "FunctionSignature",
+    "Parameter",
+    "PropertyDeclaration"
+  ],
+  "../declarations/README.md": [
+    "RCTypeDeclaration",
+    "InterfaceDeclaration",
+    "VariableDeclaration",
+    "FunctionDeclaration"
+  ],
+  "../declarations/VARIABLE_DECL.md": ["VariableDeclaration"],
+  "../expressions/ALLOCATION.md": ["Allocation", "PropertyInitializer"],
+  "../expressions/AND-OR.md": ["LogicalOperation"],
+  "../expressions/AS_SHARED.md": ["AsShared"],
+  "../expressions/BOX.md": ["Box"],
+  "../expressions/CALL.md": [
+    "FunctionCallExpression",
+    "Receiver",
+    "FunctionName"
+  ],
+  "../expressions/INTEGER_LITERAL.md": ["IntegerLiteral"],
+  "../expressions/PROPERTY_REF.md": ["PropertyReference"],
+  "../expressions/README.md": [
+    "StringLiteral",
+    "IntegerLiteral",
+    "TruthvalueLiteral",
+    "FunctionCallExpression",
+    "Allocation",
+    "Retain",
+    "AsShared",
+    "Box",
+    "VariableReference",
+    "PropertyReference"
+  ],
+  "../expressions/RETAIN.md": ["Retain"],
+  "../expressions/STRING_LITERAL.md": ["StringLiteral"],
+  "../expressions/TRUTHVALUE_LITERAL.md": ["TruthvalueLiteral"],
+  "../expressions/VARIABLE_REF.md": ["VariableReference"],
+  "../expressions/arithmetic-operators.md": ["Arithmetic"],
+  "../lattices/README.md": [
+    "IntegerSet",
+    "RealSet",
+    "TruthvalueSet",
+    "StringSet",
+    "RCTypeSet",
+    "InterfaceSet"
+  ],
+  "../lattices/integer.md": ["IntegerSet"],
+  "../lattices/interface.md": ["InterfaceSet"],
+  "../lattices/rc-type.md": ["RCTypeSet"],
+  "../lattices/real.md": ["RealSet"],
+  "../lattices/string.md": ["StringSet"],
+  "../lattices/truthvalue.md": ["TruthvalueSet"],
+  "../statements/ASSIGN.md": ["Assign"],
+  "../statements/CALL.md": [
+    "FunctionCallStatement",
+    "Receiver",
+    "FunctionName"
+  ],
+  "../statements/ENSURE_UNIQUE.md": ["EnsureUnique"],
+  "../statements/README.md": [
+    "EnsureUnique",
+    "Release",
+    "FunctionCallStatement",
+    "Return",
+    "Assign",
+    "SelfInitialization",
+    "VariableDeclaration"
+  ],
+  "../statements/RELEASE.md": ["Release"],
+  "../statements/RETURN.md": ["Return"],
+  "../statements/SELF_INIT.md": ["SelfInitialization"],
+  "../statements/VARIABLE_DECL.md": ["VariableDeclaration"]
+}
