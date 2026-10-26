@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Clawr Language Tutorials
 
 Welcome! This is the place for language learners.

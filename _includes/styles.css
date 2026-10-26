@@ -2,6 +2,13 @@ a {
     color: firebrick;
 }
 
+.clawr-logo {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    width: 50px;
+}
+
 body {
     margin-bottom: 60px;
 }

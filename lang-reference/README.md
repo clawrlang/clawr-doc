@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # the Clawr Language
 
 A language is a tool for communication. Human language likely began with gestures, facial expressions, and simple vocalizations. Over time, as our anatomy and social structures evolved, so did our ability to express complex ideas. Eventually, writing allowed knowledge to be recorded and passed across generations.

@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="./images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Clawr Documentation
 
 Clawr is a language with three main goals: clarity, a focus on modelling, and easy refactoring. The name is a portmanteau of the word “clarity,” and a lion’s roar (or “rawr”). The fact that the first four letters spell out the word _claw_ is a nice bonus.
