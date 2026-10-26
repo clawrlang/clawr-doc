@@ -33,41 +33,53 @@ body {
 
 /* Admonitions */
 
-.admonition.info,
-.admonition.note {
-    background-color: burlywood;
-    color: white;
-    box-shadow: wheat 0 0 0 2px;
+.markdown-body blockquote {
+    color: darkgray;
 }
 
-.admonition.info > .admonition-title,
-.admonition.note > .admonition-title {
-    background-color: brown;
-    color: white;
+.admonition {
+    color: #dce3e9;
+}
+
+.admonition.note,
+.admonition.info {
+    --adm-bg: #13212e;
+    --adm-border: #234058;
+    --adm-title-bg: #1f5f99;
+    --adm-title-fg: #ffffff;
+}
+
+.admonition.tip {
+    --adm-bg: #12241d;
+    --adm-border: #1e4437;
+    --adm-title-bg: #1c6b50;
+    --adm-title-fg: #ffffff;
+}
+
+.admonition.question {
+    --adm-bg: #1d1929;
+    --adm-border: #35294f;
+    --adm-title-bg: #5b3e96;
+    --adm-title-fg: #ffffff;
 }
 
 .admonition.warning {
-    background-color: burlywood;
-    color: white;
-    box-shadow: aqua 0 0 20px 5px;
-}
-
-.admonition.note > .admonition-title {
-    background-color: brown;
-    color: white;
+    --adm-bg: #2b1712;
+    --adm-border: #5c2b1a;
+    --adm-title-bg: #a63c1e;
+    --adm-title-fg: #ffffff;
+    /* if you liked the old glow, make it warm instead of aqua:
+           box-shadow: 0 0 0 1px var(--adm-border),
+                       0 0 16px rgba(214, 96, 52, 0.35); */
 }
 
 .admonition.todo {
-    background-color: #020;
-    color: wheat;
-    box-shadow: wheat 0 0 0 2px;
-}
-
-.admonition.todo > .admonition-title {
-    background-color: revert;
-    color: white;
+    --adm-bg: #1b1e21;
+    --adm-border: #31383e;
+    --adm-title-bg: #3f474e;
+    --adm-title-fg: #ffffff;
 }
 
 .admonition.todo > .admonition-title > svg {
-    color: lime;
+    color: #74c69d;
 }

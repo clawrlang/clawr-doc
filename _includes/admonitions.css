@@ -27,64 +27,72 @@
     height: auto;
 }
 
-.admonition.note {
-    background-color: lavender;
+/* --- shared shape --- */
+.admonition {
+    background-color: var(--adm-bg);
+    border-radius: 6px;
+    overflow: hidden; /* keeps the title bar corners clean */
+    box-shadow: 0 0 0 1px var(--adm-border);
+
+    clip-path: polygon(
+        35px 0,
+        calc(100% - 35px) 0,
+        100% 35px,
+        100% calc(100% - 10px),
+        calc(100% - 10px) 100%,
+        10px 100%,
+        0 calc(100% - 10px),
+        0 35px
+    );
 }
 
-.admonition.note > .admonition-title {
-    background-color: navy;
-    color: white;
+.admonition > .admonition-title {
+    background-color: var(--adm-title-bg);
+    color: var(--adm-title-fg);
+    padding-left: 40px;
 }
 
+/* --- note / info : blue --- */
+.admonition.note,
 .admonition.info {
-    background-color: lavender;
+    --adm-bg: #eaf3fb;
+    --adm-border: #c6ddf0;
+    --adm-title-bg: #1f5f99;
+    --adm-title-fg: #ffffff;
 }
 
-.admonition.info > .admonition-title {
-    background-color: navy;
-    color: white;
+/* --- tip : green-teal --- */
+.admonition.tip {
+    --adm-bg: #e6f6ef;
+    --adm-border: #c2e6d6;
+    --adm-title-bg: #1c6b50;
+    --adm-title-fg: #ffffff;
 }
 
+/* --- question : violet --- */
 .admonition.question {
-    background-color: blanchedalmond;
+    --adm-bg: #f1ecfa;
+    --adm-border: #d9cdf0;
+    --adm-title-bg: #5b3e96;
+    --adm-title-fg: #ffffff;
 }
 
-.admonition.question > .admonition-title {
-    background-color: peru;
-    color: white;
+/* --- warning : rust red --- */
+.admonition.warning {
+    --adm-bg: #fdeee5;
+    --adm-border: #f3cfbb;
+    --adm-title-bg: #a63c1e;
+    --adm-title-fg: #ffffff;
 }
 
+/* --- todo : neutral grey --- */
 .admonition.todo {
-    background-color: gainsboro;
-    box-shadow: wheat 0 0 0 2px;
-}
-
-.admonition.todo > .admonition-title {
-    background-color: seashell;
-    color: grey;
+    --adm-bg: #f1f3f5;
+    --adm-border: #d5dbe0;
+    --adm-title-bg: #495057;
+    --adm-title-fg: #ffffff;
 }
 
 .admonition.todo > .admonition-title > svg {
-    color: green;
-}
-
-.admonition.tip {
-    background-color: powderblue;
-}
-
-.admonition.tip > .admonition-title {
-    background-color: chocolate;
-    color: white;
-}
-
-.admonition.warning {
-    background-color: lemonchiffon;
-}
-
-.admonition.warning > .admonition-title {
-    background-color: firebrick;
-    color: white;
-}
-
-@media (prefers-color-scheme: dark) {
+    color: #8ce99a; /* soft green tick on grey */
 }
