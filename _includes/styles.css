@@ -1,0 +1,43 @@
+a {
+    color: firebrick;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.markdown-body blockquote.admonition {
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.markdown-body .highlight {
+    margin-bottom: 0;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+    background-color: seashell;
+}
+
+.highlighter-rouge {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 16px;
+    padding: 5px;
+    background-color: brown;
+    border-radius: 5px;
+}
+
+.footer {
+    font-family: cursive;
+    font-size: 10pt;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-right: 50px;
+    padding-bottom: 20px;
+    background-color: white;
+}

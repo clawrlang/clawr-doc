@@ -9,6 +9,7 @@
 <!-- Overrides the jekyll-theme-primer include of the same name (copied from v0.6.0) to add site-wide scripts and styles. -->
 <script>
     {% include mathjax-config.js %}
+    {% include admonitions.js %}
 </script>
 <script
     id="MathJax-script"
@@ -16,11 +17,13 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
 ></script>
 <script src="https://unpkg.com/lucide@latest" defer></script>
-<script>
-    {% include admonitions.js %}
-</script>
 <style>
+    {% include styles.css %}
     {% include admonitions.css %}
+
+    @media (prefers-color-scheme: dark) {
+        {% include dark-styles.css %}
+    }
 </style>
 
 <!-- end custom head snippets -->

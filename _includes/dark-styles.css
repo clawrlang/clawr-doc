@@ -1,0 +1,73 @@
+a {
+    color: coral;
+}
+
+body {
+    background-color: black;
+    color: aliceblue;
+    margin-bottom: 100px;
+}
+
+.footer {
+    background-color: black;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+    border-bottom-color: darkolivegreen;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+    color: black;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+    background-color: seashell;
+}
+
+.highlight {
+    background-color: green;
+}
+
+/* Admonitions */
+
+.admonition.info,
+.admonition.note {
+    background-color: burlywood;
+    color: white;
+    box-shadow: wheat 0 0 0 2px;
+}
+
+.admonition.info > .admonition-title,
+.admonition.note > .admonition-title {
+    background-color: brown;
+    color: white;
+}
+
+.admonition.warning {
+    background-color: burlywood;
+    color: white;
+    box-shadow: aqua 0 0 20px 5px;
+}
+
+.admonition.note > .admonition-title {
+    background-color: brown;
+    color: white;
+}
+
+.admonition.todo {
+    background-color: #020;
+    color: wheat;
+    box-shadow: wheat 0 0 0 2px;
+}
+
+.admonition.todo > .admonition-title {
+    background-color: revert;
+    color: white;
+}
+
+.admonition.todo > .admonition-title > svg {
+    color: lime;
+}

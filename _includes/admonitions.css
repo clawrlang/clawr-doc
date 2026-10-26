@@ -1,20 +1,23 @@
-.admonition {
+.markdown-body blockquote.admonition {
+    padding: 1em;
+    padding-top: 0;
     border-left: none;
-    border: 1px solid !important;
+}
+
+.admonition {
     border-radius: 7px;
-    padding: 5px;
     margin-left: auto;
     margin-right: auto;
-    width: 800px;
-    min-width: 300px;
+    max-width: 700px;
 }
 
 .admonition > .admonition-title {
-    margin-left: -16px;
     border-top-left-radius: 5px;
-    margin-right: -16px;
     border-top-right-radius: 5px;
     padding: 4px;
+    margin-left: -1em;
+    margin-right: -1em;
+    margin-bottom: 10px;
 }
 
 .admonition > .admonition-title > .lucide {
@@ -51,6 +54,20 @@
     color: white;
 }
 
+.admonition.todo {
+    background-color: gainsboro;
+    box-shadow: wheat 0 0 0 2px;
+}
+
+.admonition.todo > .admonition-title {
+    background-color: seashell;
+    color: grey;
+}
+
+.admonition.todo > .admonition-title > svg {
+    color: green;
+}
+
 .admonition.tip {
     background-color: powderblue;
 }
@@ -67,4 +84,7 @@
 .admonition.warning > .admonition-title {
     background-color: firebrick;
     color: white;
+}
+
+@media (prefers-color-scheme: dark) {
 }
