@@ -46,26 +46,7 @@ The main repository for (early) Clawr development is <https://github.com/clawrla
 
 ### Architecture Design Records
 
-The ADRs are copied from the main repository using `git subtree`. Perform the following steps to update them from the source.
-
-In preparation, you’ll need a remote that references the Clawr repository and a local branch that tracks `main`. These commands set up a remote named `clawr` and a local branch named `clawr/main` (you will only need to do this once):
-
-```sh
-git remote add clawr https://github.com/clawrlang/clawr.git
-git fetch clawr
-git checkout -b clawr/main clawr/main
-```
-
-To update, check out and synchronise your local `clawr/main` branch and run `git subtree` to update the “true” `main` —  the one that references this repository:
-
-```sh
-git checkout clawr/main
-git pull
-git subtree split --prefix=adr/ -b tmp
-
-git checkout main
-git subtree pull --prefix=adr . tmp
-```
+The ADRs are synced from the main repository using a GitHub Action. Do not make direct edits to that subfolder in this repository.
 
 ### Clawr Intermediate Representation
 
