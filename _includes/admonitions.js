@@ -37,4 +37,5 @@ const ICONS = {
     WARNING: 'circle-alert',
     TODO: 'check-check',
     TIP: 'flame',
+    QUOTE: 'quote',
 }

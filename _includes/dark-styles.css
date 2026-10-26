@@ -3,7 +3,7 @@ a {
 }
 
 body {
-    background-color: black;
+    background-color: #121314;
     color: aliceblue;
     margin-bottom: 100px;
 }
@@ -63,14 +63,18 @@ body {
     --adm-title-fg: #ffffff;
 }
 
+.admonition.quote {
+    --adm-bg: #1b1e21;
+    --adm-border: #31383e;
+    --adm-title-bg: #3f474e;
+    --adm-title-fg: #ffffff;
+}
+
 .admonition.warning {
     --adm-bg: #2b1712;
     --adm-border: #5c2b1a;
     --adm-title-bg: #a63c1e;
     --adm-title-fg: #ffffff;
-    /* if you liked the old glow, make it warm instead of aqua:
-           box-shadow: 0 0 0 1px var(--adm-border),
-                       0 0 16px rgba(214, 96, 52, 0.35); */
 }
 
 .admonition.todo {

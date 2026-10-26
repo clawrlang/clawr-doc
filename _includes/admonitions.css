@@ -77,6 +77,14 @@
     --adm-title-fg: #ffffff;
 }
 
+/* --- quote : neutral grey --- */
+.admonition.quote {
+    --adm-bg: #f1f3f5;
+    --adm-border: #d5dbe0;
+    --adm-title-bg: #495057;
+    --adm-title-fg: #ffffff;
+}
+
 /* --- warning : rust red --- */
 .admonition.warning {
     --adm-bg: #fdeee5;
@@ -93,6 +101,29 @@
     --adm-title-fg: #ffffff;
 }
 
-.admonition.todo > .admonition-title > svg {
-    color: #8ce99a; /* soft green tick on grey */
+.admonition.info .lucide {
+    color: #3acbcb;
+}
+.admonition.note .lucide {
+    color: #09a887;
+}
+
+.admonition.question .lucide {
+    color: #ec6565;
+}
+
+.admonition.quote .lucide {
+    color: #c0c0c0;
+}
+
+.admonition.tip .lucide {
+    color: #e9d88c;
+}
+
+.admonition.todo .lucide {
+    color: #8ce99a;
+}
+
+.admonition.warning .lucide {
+    color: #d5e582;
 }
