@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Variable Scope & Semantics
 
 > What if you want to use the same type in different parts of your code, but sometimes you need it to be a `struct` and at other times a `class`?

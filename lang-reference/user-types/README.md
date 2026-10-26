@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="/images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # User-Defined Types
 
 There are several classes of user-defined types:

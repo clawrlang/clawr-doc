@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="/images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Service Types
 
 A `service` is an `object` with special privileges. A simple `object` is an encapsulation of data. A `service` has access to system resources. It can produce side effects outside its allocated data. For example:

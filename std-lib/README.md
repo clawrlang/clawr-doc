@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Standard Library
 
 The Clawr standard library is implemented by the backend. It contains some basic functionality. The backend/runtime `MUST` add implementation for all these declarations.

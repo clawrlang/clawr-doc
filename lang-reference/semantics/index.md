@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Clawr Variable Semantics
 
 Value semantics and reference semantics are fundamental tools for understanding imperative programs. In Clawr, this choice is part of each variable declaration. The `const`, `mut`, `ref` and `mutref` keywords determine how the variable interacts with other variables. A `const` variable may never change in any respect, a `mut` variable may be modified, but only through direct reference, and a `ref`/`mutref` variable is a pointer to shared data — potentially over multiple threads — which can change surprisingly from one code statement to the next.

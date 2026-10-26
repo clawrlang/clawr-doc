@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Isolation Levels for Function Return Values
 
 Functions can return memory they just allocated, memory that they receive from somewhere else, or memory stored as a property. That memory could have `ISOLATED` or `SHARED` semantics. But functions should be reusable whether the caller assigns the result to a `const` or a `ref` variable. To resolve this, Clawr uses _uniquely referenced values_ where possible.

@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="/images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Traits and Roles
 
 > _What is the difference between a `trait` and a `role`? They both seem to do the same thing. Aren’t they both interfaces?_

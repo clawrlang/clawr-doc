@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Arithmetic Operators
 
 Arithmetic operations on two `integer` operands yield `integer` results. Operations on at least one `real` value yield a `real` output.

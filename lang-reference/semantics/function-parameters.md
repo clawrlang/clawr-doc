@@ -1,6 +1,3 @@
-<!-- markdownlint-disable MD041 MD033 -->
-<img src="../../images/rawry-150.png" alt="Rawry" style="float: right; margin: 10px;">
-
 # Function Parameters
 
 Function parameters have the [same semantics](./variable-semantics.md) as ordinary variables and properties. Plus a fifth mode that allows values of any semantic flavour to be passed.
