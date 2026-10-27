@@ -4,5 +4,4 @@ addEventListener('DOMContentLoaded', (event) => {
     el.alt = 'Rawry'
     el.className = 'clawr-logo'
     document.body.appendChild(el)
-    console.log(el, event)
 })
