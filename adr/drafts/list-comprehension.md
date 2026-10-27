@@ -1,12 +1,14 @@
 # List Comprehensions and Generators
 
-[ADRs](../README.md)
+s[ADRs](../README.md) &#124; [Draft ADRs](./README.md)
 
 ## Status
 
 ✍🏼 **Draft**
 
 > A rough sketch of an idea
+
+## Context
 
 Several languages use a syntax called a list comprehension. It allows safe filtering and conversion of lists. Clawr has its own flavour; you can choose between constructing the _cartesian product_ of existing collections, or _zipping_ ordered sequences together.
 
