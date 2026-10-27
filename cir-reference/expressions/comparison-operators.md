@@ -1,5 +1,7 @@
 # Comparison Operators
 
+<!-- markdownlint-disable MD033 -->
+
 Comparison is a union of three families. Every family shares the same
 shape — `kind`, `left`, `right` and `type`.
 
@@ -24,10 +26,10 @@ The Equality family tests for semantic equality, while the Referential Equality 
 
 The Ordering family applies to `integer` and `real` values as well as values that conform to the `Ordered` trait (not yet implemented).
 
-# Rules for Frontend
+## Rules for Frontend
 
 - The expression types `MUST` be limited to Boolean values. Comparing two values `MUST NOT` yield `ambiguous`.
 
-# Rules for Backend
+## Rules for Backend
 
 -

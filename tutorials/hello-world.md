@@ -1,6 +1,6 @@
-[data structures >](./data-structures.md)
-
 # Hello World
+
+[data structures >](./data-structures.md)
 
 It is customary to start language introduction with a Hello-World example. It is maybe the simplest possible program in any language. It shows how to output a greeting to the terminal console.
 

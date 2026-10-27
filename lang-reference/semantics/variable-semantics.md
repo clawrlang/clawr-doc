@@ -141,6 +141,8 @@ print(game2.score) // 10 -> includes scond roll
 print(game1.score) // 10 -> changed too! (two variables, but only one game)
 ```
 
+<!-- markdownlint-disable MD024 -->
+
 ### What happened?
 
 1. Both variables reference the same game entity

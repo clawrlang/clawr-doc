@@ -1,6 +1,6 @@
-[< encapsulation](./encapsulation.md)
-
 # Inheritance
+
+[< encapsulation](./encapsulation.md)
 
 `object` and `service` types can utilise inheritance. Every type can have a single supertype of the same kind. An `object` can inherit another `object` and `service` can inherit another `service`, but an `object` cannot inherit a `service` or vice versa.
 

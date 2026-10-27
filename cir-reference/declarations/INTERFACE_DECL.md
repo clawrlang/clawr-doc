@@ -1,5 +1,7 @@
 # `INTERFACE_DECL`
 
+<!-- markdownlint-disable MD033 -->
+
 [CIR](../README.md) : [Declarations](./README.md)
 
 The `INTERFACE_DECL` node defines a polymorphic type. The type lists method `requirements` for interactions without implying any specific implementation.

@@ -1,7 +1,7 @@
+# Encapsulation
+
 [< `data`](./data-structures.md)
 [inheritance >](./inheritance.md)
-
-# Encapsulation
 
 The `data` construct is useful when gathering related data elements. It is however primarily meant for communication protocols and large-data computation. When collecting information — protecting invariants — open access to raw data is not recommended. It is better to encapsulate that data in an `object`.
 

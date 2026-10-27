@@ -17,12 +17,12 @@ An `INTEGER_LITERAL` is a value in the (countably infinite) mathematical set kno
 
 The `value` property is singleton set containing a single integer value (`max` == `min`).
 
-# Rules for Frontend
+## Rules for Frontend
 
 - The `type` property `MUST` contain a singleton set.
 - The represented value `MAY` be arbitrarily large.
 
-# Rules for Backend
+## Rules for Backend
 
 - The value `MAY` be serialized as machine-code data if the value fits the physical representation.
 - The value `MAY` be used to construct a reference-counted structure.

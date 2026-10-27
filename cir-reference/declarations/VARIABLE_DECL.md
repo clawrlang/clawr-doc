@@ -1,5 +1,7 @@
 # `VARIABLE_DECL`
 
+<!-- markdownlint-disable MD033 -->
+
 [CIR](../README.md) : [Declarations](./README.md)
 
 A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables (“constants”) remain unchanged from inception until destruction. Others are updated frequently.
@@ -46,6 +48,8 @@ The `inititalValue` property indicates the starting value of the variable.
 > [!note]
 >
 > Mutability and `const`ness are presumed to be inconsequential to the process of lowering. Immutability is enforced by the frontend and not a concern for the backend. All variables `MUST` be lowered in a way that allows mutation.
+
+&nbsp;
 
 > [!tip]
 >

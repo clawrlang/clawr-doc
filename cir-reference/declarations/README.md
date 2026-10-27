@@ -1,5 +1,7 @@
 # Declarations
 
+<!-- markdownlint-disable MD033 -->
+
 [CIR](../README.md)
 
 Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is of some importance (see the rules below). As a rule of thumb, entities must be declared prior to any declarations that reference them.

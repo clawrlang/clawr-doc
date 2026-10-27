@@ -1,5 +1,7 @@
 # `CALL`
 
+<!-- markdownlint-disable MD033 -->
+
 [CIR](../README.md) : [Expressions](./README.md)
 
 A Clawr function may or may not have a return value. A `CALL` structure can be used as an expression or a statement. A `CALL` used as an _expression_ always has a `type`, which describes its result values.
