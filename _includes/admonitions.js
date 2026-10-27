@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 const ICONS = {
+    ERROR: 'unplug',
     NOTE: 'pencil',
     INFO: 'info',
     QUESTION: 'circle-question-mark',

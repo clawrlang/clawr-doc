@@ -55,6 +55,13 @@ body {
     color: #dce3e9;
 }
 
+.admonition.error {
+    --adm-bg: #2b1712;
+    --adm-border: #5c2b1a;
+    --adm-title-bg: #a63c1e;
+    --adm-title-fg: #ffffff;
+}
+
 .admonition.note,
 .admonition.info {
     --adm-bg: #13212e;

@@ -1,5 +1,11 @@
 # Sample Admonitions
 
+> [!error]
+>
+> It might still be wrong to not treat _all_ values as reference-counted. But the frontend does not know (or can it? — better think this through) when e.g. an `integer` is the same instance as another and when they are merely similar values?
+
+&nbsp;
+
 > [!info]
 >
 > This section provides additional information and context about Clawr and its documentation.

@@ -52,6 +52,14 @@
     padding-left: 40px;
 }
 
+/* --- error : rust red --- */
+.admonition.error {
+    --adm-bg: #fdeee5;
+    --adm-border: #f3cfbb;
+    --adm-title-bg: #a63c1e;
+    --adm-title-fg: #ffffff;
+}
+
 /* --- note / info : blue --- */
 .admonition.note,
 .admonition.info {
@@ -99,6 +107,10 @@
     --adm-border: #d5dbe0;
     --adm-title-bg: #495057;
     --adm-title-fg: #ffffff;
+}
+
+.admonition.error .lucide {
+    color: #ff7373;
 }
 
 .admonition.info .lucide {
