@@ -2,6 +2,10 @@ a {
     color: firebrick;
 }
 
+ul:has(li:nth-child(n + 10)) {
+    column-count: 2;
+}
+
 .clawr-logo {
     position: absolute;
     top: 0px;
