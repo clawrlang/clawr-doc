@@ -1,42 +1,38 @@
 function formatAdmonitions() {
-    const calloutPs = [...document.querySelectorAll('blockquote')]
-        .map((bq) => bq.querySelector('p'))
-        .filter((p) => /^\[!(.*)\]/.test(p.textContent))
-    for (const p of calloutPs) {
-        const bq = p.parentNode
-        const type = p.textContent.match(/^\[!(.*)\]/)[1]
+    const callouts = [...document.querySelectorAll('blockquote > p')].filter(
+        (p) => /^\[!(.*)\]/.test(p.textContent),
+    )
 
-        if (/^\[!(.*)\]$/.test(p.textContent))
-            p.textContent = p.textContent.replace(
-                /^\[!(.*)\]$/,
-                (_, [i, ...tag]) =>
-                    i.toUpperCase() + tag.join('').toLowerCase(),
-            )
-        // .replace(/^\[!(.*)\]/, $1)
-        else p.textContent = p.textContent.replace(/^\[!(.*)\]\s*/, '')
+    for (const p of callouts) {
+        const type = p.textContent.match(/^\[!(.*)\]/)[1]
+        const config = ADMONITIONS[type.toLowerCase()]
+
+        p.textContent = /^\[!(.*)\]$/.test(p.textContent)
+            ? config.text
+            : p.textContent.replace(/^\[!(.*)\]\s*/, '')
 
         p.classList.add('admonition-title', type)
-        bq.classList.add('admonition', type)
+        p.parentNode.classList.add('admonition', type)
 
         const icon = document.createElement('i')
-        icon.setAttribute('data-lucide', ICONS[type.toUpperCase()])
+        icon.setAttribute('data-lucide', config.icon)
         icon.classList.add('admonition-icon', type)
         p.insertBefore(icon, p.firstChild)
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+addEventListener('DOMContentLoaded', () => {
     formatAdmonitions()
     lucide.createIcons()
 })
 
-const ICONS = {
-    ERROR: 'unplug',
-    NOTE: 'pencil',
-    INFO: 'info',
-    QUESTION: 'circle-question-mark',
-    WARNING: 'triangle-alert',
-    TODO: 'circle-check-big',
-    TIP: 'lightbulb',
-    QUOTE: 'message-square-quote',
+const ADMONITIONS = {
+    error: { icon: 'unplug', text: 'Error' },
+    info: { icon: 'info', text: 'Info' },
+    note: { icon: 'pencil', text: 'Note' },
+    question: { icon: 'circle-question-mark', text: 'Question' },
+    quote: { icon: 'message-square-quote', text: 'Quote' },
+    tip: { icon: 'lightbulb', text: 'Hint' },
+    todo: { icon: 'circle-check-big', text: 'TODO' },
+    warning: { icon: 'triangle-alert', text: 'Warning' },
 }
