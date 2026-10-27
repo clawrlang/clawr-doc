@@ -17,6 +17,10 @@ body {
     margin-bottom: 60px;
 }
 
+.markdown-body img {
+    background-color: revert;
+}
+
 .markdown-body blockquote.admonition {
     margin-bottom: 40px;
     margin-top: 40px;
