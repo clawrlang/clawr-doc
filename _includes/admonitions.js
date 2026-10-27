@@ -34,8 +34,8 @@ const ICONS = {
     NOTE: 'pencil',
     INFO: 'info',
     QUESTION: 'circle-question-mark',
-    WARNING: 'circle-alert',
-    TODO: 'check-check',
-    TIP: 'flame',
-    QUOTE: 'quote',
+    WARNING: 'triangle-alert',
+    TODO: 'circle-check-big',
+    TIP: 'lightbulb',
+    QUOTE: 'message-square-quote',
 }
