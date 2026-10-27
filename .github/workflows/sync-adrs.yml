@@ -23,3 +23,4 @@ jobs:
           FOLDER: adr # The source directory in clawrlang/clawr
           TARGET_DIR: adr # The destination directory in clawrlang/clawr-doc
           SSH_PRIVATE_KEY: ${{ secrets.ADR_DEPLOY_KEY }}
+          MESSAGE: "{msg}\n\n(Replayed adr/ changes from clawr-doc:{sha}.)"
