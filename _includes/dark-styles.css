@@ -8,8 +8,17 @@ body {
     margin-bottom: 100px;
 }
 
+.markdown-body table tr {
+    background-color: #121314;
+    color: aliceblue;
+}
+
+.markdown-body table tr:nth-child(2n) {
+    background-color: revert;
+}
+
 .footer {
-    background-color: black;
+    background-color: #121314;
 }
 
 .markdown-body h1,
@@ -28,7 +37,12 @@ body {
 }
 
 .highlight {
-    background-color: green;
+    background-color: #121314;
+}
+
+.language-clawr::before {
+    color: aliceblue;
+    background-color: brown;
 }
 
 /* Admonitions */

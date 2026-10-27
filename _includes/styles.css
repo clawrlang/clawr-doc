@@ -25,16 +25,36 @@ body {
 .markdown-body .highlight pre,
 .markdown-body pre {
     background-color: seashell;
-}
 
-.highlighter-rouge {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 16px;
     padding: 5px;
-    background-color: brown;
+    border: 5px solid brown;
     border-radius: 5px;
+}
+
+.markdown-body .highlight pre {
+    border-color: gray;
+}
+
+.language-clawr::before {
+    content: 'Proposed Syntax';
+    font-family: cursive;
+    text-wrap: auto;
+    text-align: center;
+
+    display: block;
+    border-radius: 10px;
+    padding: 3px;
+    width: 60px;
+
+    position: absolute;
+    left: 70px;
+
+    color: aliceblue;
+    background-color: brown;
 }
 
 .footer {
