@@ -45,6 +45,26 @@ body {
     background-color: brown;
 }
 
+/* Statuses */
+
+div.status.Adopted .title {
+    color: whitesmoke;
+    background-color: #118423;
+    border-color: #17a62c;
+}
+
+div.status.Proposed .title {
+    color: whitesmoke;
+    background-color: #118379;
+    border-color: #17a69a;
+}
+
+div.status.Draft .title {
+    color: whitesmoke;
+    background-color: #888;
+    border-color: #b3b3b3;
+}
+
 /* Admonitions */
 
 .markdown-body blockquote {

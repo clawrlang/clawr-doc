@@ -1,0 +1,73 @@
+.status .title {
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.status.Adopted .title {
+    color: whitesmoke;
+    background-color: #118423;
+    border-color: #062d0c;
+}
+
+.status.Proposed .title {
+    color: whitesmoke;
+    background-color: #118379;
+    border-color: #062d2a;
+}
+
+.status.Draft .title {
+    color: whitesmoke;
+    background-color: #888;
+    border-color: #333;
+}
+
+.status .descriptor {
+    background-color: burlywood;
+}
+
+/* Tooltip container */
+.status {
+    position: relative;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+/* Tooltip text */
+.status .tooltip {
+    /*visibility: hidden;*/
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    left: 100%;
+    top: 50%;
+    margin-left: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    width: max-content;
+    max-width: 400px;
+    transform: translateY(-50%);
+}
+
+/* Tooltip arrow */
+.status .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 100%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.status:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
