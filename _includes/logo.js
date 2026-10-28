@@ -11,20 +11,28 @@ let ticking = false
 window.addEventListener('scroll', () => {
     if (ticking) return
 
-    const el = document.querySelector('.clawr-logo')
-    if (!el) return
+    const navEl = document.querySelector('.nav')
+    const logoEl = document.querySelector('.clawr-logo')
+    if (!logoEl) return
 
     ticking = true
     requestAnimationFrame(() => {
-        // Normalize scroll to 0-1 range (adjust based on when scaling ends)
-        const scrollProgress = Math.min(window.scrollY / 300, 1)
-        const easedProgress = easing.easeOutCubic(scrollProgress)
+        const logoProgress = easing.easeOutCubic(
+            Math.min(window.scrollY / 400, 1),
+        )
+        const navProgress = easing.easeOutCubic(
+            Math.min(window.scrollY / 120, 1),
+        )
 
-        const height = Math.max(210 - easedProgress * 140, 70)
-        const top = Math.max(0, Math.min(10, 10 - easedProgress * 10))
+        const height = Math.max(250 - logoProgress * 180, 70)
+        const top = Math.max(0, Math.min(10, 10 - logoProgress * 10))
+        const padding = Math.max(15 - navProgress * 10, 5)
+        const border = Math.max(10 - navProgress * 5, 5)
 
-        el.style.height = `${height}px`
-        el.style.top = `${top}px`
+        logoEl.style.height = `${height}px`
+        logoEl.style.top = `${top}px`
+        navEl.style.padding = `${padding}px 0`
+        navEl.style.borderBottomWidth = `${border}px`
         ticking = false
     })
 })

@@ -9,6 +9,5 @@ addEventListener('DOMContentLoaded', (event) => {
     nav.appendChild(navH)
     nav.appendChild(navP)
 
-    const container = document.querySelector('.markdown-body')
-    container.prepend(nav)
+    document.body.prepend(nav)
 })
