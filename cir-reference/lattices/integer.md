@@ -1,6 +1,6 @@
-# `integer`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Lattices](./README.md)
 
-[CIR](../README.md) : [Lattices](./README.md)
+# `integer`
 
 The `integer` type consists of the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ).
 

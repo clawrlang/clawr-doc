@@ -1,6 +1,6 @@
-# `rc-type`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Lattices](./README.md)
 
-[CIR](../README.md) : [Lattices](cir-reference/lattices/README.md)
+# `rc-type`
 
 A set allowing all instances of a reference counted type (meaning `data`, `object` and `service` types). The `name` `MUST` identify an [RC_TYPE_DECL](../declarations/RC_TYPE_DECL.md) declaration that is accessible from the current scope.
 

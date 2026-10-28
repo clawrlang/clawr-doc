@@ -1,6 +1,6 @@
-# `VARIABLE_DECL`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Statements](./README.md)
 
-[CIR](../README.md) : [Statements](./README.md)
+# `VARIABLE_DECL`
 
 A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables (“constants”) remain unchanged from inception until destruction. Others are updated frequently.
 

@@ -1,8 +1,6 @@
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Declarations](./README.md)
+
 # `RC_TYPE_DECL`
-
-<!-- markdownlint-disable MD033 -->
-
-[CIR](../README.md) : [Declarations](./README.md)
 
 The `RC_TYPE_DECL` node defines a reference-counted type that stores its state in properties. The type might include `methods` for interactions and it might be part of an inheritance chain.
 

@@ -1,8 +1,6 @@
+&nbsp; / &nbsp; [CIR Reference](../README.md) &nbsp; / &nbsp; [Declarations](./README.md)
+
 # `FUNCTION_DECL`
-
-<!-- markdownlint-disable MD033 -->
-
-[CIR](../README.md) : [Declarations](./README.md)
 
 A `FUNCTION_DECL` defines a “free function” in the module or a method on an `object`/`service` type. A function's unique name is defined by its `baseName` and its labels, plus the optional `namespace`.
 

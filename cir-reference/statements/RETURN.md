@@ -1,6 +1,6 @@
-# `RETURN`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Statements](./README.md)
 
-[CIR](../README.md) : [Expressions](./README.md)
+# `RETURN`
 
 Return early from a `void` function or return a value from a query function.
 

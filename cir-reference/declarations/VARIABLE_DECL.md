@@ -1,8 +1,6 @@
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Declarations](./README.md)
+
 # `VARIABLE_DECL`
-
-<!-- markdownlint-disable MD033 -->
-
-[CIR](../README.md) : [Declarations](./README.md)
 
 A `VARIABLE_DECL` defines a variable. Variables store values as the application runs. Some variables (“constants”) remain unchanged from inception until destruction. Others are updated frequently.
 

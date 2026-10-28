@@ -1,6 +1,6 @@
-# Statements
+&nbsp; / &nbsp;[CIR Reference](../README.md)
 
-[CIR](../README.md)
+# Statements
 
 Statements are added to the `startBlock` of a module, and to the `body` of a function. Statements `MUST NOT` be reordered or skipped when lowering. An optimisation step `MAY` however perform limited changes.
 

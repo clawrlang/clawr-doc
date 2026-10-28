@@ -1,6 +1,6 @@
-# `truthvalue`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Lattices](./README.md)
 
-[CIR](../README.md) : [Lattices](./README.md)
+# `truthvalue`
 
 A set of truth-values.
 

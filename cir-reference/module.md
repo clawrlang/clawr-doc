@@ -1,6 +1,6 @@
-# `ClawrModule`
+&nbsp; / &nbsp;[CIR Reference](./README.md)
 
-[CIR](./README.md)
+# `ClawrModule`
 
 A _module_ is a single .clawr code file. The file `MAY` contain a single `@main {}` block for running the program. The frontend `MUST` add this block as `startBlock` in the CIR.
 

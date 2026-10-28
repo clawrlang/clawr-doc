@@ -1,6 +1,6 @@
-# `AS_SHARED`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Expressions](./README.md)
 
-[CIR](../README.md) : [Expressions](./README.md)
+# `AS_SHARED`
 
 Upgrade a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 

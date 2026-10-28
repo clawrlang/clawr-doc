@@ -1,6 +1,6 @@
-# Comparison Operators
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Expressions](./README.md)
 
-<!-- markdownlint-disable MD033 -->
+# Comparison Operators
 
 Comparison is a union of three families. Every family shares the same
 shape — `kind`, `left`, `right` and `type`.

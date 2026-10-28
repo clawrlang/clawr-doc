@@ -6,6 +6,17 @@ ul:has(li:nth-child(n + 10)) {
     column-count: 2;
 }
 
+h1:first-child {
+    display: inline;
+    border-bottom: none;
+    font-size: unset;
+    font-weight: normal;
+}
+
+p:nth-child(2) {
+    display: inline;
+}
+
 p:has(img) {
     text-align: center;
 }

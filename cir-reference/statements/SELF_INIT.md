@@ -1,6 +1,6 @@
-# `SELF_INIT
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Statements](./README.md)
 
-[CIR](../README.md) : [Expressions](./README.md)
+# `SELF_INIT`
 
 Initialize the properties of the `self` entity.
 

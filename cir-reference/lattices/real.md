@@ -1,6 +1,6 @@
-# `real`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Lattices](../lattices/README.md)
 
-[CIR](../README.md) : [Lattices](../lattices/README.md)
+# `real`
 
 A range of real values. A constant integer (e.g. a `const` variable or a literal) will have `min` = `max`, equal to the constant itself. Other value-sets may skip either the `min`, `max` or both properties.
 

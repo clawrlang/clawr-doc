@@ -1,6 +1,6 @@
-# `interface`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Lattices](./README.md)
 
-[CIR](../README.md) : [Lattices](cir-reference/lattices/README.md)
+# `interface`
 
 A set allowing all values/entities that conform to an interface (`trait` or `role`). The `name` `MUST` identify an [INTERFACE_DECL](../declarations/INTERFACE_DECL.md) declaration that is accessible from the current scope.
 

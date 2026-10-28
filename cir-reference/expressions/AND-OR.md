@@ -1,3 +1,5 @@
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Expressions](./README.md)
+
 # Logic Operators
 
 Clawr supports three-value (Kleene K3) logic. A `truthvalue` is either `false`, `ambiguous` or `true`. The operations `AND` and `OR` have meaningful behaviours that translate cleanly between Boolean logic and K3.

@@ -1,6 +1,6 @@
-# `string`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Lattices](./README.md)
 
-[CIR](../README.md) : [Lattices](./README.md)
+# `string`
 
 An unconstrained string value. A “string” is a sequence of characters and the `string` value-set is the set of all possible sequences.
 

@@ -1,6 +1,6 @@
-# `INTEGER_LITERAL`
+&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Expressions](./README.md)
 
-[CIR](../README.md) : [Expressions](./README.md)
+# `INTEGER_LITERAL`
 
 An `INTEGER_LITERAL` is a value in the (countably infinite) mathematical set known as “the integers” (typically depicted as ℤ). It may be arbitrarily large.
 
