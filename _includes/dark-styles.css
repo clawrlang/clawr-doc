@@ -2,6 +2,16 @@ a {
     color: coral;
 }
 
+.nav {
+    background-color: coral;
+    border-bottom: 10px solid maroon;
+    color: black;
+}
+
+.nav a {
+    color: lavender;
+}
+
 body {
     background-color: #121314;
     color: aliceblue;

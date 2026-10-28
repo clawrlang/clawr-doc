@@ -6,14 +6,34 @@ ul:has(li:nth-child(n + 10)) {
     column-count: 2;
 }
 
-h1:first-child {
+.markdown-body > *.nav:first-child {
+    padding: 5px;
+    text-align: center;
+
+    position: sticky;
+    top: 0em;
+    margin-left: -1em;
+    margin-right: -1em;
+    z-index: 1;
+}
+
+.nav {
+    background-color: coral;
+    color: black;
+}
+
+.nav a {
+    color: lavender;
+}
+
+.nav > h1 {
     display: inline;
     border-bottom: none;
     font-size: unset;
     font-weight: normal;
 }
 
-p:nth-child(2) {
+.nav > p {
     display: inline;
 }
 
@@ -25,10 +45,12 @@ p:has(img):has(:nth-child(n + 2)) {
 }
 
 .clawr-logo {
-    position: absolute;
-    top: 0px;
+    position: fixed;
+    top: 10px;
     right: 20px;
-    width: 50px;
+    height: 210px;
+    z-index: 1;
+    will-change: height, top;
 }
 
 body {
