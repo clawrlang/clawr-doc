@@ -147,12 +147,13 @@ body {
     color: grey;
     top: 50%;
     transform: translateY(-50%);
-    border-radius: 5px;
+    border-radius: 3px;
+    padding: 1px;
 }
 
 .highlighter-rouge .title span.copied {
     position: absolute;
-    right: 30px;
+    right: 35px;
     top: 50%;
     transform: translateY(-50%);
     border-radius: 5px;
@@ -168,8 +169,38 @@ body {
     visibility: visible;
 }
 
+.highlighter-rouge .title span.tooltip::after {
+    content: '';
+    position: absolute;
+    right: 100%;
+    transform: translate(50%, 50%) translateY(4px) rotate(195deg);
+    bottom: 100%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+}
+.highlighter-rouge .title span.tooltip {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    transform: translate(100%, -25%);
+    border-radius: 5px;
+    font-size: 10pt;
+    padding: 5px;
+
+    color: #ffffff;
+    background-color: #555;
+    visibility: hidden;
+}
+.highlighter-rouge .title:has(svg:hover) .tooltip {
+    visibility: visible;
+}
+.highlighter-rouge .title.copied:has(svg:hover) .tooltip {
+    visibility: hidden;
+}
+
 .highlighter-rouge .title svg:hover {
-    outline: 3px solid blue;
+    outline: 2px solid #5d5d5d;
 }
 .highlighter-rouge .title svg:active {
     outline: 2px solid gray;

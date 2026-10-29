@@ -47,6 +47,11 @@ addEventListener('DOMContentLoaded', () => {
         copiedElement.textContent = 'copied'
         div.appendChild(copiedElement)
 
+        const tooltipElement = document.createElement('span')
+        tooltipElement.className = 'tooltip'
+        tooltipElement.textContent = 'copy'
+        div.appendChild(tooltipElement)
+
         const iconElement = lucide.createElement(lucide.Copy)
         div.appendChild(iconElement)
 
