@@ -114,6 +114,14 @@ body {
     border-color: brown;
     background-color: #f6f8fa;
 }
+.highlighter-rouge.language-clawr .title {
+    color: chocolate;
+    background-color: #f6f8fa;
+}
+.highlighter-rouge.language-clawr pre {
+    border-color: chocolate;
+    background-color: #f6f8fa;
+}
 
 .highlighter-rouge .title svg {
     position: absolute;

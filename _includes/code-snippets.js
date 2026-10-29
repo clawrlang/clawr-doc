@@ -55,4 +55,5 @@ addEventListener('DOMContentLoaded', () => {
 
 const LANGUAGE_ALIASES = {
     sh: 'shell',
+    plain: 'plain text',
 }
