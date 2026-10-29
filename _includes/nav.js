@@ -7,7 +7,7 @@ addEventListener('DOMContentLoaded', (event) => {
     const nav = document.createElement('p')
     nav.className = 'nav'
     nav.appendChild(navH)
-    nav.appendChild(navP)
+    if (navP) nav.appendChild(navP)
 
     document.body.prepend(nav)
 
