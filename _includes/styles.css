@@ -114,6 +114,7 @@ body {
     border-color: brown;
     background-color: #f6f8fa;
 }
+
 .highlighter-rouge.language-clawr .title {
     color: chocolate;
     background-color: #f6f8fa;
@@ -121,6 +122,21 @@ body {
 .highlighter-rouge.language-clawr pre {
     border-color: chocolate;
     background-color: #f6f8fa;
+}
+
+.highlighter-rouge.language-ada .title {
+    color: #0f23c3;
+    background-color: #f6f8fa;
+}
+.highlighter-rouge.language-ada pre {
+    border-color: #0f23c3;
+    background-color: #f6f8fa;
+}
+
+.highlighter-rouge .title img {
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: text-bottom;
 }
 
 .highlighter-rouge .title svg {

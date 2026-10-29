@@ -25,12 +25,20 @@ addEventListener('DOMContentLoaded', () => {
     const snippets = document.querySelectorAll('div.highlighter-rouge')
 
     for (const snippet of snippets) {
-        const language = [...snippet.classList]
+        const specifiedLanguage = [...snippet.classList]
             .find((c) => /^language-/.test(c))
             .replace(/^language-/, '')
+        const languageCode =
+            LANGUAGE_ALIASES[specifiedLanguage] ?? specifiedLanguage
+        const language = LANGUAGES[languageCode] ?? { name: 'code' }
+
         const div = document.createElement('div')
         div.className = 'title'
-        div.textContent = LANGUAGE_ALIASES[language] ?? language
+        div.textContent = language.name ?? languageCode
+
+        const icon = document.createElement('img')
+        icon.src = `/clawr-doc/images/${language.icon ?? 'script.svg'}`
+        div.insertAdjacentElement('afterbegin', icon)
 
         snippet.insertAdjacentElement('afterbegin', div)
 
@@ -55,5 +63,31 @@ addEventListener('DOMContentLoaded', () => {
 
 const LANGUAGE_ALIASES = {
     sh: 'shell',
+    jsonc: 'json',
     plain: 'plain text',
+}
+
+const LANGUAGES = {
+    ada: {
+        icon: 'ada.svg',
+    },
+    ts: {
+        icon: 'typescript.svg',
+        name: 'TypeScript',
+    },
+    json: {
+        icon: 'json.svg',
+    },
+    shell: {
+        icon: 'terminal.svg',
+    },
+    clawr: {
+        icon: 'rawry-simplified.png',
+    },
+    swift: {
+        icon: 'swift.svg',
+    },
+    haskell: {
+        icon: 'haskell.svg',
+    },
 }
