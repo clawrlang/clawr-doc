@@ -74,40 +74,81 @@ body {
     margin-bottom: 0;
 }
 
-.markdown-body .highlight pre,
-.markdown-body pre {
-    background-color: seashell;
+.highlighter-rouge > div.highlight {
+    background-color: revert;
+}
 
+.highlighter-rouge pre {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 16px;
     padding: 5px;
-    border: 5px solid brown;
+    border: 5px solid;
     border-radius: 5px;
-}
-
-.markdown-body .highlight pre {
     border-color: gray;
 }
 
-.language-clawr::before {
-    content: 'Proposed Syntax';
-    font-family: cursive;
-    text-wrap: auto;
-    text-align: center;
+.highlighter-rouge .title {
+    position: relative;
+    text-transform: capitalize;
+    margin-left: auto;
+    margin-right: auto;
+    width: 560px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 0 20px;
+}
 
-    display: block;
-    border-radius: 10px;
-    padding: 3px;
-    width: 60px;
+.highlighter-rouge .title {
+    color: grey;
+    background-color: #f6f8fa;
+}
+.highlighter-rouge.language-sh .title,
+.highlighter-rouge.language-shell .title {
+    color: brown;
+    background-color: #f6f8fa;
+}
+.highlighter-rouge.language-sh pre,
+.highlighter-rouge.language-shell pre {
+    border-color: brown;
+    background-color: #f6f8fa;
+}
 
+.highlighter-rouge .title svg {
     position: absolute;
-    left: 50%;
-    margin-left: -380px;
+    width: 17px;
+    height: 17px;
+    right: 10px;
+    color: grey;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+}
 
-    color: aliceblue;
-    background-color: brown;
+.highlighter-rouge .title span.copied {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    font-size: 10pt;
+
+    color: grey;
+    background-color: #ffffff;
+    outline: 3px dotted purple;
+
+    visibility: hidden;
+}
+.highlighter-rouge .title.copied span.copied {
+    visibility: visible;
+}
+
+.highlighter-rouge .title svg:hover {
+    outline: 3px solid blue;
+}
+.highlighter-rouge .title svg:active {
+    outline: 2px solid gray;
 }
 
 .footer {

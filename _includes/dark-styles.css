@@ -41,20 +41,6 @@ body {
     color: black;
 }
 
-.markdown-body .highlight pre,
-.markdown-body pre {
-    background-color: seashell;
-}
-
-.highlight {
-    background-color: #121314;
-}
-
-.language-clawr::before {
-    color: aliceblue;
-    background-color: brown;
-}
-
 /* Statuses */
 
 div.status.Adopted .title {
