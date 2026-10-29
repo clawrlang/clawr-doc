@@ -8,6 +8,8 @@ ul:has(li:nth-child(n + 10)) {
 
 *.nav:first-child {
     padding: 15px;
+    border-bottom: 5px solid;
+    border-bottom-color: revert-rule;
     text-align: center;
 
     position: sticky;
@@ -15,11 +17,12 @@ ul:has(li:nth-child(n + 10)) {
     margin-top: 3em;
     z-index: 1;
 
-    will-change: padding, border-bottom-width;
+    will-change: padding;
 }
 
 .nav {
     background-color: coral;
+    border-bottom-color: maroon;
     color: black;
 }
 
