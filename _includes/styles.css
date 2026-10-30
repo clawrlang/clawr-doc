@@ -45,29 +45,41 @@ ul:has(li:nth-child(n + 10)) {
     display: inline;
 }
 
-.nav span.nav-title {
-    display: none;
+.nav .nav-title {
+    overflow: hidden;
+    height: 0;
 }
-.nav span.nav-title.scrolled {
+.nav .nav-title.scrolled {
+    overflow: hidden;
+    height: 100%;
+}
+
+.nav .nav-title span {
+    transition: clip-path 1s ease-in;
+    clip-path: inset(0 100% 0 0);
+    font-weight: bold;
+}
+.nav .nav-title.scrolled span {
+    clip-path: inset(0 0 0 0);
     display: revert;
 }
-.nav span.nav-title a {
+
+.nav .nav-title svg {
     cursor: pointer;
     position: absolute;
     left: 50%;
-    top: 30px;
-    transform: translateX(-50%);
-}
-.nav span.nav-title svg {
+    top: 100%;
+    transform: translate(-50%, -25%);
+
     width: 40px;
     height: 40px;
     color: grey;
     border-radius: 100%;
 }
-.nav span.nav-title svg:hover {
+.nav .nav-title svg:hover {
     outline: 2px solid currentColor;
 }
-.nav span.nav-title svg:active {
+.nav .nav-title svg:active {
     outline: none;
 }
 

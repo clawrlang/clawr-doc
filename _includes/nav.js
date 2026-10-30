@@ -11,23 +11,16 @@ addEventListener('DOMContentLoaded', (event) => {
 
     document.body.prepend(nav)
 
-    const span = document.createElement('span')
-    span.className = 'nav-title'
-    nav.appendChild(span)
+    const titleSpan = document.createElement('span')
+    titleSpan.textContent =
+        document.querySelector('.markdown-body>h1').textContent
+    const div = document.createElement('div')
+    div.className = 'nav-title'
+    div.appendChild(titleSpan)
+    nav.appendChild(div)
 
-    span.innerHTML = ` \u00A0 / \u00A0 ${document.querySelector('.markdown-body>h1').innerHTML}`
-    const totop = document.createElement('a')
-    const upImage = lucide.createElement(lucide.CircleChevronUp)
-    totop.appendChild(upImage)
-    span.appendChild(totop)
-
-    upImage.setAttribute(
-        'fill',
-        document.body.computedStyleMap().get('background-color'),
-    )
-    totop.onclick = () => {
-        scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    const totop = createToTopButton()
+    div.appendChild(totop)
 
     AnimationCenter.add(() => {
         if (!nav) return
@@ -45,9 +38,26 @@ addEventListener('DOMContentLoaded', (event) => {
 
         ticking = true
         requestAnimationFrame(() => {
-            if (scrollY < 200) span.classList.remove('scrolled')
-            else span.classList.add('scrolled')
+            if (scrollY < 200) div.classList.remove('scrolled')
+            else div.classList.add('scrolled')
             ticking = false
         })
     })
+
+    function createToTopButton() {
+        const totop = createUpImage()
+        totop.onclick = () => {
+            scrollTo({ top: 0, behavior: 'smooth' })
+        }
+        return totop
+    }
+
+    function createUpImage() {
+        const upImage = lucide.createElement(lucide.CircleChevronUp)
+        upImage.setAttribute(
+            'fill',
+            document.body.computedStyleMap().get('background-color'),
+        )
+        return upImage
+    }
 })
