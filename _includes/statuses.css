@@ -71,7 +71,7 @@
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
-.status:hover .tooltip {
+.status:has(.title:hover) .tooltip {
     visibility: visible;
     opacity: 1;
 }
