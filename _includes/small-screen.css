@@ -1,3 +1,12 @@
 .clawr-logo {
     display: none;
 }
+
+.highlighter-rouge .title span.tooltip {
+    transform: none;
+}
+
+.highlighter-rouge .title span.tooltip::after {
+    right: 50%;
+    transform: translateX(50%);
+}
