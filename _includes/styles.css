@@ -2,6 +2,10 @@ a {
     color: firebrick;
 }
 
+body {
+    margin-bottom: 100px;
+}
+
 ul:has(li:nth-child(n + 10)) {
     column-count: 2;
 }
@@ -216,4 +220,10 @@ body {
     padding-right: 50px;
     padding-bottom: 20px;
     background-color: white;
+}
+
+@media (max-width: 1400px) {
+    .markdown-body::before {
+        margin-top: 120px;
+    }
 }
