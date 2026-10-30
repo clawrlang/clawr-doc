@@ -66,7 +66,7 @@
 
 @media (max-width: 550px) {
     .status .tooltip {
-        max-width: calc(100vw - 140px);
+        max-width: calc(100vw - 145px);
     }
 }
 
