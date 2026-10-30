@@ -5,6 +5,7 @@
 This is the thought that sparked the desire to design a new programming language.
 
 > [!note]
+>
 > This document gives a practical explanation of how variables work in Clawr. If you want an introduction to the conceptual meaning of the keywords, you should check out the [Mental Model](./index.md). Or you could read that first and then come back here.
 
 In the languages I know, such a need would require duplicating code — which violates DRY — or wrapping one type inside another — a `class` that contains a `struct` — which can be awkward.
@@ -47,35 +48,42 @@ The problem with ownership and borrowing is that it can be confusing. While Rust
 
 Here is a proposal for Clawr. Instead of defining semantics per type, let’s make each variable individually declare its isolation level.
 
-Rust uses ownership and borrowing to manage memory safety. While this is powerful, it requires explicit lifetime annotations that add syntactic overhead. With the proposed strategy, we can provide similar safety guarantees with clearer, more readable code.
+Languages like Rust use ownership and borrowing to manage memory safety. While this is powerful, it requires explicit lifetime annotations that add syntactic overhead. With the proposed strategy, we can provide similar safety guarantees with clearer, more readable code.
 
-| Keyword  | Contract                                    | Modifications                                                    |
-| -------- | ------------------------------------------- | ---------------------------------------------------------------- |
-| `const`  | Isolated (immutable) value contained        | Are not allowed and do not propagate from other variables        |
-| `mut`    | Isolated (mutable) value container          | Do not propagate to/from other variables                         |
-| `ref`    | Reference to a (fixed) shared entity        | Apply to referenced entity and reflect all referencing variables |
-| `mutref` | Reference to a (reassignable) shared entity | Apply to referenced entity and reflect all referencing variables |
+| Keyword               | Semantic Meaning                                                                       |
+| --------------------- | -------------------------------------------------------------------------------------- |
+| `cow T` (or just `T`) | Isolated Value — copied on write, no other variable can observe or cause changes to it |
+| `ref T`               | Shared Mutable State — multiple variables can reference and modify this entity         |
+| `const`               | Immutable Variable — cannot be modified after initialization                           |
+| `mut`                 | Mutable Variable — can be modified after initialization                                |
 
-| Keyword  | Mutability | Semantics              | Use Case                        |
-| -------- | ---------- | ---------------------- | ------------------------------- |
-| `const`  | Immutable  | Isolated/Copy on Write | Constants, pure data            |
-| `mut`    | Mutable    | Isolated/Copy on Write | Isolated mutation               |
-| `ref`    | Mutable    | Shared Reference       | Shared state (not reassignable) |
-| `mutref` | Mutable    | Shared Reference       | Shared state (reassignable)     |
+“Immutable” means different things for `ref T` variables than `cow T`variables. A `const cow T` variable is structurally immutable; the value cannot change in any way. A shared entity, however is always mutable, so a `const ref` variable is only immutable in the sense that it cannot be reassigned different entity.
 
-Mental Model:
+> [!tip]
+>
+> Check out the [Mental Model](./index.html) for a different perspective.
 
-- `const` variable: A constant value (even if structurally complex)
-- `mut` variable: A container for data. The data can be copied to another container, but the containers remain independent.
-- `ref` variable: A pointer to an entity. Multiple variables can reference and modify the same entity.
+| Mutability \ Isolation | `cow`                            | `ref`                                              |
+| ---------------------- | -------------------------------- | -------------------------------------------------- |
+| `const`                | Constant, structurally immutable | Cannot be reassigned, referenced entity is mutable |
+| `mut`                  | Isolated mutable state           | Shared mutable state                               |
 
-> [!note]
-> We might want to consider additional keywords. For example, we might want to disallow structural mutation on `ref` variables (i.e., only allow calling mutating methods, but not changing properties directly). This would enforce better encapsulation. (Though a `const` copy might be sufficient in that case.)
+### Isolated and Shared Cannot Mix
+
+An isolated (`cow`) variable must never refer to a shared entity, and a reference variable must never refer to an isolated value. If they did, the isolation semantics could not be guaranteed. Therefore, every assignment of a value from one isolation mode to a variable of another requires explicit copying using the `copy(of:)` function.
+
+```clawr
+const x: ref T = ...
+const y: T = copy(of: x) // declares y as an isolated variable
+const z = copy(of: x) as cow // declares z as an isolated variable (inferring type)
+```
+
+## Example: Bowling
 
 Let's explore an example to see why this flexibility is powerful. Consider a bowling game score calculator that needs to track rolls:
 
 ```clawr
-subset RollResult = integer(0..<10)
+subset RollResult = integer(0...10)
 
 object BowlingGame {
 
@@ -89,27 +97,26 @@ mutating:
         rolls.append(count)
     }
 
-state:
-    rolls: RollResult[]
-}
+init:
+    func start() => { rolls: [] }
 
-companion BowlingGame {
-    func start() -> BowlingGame => { rolls: [] }
+state:
+    rolls: [RollResult]
 }
 ```
 
 > [!note]
 >
-> This `BowlingGame` type is defined as an `object`, meaning it hides its data structure behind an encapsulation. This will be discussed in a [different document](../types/object-data.md).
+> This `BowlingGame` type is defined as an `object`, meaning it hides its data structure behind an encapsulation. This will be discussed in a [different document](../user-types/object-data.md).
 
 Now, when using `BowlingGame`, we can choose the appropriate semantics based on our needs:
 
-### Copy Semantics with `mut`
+### Copy Semantics with `cow`
 
-When using `mut` variables, changes are isolated:
+When using `cow` variables, changes are isolated:
 
 ```clawr
-mut game1 = BowlingGame.start()
+mut game1 = { BowlingGame.start() }  // A cow variable
 game1.roll(droppingPins: 9)
 print(game1.score) // 9
 
@@ -122,22 +129,22 @@ print(game1.score) // 9 -> unchanged by second roll (isolated variable)
 ### What happened?
 
 1. `game1` and `game2` initially reference the same memory
-2. When `game2.roll()` is called (a mutating method), the runtime detects multiple references
+2. When `game2.roll(droppingPins:)` is called (a mutating method), the runtime detects that multiple references exist
 3. A copy is made before modification, ensuring `game1` remains unchanged
 4. Each variable has its own independent game state
 
 ### Reference Semantics with `ref`
 
-When using `ref` variables, changes are shared:
+When using `ref` entities, changes are shared:
 
 ```clawr
-ref game1 = BowlingGame()
+const game1 = { BowlingGame.start() } as ref // Explicitly as ref
 game1.roll(droppingPins: 9)
 print(game1.score) // 9
 
-ref game2 = game1                    // Shares the same game
-game2.roll(droppingPins: 1)          // Modifies shared state
-print(game2.score) // 10 -> includes scond roll
+const game2 = game1                    // Shares the same game
+game2.roll(droppingPins: 1)            // Modifies shared state
+print(game2.score) // 10 -> includes second roll
 print(game1.score) // 10 -> changed too! (two variables, but only one game)
 ```
 
@@ -151,80 +158,8 @@ print(game1.score) // 10 -> changed too! (two variables, but only one game)
 
 ### When to Use Each
 
-```clawr
-// Local calculations - use mut for isolation
-mut tempScore = game.calculateFrame(3)
-tempScore.adjust(bonus: 10)  // Only affects tempScore
+The default is `cow`. It is usually the right choice. But sometimes sharing is _the point_.
 
-// Shared game state - use ref for coordination
-ref activeGame = gameManager.currentGame
-player1Thread.update(activeGame)
-player2Thread.update(activeGame)  // Single game instance
-
-// Immutable snapshots - use const for safety
-const finalScore = game.score
-archiveToDatabase(finalScore)  // Safe to share
-```
-
-## Notes on Implementation
-
-### Memory Structure
-
-To enforce isolation semantics, the runtime will need to manage memory with metadata indicating whether a memory block is `ISOLATED` or `SHARED`.
-
-- **Semantics flag**: `ISOLATED` (for `const`/`mut` variables) or `SHARED` (for `ref` variables)
-- **Reference Counter**: To track how many variables reference each memory block
-- **Type Information**: To enable polymorphic behaviour and method dispatch, and to support runtime type-checking if needed
-
-### Copy-on-Write Optimisation
-
-The implementation should use automatic reference counting (ARC) with copy-on-write:
-
-1. No copying at assignment: When x = y, both variables initially reference the same memory
-2. Copy only when needed: A copy is made only when a mutating operation is about to be performed and…
-   - Memory is flagged ISOLATED, AND
-   - Reference count > 1
-3. Never copy SHARED memory: This would violate the shared-state contract
-   This provides the safety of value semantics with the performance of reference semantics.
-
-### Type Safety Rules
-
-The compiler enforces the following rules:
-
-- Cannot assign `ref` to `mut` or `const` without explicit copy:
-
-  ```clawr
-  ref r = BowlingGame()
-  mut m = r              // Compile error
-  mut m = r.copy()       // Explicit copy - OK
-  ```
-
-- Cannot assign `mut`/`const` to `ref` (would create isolated entity when shared expected):
-
-  ```clawr
-  mut m = BowlingGame()
-  ref r = m              // Compile error
-  ref r = m.copy()       // Explicit copy - OK
-  ```
-
-Different semantics cannot be mixed without explicit intent. There is no way to maintain two different sets of semantic guarantees for the same memory block. Therefore, a copy with different semantics must be created immediately at assignment. If this is done implicitly, it can lead to confusion and bugs.
-
-### Function Parameters and Return Values
-
-Function parameters and return values should also respect semantics:
-
-- Parameters default to `const` semantics (isolated). Passing a `ref` requires explicit copy.
-- Each function can specify if it returns `ref` or `const`/`mut` semantics.
-  Idea/exploration: What if parameters had their own semantics? They could be something like:
-
-1. require immutable, isolated values; does not mutate or share state and reqiures that no other thread can change it while it’s working.
-2. allow reference, but promise not to mutate: safe to pass `const` or `ref` variables without copying.
-3. explicitly mutates received structure: requires `ref` variables; allows mutation of shared state.
-4. temporarily borrows value for mutation: accepts `mut` or `ref` variables; might be dangerous to allow if the value can “escape.”
-5. and other options?
-
-## Proof of Concept
-
-There is a [proof of concept repository](https://github.com/clawrlang/clawr-poc) that implements a compiler and runtime for Clawr, demonstrating the variable scope and semantics model described above. Its main focus is showing how the runtime can manage memory with the proposed semantics while providing safety guarantees.
-
-It also implements the other big language idea of Clawr: enforcing [encapsulation vs pure data segregation](../types/object-data.md).
+- When creating a manager for accessing a database, a sensor or other feature of the environment.
+- When implementing the Singleton pattern.
+- When circular references are needed.
