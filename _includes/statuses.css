@@ -35,15 +35,12 @@
 
 /* Tooltip text */
 .status .tooltip {
-    /*visibility: hidden;*/
     background-color: #555;
     color: #fff;
     text-align: center;
     padding: 5px;
     border-radius: 6px;
     position: absolute;
-    z-index: 1;
-    left: 100%;
     top: 50%;
     margin-left: 20px;
     opacity: 0;
@@ -51,6 +48,7 @@
     width: max-content;
     max-width: 400px;
     transform: translateY(-50%);
+    transition: opacity 0.2s ease-in;
 }
 
 /* Tooltip arrow */
@@ -64,6 +62,12 @@
     border-width: 5px;
     border-style: solid;
     border-color: transparent #555 transparent transparent;
+}
+
+@media (max-width: 550px) {
+    .status .tooltip {
+        max-width: calc(100vw - 140px);
+    }
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
