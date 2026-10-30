@@ -11,7 +11,8 @@ addEventListener('DOMContentLoaded', (event) => {
 
     document.body.prepend(nav)
 
-    const titleSpan = document.createElement('span')
+    const titleSpan = document.createElement('div')
+    titleSpan.className = 'header'
     titleSpan.textContent =
         document.querySelector('.markdown-body>h1').textContent
     const div = document.createElement('div')

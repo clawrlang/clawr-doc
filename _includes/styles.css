@@ -48,18 +48,23 @@ ul:has(li:nth-child(n + 10)) {
 .nav .nav-title {
     overflow: hidden;
     height: 0;
+    padding: 0 5px;
 }
 .nav .nav-title.scrolled {
     overflow: hidden;
     height: 100%;
 }
 
-.nav .nav-title span {
+.nav .nav-title .header {
     transition: clip-path 1s ease-in;
     clip-path: inset(0 100% 0 0);
+    font-family:
+        Fira Code,
+        monospace;
+    font-size: 12pt;
     font-weight: bold;
 }
-.nav .nav-title.scrolled span {
+.nav .nav-title.scrolled .header {
     clip-path: inset(0 0 0 0);
     display: revert;
 }
