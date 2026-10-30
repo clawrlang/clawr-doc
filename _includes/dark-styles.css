@@ -17,6 +17,10 @@ body {
     color: aliceblue;
 }
 
+.nav span.nav-title svg {
+    color: seashell;
+}
+
 .markdown-body table tr {
     background-color: #121314;
     color: aliceblue;

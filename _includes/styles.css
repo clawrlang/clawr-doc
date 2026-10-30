@@ -45,6 +45,32 @@ ul:has(li:nth-child(n + 10)) {
     display: inline;
 }
 
+.nav span.nav-title {
+    display: none;
+}
+.nav span.nav-title.scrolled {
+    display: revert;
+}
+.nav span.nav-title a {
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%);
+}
+.nav span.nav-title svg {
+    width: 40px;
+    height: 40px;
+    color: grey;
+    border-radius: 100%;
+}
+.nav span.nav-title svg:hover {
+    outline: 2px solid currentColor;
+}
+.nav span.nav-title svg:active {
+    outline: none;
+}
+
 p:has(img) {
     text-align: center;
 }
@@ -69,6 +95,7 @@ body {
     background-color: revert;
 }
 
+.highlighter-rouge,
 .markdown-body blockquote.admonition {
     margin-bottom: 40px;
     margin-top: 40px;
