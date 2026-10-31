@@ -1,6 +1,12 @@
 a {
     color: firebrick;
 }
+a svg {
+    width: 0.7em;
+    vertical-align: middle;
+    margin-left: 3px;
+    transform: translateY(-2px);
+}
 
 body {
     margin-bottom: 100px;
@@ -262,6 +268,32 @@ body {
 }
 .highlighter-rouge .title svg:active {
     outline: none;
+}
+
+.footnotes {
+    border-top: 2px dotted;
+    margin-top: 50px;
+    padding: 30px 0;
+    font-size: 9pt;
+    background-color: #ddd;
+}
+.footnotes::before {
+    content: 'Footnotes';
+    width: 100%;
+    text-align: center;
+    font-family:
+        Fira Code,
+        monospace;
+    font-size: 14pt;
+    font-weight: bold;
+    display: block;
+}
+.footnotes ol {
+    max-width: 80%;
+    margin: auto;
+}
+.footnotes a {
+    color: #c02a2a;
 }
 
 .footer {

@@ -1,4 +1,4 @@
-addEventListener('DOMContentLoaded', (event) => {
+addEventListener('DOMContentLoaded', () => {
     const navH = document.querySelector('h1:first-child')
     const navP =
         navH.nextElementSibling.tagName === 'P'
@@ -11,13 +11,13 @@ addEventListener('DOMContentLoaded', (event) => {
 
     document.body.prepend(nav)
 
-    const titleSpan = document.createElement('div')
-    titleSpan.className = 'header'
-    titleSpan.textContent =
+    const headerEl = document.createElement('div')
+    headerEl.className = 'header'
+    headerEl.textContent =
         document.querySelector('.markdown-body>h1').textContent
     const div = document.createElement('div')
     div.className = 'nav-title'
-    div.appendChild(titleSpan)
+    div.appendChild(headerEl)
     nav.appendChild(div)
 
     const totop = createToTopButton()
@@ -60,5 +60,18 @@ addEventListener('DOMContentLoaded', (event) => {
             document.body.computedStyleMap().get('background-color'),
         )
         return upImage
+    }
+})
+
+addEventListener('DOMContentLoaded', () => {
+    const anchors = document.querySelectorAll(
+        `.markdown-body a[href^='http://'], .markdown-body a[href^='https://']`,
+    )
+    for (const a of anchors) {
+        a.insertAdjacentElement('beforeend', createExtLinkImage())
+    }
+
+    function createExtLinkImage() {
+        return lucide.createElement(lucide.SquareArrowOutUpRight)
     }
 })

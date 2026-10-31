@@ -127,3 +127,11 @@ div.status.Draft .title {
 .admonition.todo > .admonition-title > svg {
     color: #74c69d;
 }
+
+.footnotes {
+    background-color: #222;
+    color: #a0a493;
+}
+.footnotes a {
+    color: #c1886e;
+}
