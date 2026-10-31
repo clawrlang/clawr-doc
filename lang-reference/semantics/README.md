@@ -109,7 +109,7 @@ Just like a `struct` in languages like C# and Swift can contain properties that 
 
 When dealing with `mut` variables, a `ref` property becomes like a hand reaching out from _inside_ the drawer. It can still refer to an entity shared with other variables. That shared entity is not inside the drawer; only the link is. Therefore, it might still be manipulated in unexpected ways from the `mut` variable’s perspective.
 
-> [!TIP]
+> [!tip]
 >
 > Prefer `mut` and `const` properties when possible. Propertys without explicit semantics default to `mut`.
 >

@@ -6,7 +6,7 @@ This is the thought that sparked the desire to design a new programming language
 
 > [!note]
 >
-> This document gives a practical explanation of how variables work in Clawr. If you want an introduction to the conceptual meaning of the keywords, you should check out the [Mental Model](./index.md). Or you could read that first and then come back here.
+> This document gives a practical explanation of how variables work in Clawr. If you want an introduction to the conceptual meaning of the keywords, you should check out the [Mental Model](./README.md). Or you could read that first and then come back here.
 
 In the languages I know, such a need would require duplicating code — which violates DRY — or wrapping one type inside another — a `class` that contains a `struct` — which can be awkward.
 
@@ -61,7 +61,7 @@ Languages like Rust use ownership and borrowing to manage memory safety. While t
 
 > [!tip]
 >
-> Check out the [Mental Model](./index.html) for a different perspective.
+> Check out the [Mental Model](./README.md) for a different perspective.
 
 | Mutability \ Isolation | `cow`                            | `ref`                                              |
 | ---------------------- | -------------------------------- | -------------------------------------------------- |
