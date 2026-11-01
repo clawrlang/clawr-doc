@@ -9,7 +9,7 @@ function formatAdmonitions() {
 
         p.textContent = /^\[!(.*)\]$/.test(p.textContent)
             ? config.text
-            : p.textContent.replace(/^\[!(.*)\]\s*/, '')
+            : p.textContent.replace(/^\[!(.*)\]\s*/, `${config.text}: `)
 
         p.classList.add('admonition-title', type)
         p.parentNode.classList.add('admonition', type)
