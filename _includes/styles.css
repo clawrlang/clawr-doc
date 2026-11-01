@@ -12,6 +12,12 @@ body {
     margin-bottom: 100px;
 }
 
+.markdown-body table {
+    margin: 50px auto;
+    width: auto;
+    display: table;
+}
+
 ul:has(li:nth-child(n + 10)) {
     column-count: 2;
 }
