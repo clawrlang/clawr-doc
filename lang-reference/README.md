@@ -1,4 +1,6 @@
-# the Clawr Language
+# The Clawr Language
+
+- [Isolation vs Sharing](isolation-v-sharing/README.md)
 
 A language is a tool for communication. Human language likely began with gestures, facial expressions, and simple vocalizations. Over time, as our anatomy and social structures evolved, so did our ability to express complex ideas. Eventually, writing allowed knowledge to be recorded and passed across generations.
 
