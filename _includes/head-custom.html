@@ -12,15 +12,17 @@
     href="{{ '/images/apple-touch-icon.png' | relative_url }}"
 />
 
-<!-- Overrides the jekyll-theme-primer include of the same name (copied from v0.6.0) to add site-wide scripts and styles. -->
+<script src="{{ '/jsm/admonitions.js' | relative_url }}" type="module"></script>
+<script src="{{ '/jsm/statuses.js' | relative_url }}" type="module"></script>
+<script
+    src="{{ '/jsm/code-snippets.js' | relative_url }}"
+    type="module"
+></script>
+<script src="{{ '/jsm/nav.js' | relative_url }}" type="module"></script>
+<script src="{{ '/jsm/logo.js' | relative_url }}" type="module"></script>
+
 <script>
     {% include mathjax-config.js %}
-    {% include admonitions.js %}
-    {% include statuses.js %}
-    {% include code-snippets.js %}
-    {% include AnimationCenter.js %}
-    {% include logo.js %}
-    {% include nav.js %}
 </script>
 <script
     id="MathJax-script"

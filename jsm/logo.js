@@ -1,3 +1,5 @@
+import { easeOut, addScrollAnimation } from './scroll-animation.js'
+
 addEventListener('DOMContentLoaded', (event) => {
     const el = document.createElement('img')
     el.src = '/clawr-doc/images/rawry-simplified.png'
@@ -5,13 +7,13 @@ addEventListener('DOMContentLoaded', (event) => {
     el.className = 'clawr-logo'
     document.body.appendChild(el)
 
-    AnimationCenter.add(() => {
-        const height = AnimationCenter.easeOut({
+    addScrollAnimation(({ scrollY }) => {
+        const height = easeOut({
             start: 250,
             end: 70,
             t: scrollY / 400,
         })
-        const top = AnimationCenter.easeOut({
+        const top = easeOut({
             start: 10,
             end: 0,
             t: scrollY / 400,

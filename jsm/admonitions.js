@@ -1,3 +1,8 @@
+addEventListener('DOMContentLoaded', () => {
+    formatAdmonitions()
+    lucide.createIcons()
+})
+
 function formatAdmonitions() {
     const callouts = [...document.querySelectorAll('blockquote > p')].filter(
         (p) => /^\[!(.*)\]/.test(p.textContent),
@@ -20,11 +25,6 @@ function formatAdmonitions() {
         p.insertBefore(icon, p.firstChild)
     }
 }
-
-addEventListener('DOMContentLoaded', () => {
-    formatAdmonitions()
-    lucide.createIcons()
-})
 
 const ADMONITIONS = {
     error: { icon: 'unplug', text: 'Error' },
