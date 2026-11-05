@@ -34,3 +34,4 @@ They are essentally an ice-box for architectural decisions and future TODOs.
 - [Control Flow](./control-flow.md)
 - [Generics](./generics.md)
 - [Test Framework](./test-framework.md)
+- [Ternary `subset` and `type`](./ternary-subsets.md)
