@@ -1,3 +1,5 @@
+&nbsp; / &nbsp;[The Clawr Language](../README.md) &nbsp; / &nbsp;[User-Defined Types](./README.md)
+
 # Service Types
 
 A `service` is an `object` with special privileges. A simple `object` is an encapsulation of data. A `service` has access to system resources. It can produce side effects outside its allocated data. For example:

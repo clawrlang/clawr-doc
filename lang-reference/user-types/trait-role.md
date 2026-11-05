@@ -1,3 +1,5 @@
+&nbsp; / &nbsp;[The Clawr Language](../README.md) &nbsp; / &nbsp;[User-Defined Types](./README.md)
+
 # Traits and Roles
 
 > _What is the difference between a `trait` and a `role`? They both seem to do the same thing. Aren’t they both interfaces?_

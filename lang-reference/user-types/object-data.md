@@ -1,3 +1,5 @@
+&nbsp; / &nbsp;[The Clawr Language](../README.md) &nbsp; / &nbsp;[User-Defined Types](./README.md)
+
 # User-Defined Type Constraints `object` vs `data`
 
 Clawr does not have value-type vs reference-type distinctions like some other languages. Instead, it enforces consistent encapsulation rules based on whether a type is defined as an `object` or a `data` structure.
