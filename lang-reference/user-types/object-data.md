@@ -2,26 +2,63 @@
 
 # User-Defined Type Constraints `object` vs `data`
 
-Clawr does not have value-type vs reference-type distinctions like some other languages. Instead, it enforces consistent encapsulation rules based on whether a type is defined as an `object` or a `data` structure.
+Clawr does not attribute value semantics vs reference semantics to _types_ like many other languages do. Instead, it enforces such semantics on a _per-variable_ basis.
 
-## Objects vs. Data Structures
+> [!note]
+>
+> If you are used to the term “value type” from other languages like C#, you’ll find that the term is used differently in this documentation. In C#, a “value type” is a type that copies its value when assigned or passed around. In Clawr terminology, a “value type” is a type that contains all its state information (its “value”) in its primary data location, its allocated memory. This is in contrast to a [`service`](./service.md), which reads and manipulates resources throughout the runtime environment as part of its extended state.
 
-In Domain-Driven Design (DDD), the term "anaemic" (derived from the medical condition of low red blood cell count) is used to highlight the problems of exposing data directly to manipulation. An anaemic model requires validation before it can be persisted, as the volume of code that modifies it cannot be fully trusted to be free of bugs. Without encapsulation, there is a risk that the data will become inconsistent or that business logic will be scattered and hard to maintain, leading to fragile systems.
+Because Clawr does not need types to carry inherent value or reference semantics, it does not define `struct` or `class` types at all. Instead, the main user-defined types use the keywords `object` and `data`. The former implies encapsulation and controlled interaction, while the latter implies direct access to its stored data elements. The distinction mirrors the difference between objects and data structures as described by “Uncle Bob” Martin:
 
-A "rich model," in contrast, uses encapsulation to ensure that its state remains valid. By embedding the business rules within the model itself, the need for external validation is removed, and the model can evolve without breaking its internal logic. This approach also clarifies the application's intent and the goals of its users, as the rules are encapsulated in a more intuitive and predictable manner.
-
-Encapsulation offers another advantage: loose coupling. Loose coupling reduces dependencies between components, allowing changes in one part of the system to have minimal impact on other parts. By hiding the internal state of an object and exposing only the methods that interact with it, you not only protect its state from direct manipulation, reducing the risk of shared mutable state. You also improve flexibility in terms of implementation details.
-
-Robert C. Martin (Uncle Bob) succinctly captures the distinction between objects and data structures:
-
+> [!quote]
+>
 > - An Object is a set of functions that operate upon implied data elements.
 > - A Data Structure is a set of data elements operated upon by implied functions.
 >
-> — <https://blog.cleancoder.com/uncle-bob/2019/06/16/ObjectsAndDataStructures.html>
+> — Robert C. Martin (“Uncle Bob”), [_Classes vs. Data Structures_][ub]
 
-The key takeaway here is that an object’s state is hidden away (“implied”), instead only exposing “functions” for interaction. The data structure, conversely, exposes data-elements, “implying” that they have some use, but says nothing about what that usage amounts to.
+Uncle Bob unfortunaely uses the term “class” in the title of his piece, which can be misleading for readers who do not understand that classes can be used to implement both objects and data structures.
 
-### In Clawr
+## Why Objects are Preferred over Data Structures
+
+The medical condition of anaemia refers to having a deficiency of red blood cells, which means that the blood cannot carry enough oxygen to bodily tissues. The lack of oxygen leads to fatigue, weakness, and other health issues. In Domain-Driven Design (DDD), the term "anaemic" is used for models that expose their data for direct manipulation, scattering the procedural code that manipulates it throughout the code base. The terminology is apt because such models resemble the medical condition: they lack a certain “vitality” or robustness, as their state is not self-sustaining and relies heavily on external validation and manipulation to ensure correctness and to avoid inconsistencies.
+
+A "rich model," in contrast, uses encapsulation to ensure that its state remains valid and consistent _after every single operation_. By embedding the business rules within the model itself, the need for external validation is eliminated, and the model can evolve without breaking its internal logic. This approach also clarifies the application's intent and the goals of its users, as the system models “what happens” during business processes rather than merely storing the requisite data.
+
+Encapsulation offers another advantage too: loose coupling. Loose coupling reduces dependencies between components, allowing changes in one part of the system to have minimal impact on other parts. By hiding the internal state of an object and the algorithms that operate on it, instead exposing only the methods that interact with it, you not only protect the application state from invalid manipulation and corruption. You also decouple the implementation details from the rest of the system, making it easier to modify or replace components without affecting other parts of the application.
+
+At the end of his article, Uncle Bob restates the distinction between classes (objects) and data structures as follows:
+
+> [!quote]
+>
+> - Classes make functions visible while keeping data implied.
+> - Data structures make data visible while keeping functions implied.
+> - Classes make it easy to add types but hard to add functions. Data structures make it easy to add functions but hard to add types.
+>
+> — Robert C. Martin (“Uncle Bob”), [_Classes vs. Data Structures_][ub]
+
+[ub]: https://blog.cleancoder.com/uncle-bob/2019/06/16/ObjectsAndDataStructures.html
+
+### Why You Sometimes Need Data Structures
+
+While objects provide encapsulation and protect the integrity of their internal state, there are scenarios where exposing raw data is beneficial. Data structures are particularly useful for transferring information between different parts of a system, for serialization, or for interfacing with external systems where the internal logic of an object is irrelevant. They allow for straightforward access and manipulation of data without the overhead of method calls or encapsulation constraints.
+
+Choose an encapsulated object when…
+
+- You want to enforce invariants and control how the state of the system evolves.
+- You want to hide implementation details and provide a clear interface for consumers.
+- You gather data and perform tasks based on input that may be invalid (e.g. coming from a user).
+- You are constructing the “command” part (a.k.a. “write model”) of a CQRS architecture.
+
+Choose an exposed data structure when…
+
+- You need to make computations directly on read-only data you do not control.
+- You need to search or filter through large collections of “big data.”
+- You are defining a protocol for communication between different subsystems or external systems.
+- You are persisting structured data for later retrieval or processing.
+- You are constructing the “query” part (a.k.a. “read model”) of a CQRS architecture.
+
+## Data Structure Syntax In Clawr
 
 Clawr borrows Uncle Bob’s terminology in the keywords `object` and `data`. A `data` type defines structure for direct interaction with data elements.
 
@@ -32,84 +69,62 @@ data LogInfo {
   position: { latitude: real, longitude: real }
   velocity: { heading: real, speed: real }
 }
-
-const routeData: [LogInfo] = [
-  {
-    position: {latitude: 10.1, longitude: 12.2},
-    velocity: {heading: 120.0, speed: 98.5}
-  }, ...
-]
 ```
 
-An `object` is a _meaningful_ entity that hides a `data` structure in its bowels. The `object` exposes interaction points (methods) that hide the specific implementation from dependent code. A companion `namespace` defined in the same module has full access to the hidden `data`.
+A `data` type is instantiated directly using a data literal, and its fields are accessed without any encapsulation or method calls. This makes `data` types ideal for scenarios where you need straightforward access to structured information.
+
+```clawr
+@main {
+  const routeData: [LogInfo] = [
+    {
+        position: {latitude: 10.1, longitude: 12.2},
+        velocity: {heading: 120.0, speed: 98.5}
+    }, ...
+  ]
+
+  print(routeData[0].position.latitude)
+  print(routeData[0].velocity.speed)
+}
+```
+
+## Object Syntax In Clawr
+
+An `object` is a _meaningful_ entity that hides a `data` structure in its bowels. The `object` exposes interaction points (methods) that hide the specific implementation from dependent code.
 
 ```clawr
 // “An Object is a set of functions that operate upon implied data elements.”
 
 object Money {
-
     func dollars() => self.cents / 100
     func cents() => self.cents % 100
+
+init:
+    func cents(_ c: integer) -> Money => { cents: c }
+    func dollars(_ d: integer, cents: integer (0..<100) = 0) => {
+        cents: d * 100 + cents
+    }
+    func amount(_ a: real) => {
+        cents: integer(Math.round(a * 100))
+    }
 
 state:
     const cents: integer
 }
 
-// A companion object defines “static” members and methods.
-// It has full access to the internal data of the main object type.
+// A companion namespace defines “static” members and methods.
 
-companion Money {
-    const zero: Money = { cents: 0 }
-
-    func cents(_ c: integer) -> Money => { cents: c }
-    func dollars(_ d: integer, cents: integer = 0) => {
-        cents: d * 100 + cents
-    }
-    func amount(_ a: real) -> Money => {
-        cents: integer(Math.round(a * 100))
-    }
+namespace Money {
+    const zero = { Money.cents(0) }
 }
 ```
 
-## The `service` Type
+### Object Sections
 
-An `object` is just an encapsulated `data` structure. In some cases, however, we might want to access and modify system-wide data such as on-device sensors, a database or the Internet. This is where the `service` type comes in.
+An `object` in Clawr is divided into distinct sections that define its behavior and state. The main sections are:
 
-A `service` is similar to an `object`. It is defined by its interface and its behavioural capabilities, not by its composition. While it can (and probably will) have an internal `data` structure to perhaps maintain a cache or other state information, its main source of data comes from external resources far away from its own memory address.
+- the implicit read-only methods section — Defines methods that provide read-only access to the object's state.
+- `mutating:` — Defines methods that modify the object's state. Calling any of these triggers copy-on-write semantics for isolated variables.
+- `init:` — Defines initializers for calling in data literals.
+- `state:` — Declares the internal state of the object. The state is always private and can only be accessed or modified through the object's own methods.
 
-```clawr
-service UserRepository {
-    func getUser(id: integer) -> User {
-        // Fetch user from database or external subsystem
-    }
-
-    func updateUser(_ user: User) {
-        // Update user in database or external subsystem
-    }
-}
-```
-
-A `service` type can only use `SHARED` semantics. Variables must always be declared as `ref`.
-As it’s data is defined externally, making isolated copies of it’s memory will only cause weird behaviour.
-
-## Visibility and Headers
-
-An early idea was to support header files. A published header file could declare “public” APIs, while a private header could declare “package-internal” code. Code that is “private” would only be declared in the implementation-file.
-
-Headers are, however, rather complex to use. That might be the main problem with this idea.
-
-My current idea is to use a `helper` keyword:
-
-- All `object` and `service` properties are hidden and all `data` properties are public. That cannot change.
-- All methods of an object are public unless marked `helper`. A `helper` method can only be used by other methods of the same `object` (or by factories defined in the same module).
-- Free functions are publicly available. If marked `helper` they cannot be accessed outside their package/target.
-- Types are publicly available. If marked `helper` they cannot be accessed outside their package/target.
-
-## Proof of Concept
-
-There are a few proof of concept compilers for Clawr, demonstrating syntax and exploring runtime implementations.
-
-- <https://github.com/clawrlang/clawr-poc> — Early exploration into syntax _and_ runtime
-- <https://github.com/clawrlang/clawr-swift-parsing> — Focus on syntax, not runtime
-- <https://github.com/clawrlang/clawr-runtime> — Focus on runtime, not syntax
-  They also demonstrate the other big language idea of Clawr: a [variable-driven semantics model](../semantics/variable-scope.md).
+The read-only methods section is implicit and needs to be defined first, before the `state:` section (as well as all the others). This is intentional, as the `object` should be defined by your interactions with it, rather than how it stores its state.
