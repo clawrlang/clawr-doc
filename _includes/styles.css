@@ -133,6 +133,11 @@ body {
     background-color: revert;
 }
 
+.markdown-body table tr:nth-child(2n),
+.markdown-body table tr {
+    background-color: #fff8;
+}
+
 .highlighter-rouge,
 .markdown-body blockquote.admonition {
     margin-bottom: 40px;

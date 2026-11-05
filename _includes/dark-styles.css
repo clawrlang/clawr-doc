@@ -22,12 +22,11 @@ body {
 }
 
 .markdown-body table tr {
-    background-color: #121314;
+    background-color: #121314a0;
     color: aliceblue;
 }
-
 .markdown-body table tr:nth-child(2n) {
-    background-color: revert;
+    background-color: #121314a0;
 }
 
 .footer {
