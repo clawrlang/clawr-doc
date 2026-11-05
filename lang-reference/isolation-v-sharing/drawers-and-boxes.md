@@ -19,7 +19,15 @@ But just mapping keywords to terms like “isolated” and “shared” might no
 
 In traditional object-oriented languages (Java, JavaScript, Python, C++, etc.), we're taught to think of “objects” as blocks of memory “on the heap,” and variables as pointers to those blocks. Multiple variables can store the same memory address and therefore reference the same object. When the object is updated through any variable, all other variables see the change immediately, because it is the _object_ that changes, not “the variable” itself.
 
-A problem with this model (seen especially in languages like Java, JavaScript, and Python) is that it encourages shared mutable state. Multiple variables can reference the same object, and changes through one variable are immediately visible through others. This can lead to concurrency bugs and makes reasoning about program behavior more difficult. In response to this problem, other languages (e.g. Swift and C#) have introduced the idea of value types and reference types to give programmers more control over how data is shared and mutated. A value type is copied when assigned to a new variable or passed to a function, ensuring that changes to one variable do not affect others.
+A problem with this model (seen especially in languages like Java, JavaScript, and Python) is that it encourages shared mutable state. Multiple variables can reference the same object, and changes through one variable are immediately visible through others. This can lead to concurrency bugs and makes reasoning about program behavior more difficult.
+
+If, instead, we think of the variable _itself_ as the object, it becomes an isolated entity that contains its own data. Changes to a variable cannot affect any other variable if there is no shared reference. Languages like Swift and C# have introduced the idea of “value semantics” (or “value types” in C#) to give programmers more control over how data is shared and mutated. A value semantics type is copied in its entirety when assigned to a new variable or passed to a function (or before the first subsequent modification to it), ensuring that changes to one variable do not affect others. Such variable can be considered as _being_ the object itself, rather than merely a reference to it.
+
+> [!warning] Overloaded Terminology
+>
+> Clawr may want to use the term “value type” in a different way from Swift and C#. A Clawr value type is a definition that may be shared in either shared or isolated contexts. It is a “value type” in the sense that its state is defined only by the contents of its own memory, it cannot reference the runtime environment. (See the discussion on [`object` vs `data`](../user-types/object-data.md) compared with [`service`](../user-types/service.md) for more details.)
+>
+> This documentation will endeavor to use terms like “value semantics” or “isolation” to refer to the concept that C# calls “value types”, to avoid confusion with Clawr’s own terminology.
 
 ### Stack vs Heap
 
