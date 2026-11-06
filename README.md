@@ -12,6 +12,7 @@ This repository contains documentation for the Clawr language. The documentation
 - The [IDE Extensions](./ide-reference/README.md) section provides information about creating syntax coloring and diagnostics for editors.
 - The [Architecture Design Records](./adr/README.md) (or “ADRs”) describe the reasoning behind the language design and the general architecture of the compiler.
 - The [CIR Reference](./cir-reference/README.md) describes the data structure used to communicate from frontend to backend. The frontend is the tool that reads and interprets a .clawr file and enforces all the semantic rules. The backend is the tool that converts (“lowers”) the CIR into executable machine code. The two tools could be developed by different teams.
+- The [Theory](./theory/README.md) section discusses the underlying principles and concepts that inform the design of the Clawr language, such as encapsulation.
 
 ## The Clawr Architecture
 

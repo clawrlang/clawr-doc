@@ -1,0 +1,3 @@
+# Theory
+
+- [Encapsulation](./encapsulation.md)
