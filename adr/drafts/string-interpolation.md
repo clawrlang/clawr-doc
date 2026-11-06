@@ -1,4 +1,4 @@
-&nbsp; / &nbsp; [Architecture Decision Records](../README.md) &nbsp; / &nbsp; [Drafts](./README.md)
+&nbsp; / &nbsp; [Architecture Decision Records](../README.md) &nbsp; / &nbsp; [ADR Sketches](./README.md)
 
 # String Interpolation and Multiline Strings
 
@@ -29,6 +29,7 @@ let manyQuotes = #"this ##string## includes many "quotes""#
 ## Decision
 
 ```clawr
+
 ```
 
 ## Rationale
