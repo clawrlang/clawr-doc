@@ -79,7 +79,7 @@ Unlike C# and Swift — which distinguish between value and reference types at t
 
 > [!note] Overloaded Term
 >
-> The term “type” is overloaded. On the one hand it refers to the shape and behavior of a value, describing what operations can be performed on it and/or what data elements it stores. On the other hand, the type of a variable is incomplete without also specifying whether it is a drawer (`cow T` or just `T`) or a drone hub (`ref T`), which determines its isolation semantics.
+> The term “type” is overloaded. On the one hand it refers to the shape and behavior of a value, describing what operations can be performed on it and/or what data elements it stores. On the other hand, the type of a variable is incomplete without also specifying whether it is a drawer (`isolated T` or just `T`) or a drone hub (`ref T`), which determines its isolation semantics.
 
 The type of a drawer or box can be seen as the container's general shape, describing what kind of contents it can hold and what operations can be performed on it. A `Credentials` type might contain a username and password, for example, and the drawer or box would be shaped such that it can hold those two properties, but nothing else. A `MailSender` type box could be seen as a closed container with buttons and levers used for sending emails, but not dictating _how_ those emails are sent.
 
@@ -89,9 +89,9 @@ The type of a drawer or box can be seen as the container's general shape, descri
 
 As Clawr does not need the `struct` vs `class` distinction found in languages like C# or Swift, it instead uses `data`, `object`, and `service` to categorize types based on their intended usage. A `data` type stores data elements without defining behavior, an `object` type defines interactions supported by an encapsulated (hidden) data structure, and a `service` type represents capabilities that may interact with the environment. This categorization complements the drawers-and-boxes metaphor, helping to reduce the risk of accidental sharing or an invalid state.
 
-Note that `service` cannot be used as a drawer (`cow T`), while `data` and `object` types can (and are encouraged to be used this way whenever possible). If the `service` interacts with the environment, its state cannot be isolated to one container and declaring it as `cow T` would be dishonest.
+Note that `service` cannot be used as a drawer (`isolated T`), while `data` and `object` types can (and are encouraged to be used this way whenever possible). If the `service` interacts with the environment, its state cannot be isolated to one container and declaring it as `isolated T` would be dishonest.
 
-These types are all complex structures that each may contain multiple properties, each of which in turn can be either isolated or shared. In other words, a drawer variable can contain a drone hub! And the box assigned to their drone can contain both drawers and more drone hubs… Note that the isolation semantics of the containing structure does not affect the box assigned to a drone. A `ref` property inside a `cow T` variable is still a shared reference, not included in the drawer's isolation guarantee.
+These types are all complex structures that each may contain multiple properties, each of which in turn can be either isolated or shared. In other words, a drawer variable can contain a drone hub! And the box assigned to their drone can contain both drawers and more drone hubs… Note that the isolation semantics of the containing structure does not affect the box assigned to a drone. A `ref` property inside a `isolated T` variable is still a shared reference, not included in the drawer's isolation guarantee.
 
 If the container is a `const` drawer, its contents cannot be modified (even properties that have been declared as mutable). That includes the target of any drone whose hub it contains, but not the box itself. The drone is bolted to a specific box, but there are no constraints on the mutability of that box other than what has been individually declared for each of its properties.
 
@@ -99,11 +99,11 @@ If the container is a `const` drawer, its contents cannot be modified (even prop
 
 In Clawr, traits and roles help define the capabilities and responsibilities of different types and variables. A `trait` defines the constitution of a value (e.g. a `data` or `object` structure, but not a `service`), such as whether it can be compared with others of its kind, used as a hash key in search algorithms, or printed by a string. A `role`, instead, specifies the required capabilities of a box, which may interact with the environment (meaning that it can be a `service`). A `MailSender` role, for example, would require the box to have the capability to send emails.
 
-A `role` variable must always be a drone hub (`ref T`), never a drawer (`cow T`); if the agent represented by the role can interact with the environment, its state cannot be isolated to one container. A `trait` variable, on the other hand, can be either a drawer or a drone hub, depending on the desired isolation semantics.
+A `role` variable must always be a drone hub (`ref T`), never a drawer (`isolated T`); if the agent represented by the role can interact with the environment, its state cannot be isolated to one container. A `trait` variable, on the other hand, can be either a drawer or a drone hub, depending on the desired isolation semantics.
 
 ## The Container Kind (Drawer or Drone Hub) is Part of the Variable Type
 
-In Clawr, the type of a variable is not complete without considering its isolation semantics. A `cow T` variable is incompatible with a `ref T` variable (even with the same `T`). The former guarantees isolation while the latter allows shared access; if they are mixed, it could lead to violations of the intended isolation guarantees.
+In Clawr, the type of a variable is not complete without considering its isolation semantics. A `isolated T` variable is incompatible with a `ref T` variable (even with the same `T`). The former guarantees isolation while the latter allows shared access; if they are mixed, it could lead to violations of the intended isolation guarantees.
 
 This principle reinforces the idea that isolation is a property of the variable declaration rather than the type itself, ensuring that developers must explicitly choose the appropriate isolation level for each variable to maintain the integrity of the program's memory model.
 

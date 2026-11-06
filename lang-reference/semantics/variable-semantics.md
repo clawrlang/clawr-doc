@@ -52,30 +52,30 @@ Languages like Rust use ownership and borrowing to manage memory safety. While t
 
 | Keyword               | Semantic Meaning                                                                       |
 | --------------------- | -------------------------------------------------------------------------------------- |
-| `cow T` (or just `T`) | Isolated Value — copied on write, no other variable can observe or cause changes to it |
+| `T` (or `isolated T`) | Isolated Value — copied on write, no other variable can observe or cause changes to it |
 | `ref T`               | Shared Mutable State — multiple variables can reference and modify this entity         |
 | `const`               | Immutable Variable — cannot be modified after initialization                           |
 | `mut`                 | Mutable Variable — can be modified after initialization                                |
 
-“Immutable” means different things for `ref T` variables than `cow T`variables. A `const cow T` variable is structurally immutable; the value cannot change in any way. A shared entity, however is always mutable, so a `const ref` variable is only immutable in the sense that it cannot be reassigned different entity.
+“Immutable” means different things for `ref T` variables than `isolated T` variables. A `const isolated T` variable is structurally immutable; the value cannot change in any way. A shared entity, however is always mutable, so a `const ref` variable is only immutable in the sense that it cannot be reassigned different entity.
 
 > [!tip]
 >
 > Check out the [Mental Model](./README.md) for a different perspective.
 
-| Mutability \ Isolation | `cow`                            | `ref`                                              |
+| Mutability \ Isolation | `isolated`                       | `ref`                                              |
 | ---------------------- | -------------------------------- | -------------------------------------------------- |
 | `const`                | Constant, structurally immutable | Cannot be reassigned, referenced entity is mutable |
 | `mut`                  | Isolated mutable state           | Shared mutable state                               |
 
 ### Isolated and Shared Cannot Mix
 
-An isolated (`cow`) variable must never refer to a shared entity, and a reference variable must never refer to an isolated value. If they did, the isolation semantics could not be guaranteed. Therefore, every assignment of a value from one isolation mode to a variable of another requires explicit copying using the `copy(of:)` function.
+An `isolated T` variable must never refer to a shared entity, and a reference variable must never refer to an isolated value. If they did, the isolation semantics could not be guaranteed. Therefore, every assignment of a value from one isolation mode to a variable of another requires explicit copying using the `copy(of:)` function.
 
 ```clawr
 const x: ref T = ...
 const y: T = copy(of: x) // declares y as an isolated variable
-const z = copy(of: x) as cow // declares z as an isolated variable (inferring type)
+const z = copy(of: x) as isolated // declares z as an isolated variable (inferring type)
 ```
 
 ## Example: Bowling
@@ -111,12 +111,12 @@ state:
 
 Now, when using `BowlingGame`, we can choose the appropriate semantics based on our needs:
 
-### Copy Semantics with `cow`
+### Copy Semantics with `isolated`
 
-When using `cow` variables, changes are isolated:
+When using `isolated` variables, changes are isolated:
 
 ```clawr
-mut game1 = { BowlingGame.start() }  // A cow variable
+mut game1 = { BowlingGame.start() }  // An isolated variable
 game1.roll(droppingPins: 9)
 print(game1.score) // 9
 
@@ -158,7 +158,7 @@ print(game1.score) // 10 -> changed too! (two variables, but only one game)
 
 ### When to Use Each
 
-The default is `cow`. It is usually the right choice. But sometimes sharing is _the point_.
+The default is `isolated`. It is usually the right choice. But sometimes sharing is _the point_.
 
 - When creating a manager for accessing a database, a sensor or other feature of the environment.
 - When implementing the Singleton pattern.
