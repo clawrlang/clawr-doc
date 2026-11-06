@@ -1,4 +1,4 @@
-&nbsp; / &nbsp;[The Clawr Language](../README.md)
+&nbsp; / &nbsp; [The Clawr Language](../README.md)
 
 # User-Defined Types
 

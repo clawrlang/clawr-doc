@@ -1,4 +1,4 @@
-&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Lattices](./README.md)
+&nbsp; / &nbsp; [CIR Reference](../README.md) &nbsp; / &nbsp; [Lattices](./README.md)
 
 # `rc-type`
 

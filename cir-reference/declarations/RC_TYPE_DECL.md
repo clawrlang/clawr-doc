@@ -1,4 +1,4 @@
-&nbsp; / &nbsp;[CIR Reference](../README.md) &nbsp; / &nbsp; [Declarations](./README.md)
+&nbsp; / &nbsp; [CIR Reference](../README.md) &nbsp; / &nbsp; [Declarations](./README.md)
 
 # `RC_TYPE_DECL`
 

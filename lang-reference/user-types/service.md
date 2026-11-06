@@ -1,4 +1,4 @@
-&nbsp; / &nbsp;[The Clawr Language](../README.md) &nbsp; / &nbsp;[User-Defined Types](./README.md)
+&nbsp; / &nbsp; [The Clawr Language](../README.md) &nbsp; / &nbsp; [User-Defined Types](./README.md)
 
 # Service Types
 
