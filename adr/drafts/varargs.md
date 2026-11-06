@@ -2,7 +2,7 @@
 
 # Varargs Functions
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

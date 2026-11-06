@@ -57,6 +57,7 @@ div.status.Proposed .title {
     border-color: #17a69a;
 }
 
+div.status.Idea .title,
 div.status.Draft .title {
     color: whitesmoke;
     background-color: #888;

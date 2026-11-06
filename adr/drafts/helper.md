@@ -2,7 +2,7 @@
 
 # `helper` Keyword
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

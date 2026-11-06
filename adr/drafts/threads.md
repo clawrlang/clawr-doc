@@ -2,7 +2,7 @@
 
 # Threads and Processes
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

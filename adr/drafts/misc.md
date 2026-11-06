@@ -2,6 +2,8 @@
 
 # Miscellaneous Ideas
 
+> Status: 🗳️ Idea
+
 ## Pipeline
 
 - `f3 = f1 |> f2`

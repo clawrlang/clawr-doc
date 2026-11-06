@@ -2,7 +2,7 @@
 
 # Debug Information in the CIR
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

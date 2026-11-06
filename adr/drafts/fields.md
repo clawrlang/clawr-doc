@@ -2,7 +2,7 @@
 
 # Ternary Fields on Binary Hardware
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

@@ -2,7 +2,7 @@
 
 # Purity
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

@@ -2,6 +2,8 @@
 
 # Visibility Modifiers in Clawr
 
+> Status: 🗳️ Idea
+
 There are no visibility modifiers. Well, okay there is one: `helper`.
 
 ## Sane Visibility by Default

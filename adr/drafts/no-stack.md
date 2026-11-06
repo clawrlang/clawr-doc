@@ -2,6 +2,8 @@
 
 # No Stack Allocation (for now)
 
+> Status: 🗳️ Idea
+
 The per-variable semantics of Clawr means that a `LinkedList` type can be equivalent to `x:xs` in Haskell! A linked list can be declared as a monolithic structure.
 
 As long as data is laid out with indirection (every substructure is a pointer), it is possible to define an entire structure (like a linked list) using a single literal expression.

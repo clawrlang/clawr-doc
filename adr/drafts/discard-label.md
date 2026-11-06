@@ -2,7 +2,7 @@
 
 # Discard Label `_`
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

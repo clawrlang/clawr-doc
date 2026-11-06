@@ -16,6 +16,7 @@
     border-color: #062d2a;
 }
 
+.status.Idea .title,
 .status.Draft .title {
     color: whitesmoke;
     background-color: #888;

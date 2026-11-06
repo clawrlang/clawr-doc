@@ -2,7 +2,7 @@
 
 # List Comprehensions and Generators
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

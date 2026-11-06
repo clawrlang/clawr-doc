@@ -2,6 +2,8 @@
 
 # Events
 
+> Status: 🗳️ Idea
+
 ## Context
 
 In Clawr, an `object` is limited to mutate only its own internal state. It is not allowed to perform actions that affect the runtime environment. Only `service` instances may do that.

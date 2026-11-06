@@ -2,6 +2,8 @@
 
 # External Access Only Through `service`
 
+> Status: 🗳️ Idea
+
 Is it possible to require all external access to be in the shape of a `service`?
 
 Clawr would provide primitive services like `FileHandle`.

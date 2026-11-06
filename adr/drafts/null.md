@@ -2,6 +2,8 @@
 
 # What is `null`?
 
+> Status: 🗳️ Idea
+
 Probably something like a `union Optional<T> { case null, case value: T }`. But to support that we need to define `union` and generics both.
 
 Or maybe `null` is not a primitive/generic concept at all? Maybe it is domain-specific?

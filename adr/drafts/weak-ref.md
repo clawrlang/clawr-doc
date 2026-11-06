@@ -2,7 +2,7 @@
 
 # Weak References
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

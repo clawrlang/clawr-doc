@@ -2,7 +2,7 @@
 
 # Nested Functions and Lambdas
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

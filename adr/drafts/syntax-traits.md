@@ -2,6 +2,8 @@
 
 # Syntax and `trait`s
 
+> Status: 🗳️ Idea
+
 The `Ordered` `trait` should allow the `<` and `>` operators. `Equatable` allows `==` and `!=`. Both `trait`s together, allow `<=` and `>=`.
 
 The `HasStringRepresentation` `trait` should allow use in string interpolations.

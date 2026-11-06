@@ -2,7 +2,7 @@
 
 # Extensions
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

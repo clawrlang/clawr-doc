@@ -2,7 +2,7 @@
 
 # Unions and Enumerated Types
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

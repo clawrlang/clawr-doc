@@ -2,7 +2,7 @@
 
 # Multi-Module Programs and Libraries
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

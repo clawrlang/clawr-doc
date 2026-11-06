@@ -2,7 +2,7 @@
 
 # Spread Operator
 
-> Status: ✍🏼 Draft
+> Status: 🗳️ Idea
 
 ## Context
 

@@ -2,6 +2,8 @@
 
 # Prune CIR Banches
 
+> Status: 🗳️ Idea
+
 `FunctionCall.currentValue()` should use parameters, `self` and the function body to figure out the returned value-set
 
 An optimization step can use this analysis to remove the function call entirely if the value-set is a singleton.
