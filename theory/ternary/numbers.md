@@ -50,7 +50,7 @@ Interpreting a given ternary number is relatively easy. By the general positiona
 
 $$1 \cdot 3^9 + 0 \cdot 3^8 + 1 \cdot 3^7 + 1 \cdot 3^6 + (-1) \cdot 3^5 + (-1) \cdot 3^4 + 1 \cdot 3^3 + 0 \cdot 3^2 + 0 \cdot 3^1 + 1 \cdot 3^0$$
 
-This expression has the value $22,303$ in “normal” decimal form.
+This expression has the value $22{,}303$ in “normal” decimal form.
 
 To generate a ternary number is harder. There are two methods. The intuitive method is to start with the most significant digit (MSD) and build the notation from left to right. That is however not as easy as you might believe. The recommended method is to build it from right to left using the following algorithm:
 
@@ -58,7 +58,7 @@ To generate a ternary number is harder. There are two methods. The intuitive met
 2. Divide the input by three and write the result as a quotient and remainder..
 3. If the remainder is ±2, rewrite the result so that the remainder is ±1 and use that as the current digit instead.
 4. Add the current digit to the left of the accumulated output.
-5. If the quotient is z, we are done. Otherwise, repeat from 2 using the quotient of the result as the new input.
+5. If the quotient is zero, we are done. Otherwise, repeat from 2 using the quotient of the result as the new input.
 
 Let’s see this in action using the number $833$ as our input.
 
