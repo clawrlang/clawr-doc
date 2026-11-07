@@ -2,53 +2,63 @@
 
 # Traits and Roles
 
+> [!quote] FAQ
+>
 > _What is the difference between a `trait` and a `role`? They both seem to do the same thing. Aren’t they both interfaces?_
+>
 > — Frequently asked question
 
-Technically, syntactically, and maybe even semantically, traits and roles are indeed the same thing. The runtime implementation is actually identical. The [CIR](../../cir-reference/README.md) does not change.
+Technically, syntactically, and maybe even semantically, traits and roles are indeed the same thing. The runtime implementation will be identical. The [Intermediate Representation (CIR)](../../cir-reference/README.md) between compiler frontend and backend does not change.
 
-The difference is conceptual. A `trait` hides irrelevant data and emphasises essential information; a `role` signals a capability.
+The difference is conceptual. A `trait` hides irrelevant data and emphasises essential information; a `role` hides technical details and signals abstract capability.
 
-- A `trait` marks a constitutional property about a value. It applies to value types (`object`, `data` and boxed primitives). A `service` _cannot ever_ conform to a `trait`.
-- A `role` describes a capability, a responsibility. It can be embodied by any type — but typically `service`. Because it is expected to access the environment — a source that cannot be structurally isolated — it may only ever use `SHARED` semantics.
+- A `trait` marks a constitutional property about a value. It applies to value types, not to services.
+- A `role` describes a capability, a responsibility. It is primarily intended for services.
+
+| Type Class                     | `trait` Conformance | `role` Embodiment |
+| ------------------------------ | ------------------- | ----------------- |
+| Value-type (`object` / `data`) | Intended Use        | Possible (rare)   |
+| Service type (`service`)       | Not Meaningful      | Intended Use      |
+
+## The `trait` Concept
+
+A `trait` is a model type. Just like both `object` and `data`, it can apply to isolated and shared-reference variables as needed. It can also be returned as _uniquely referenced return values_, assigned value semantics or reference semantics by the caller.
+
+Example traits (from the standard library) include:
+
+- `HasStringRepresentation` (can be used in `string` interpolation)
+- `Serializable` (JSON, YAML, XML, Apple plist, binary/ternary data-stream…)
+- `HashEquatable` (can be used as lookup key in dictionaries)
+- `Equatable` and `Ordered` (can be compared to others of its type)
+- `Iterable` (can be used as the iterated collection in a `for`-`in` loop)
+
+### A `trait` is only Applicable to Value-Types
+
+Traits are only applicable to `object` and `data` types and to boxed primitives. Scalar types and structures we might call “value types.” They are not applicable to `service` types, which represent capabilities rather than encapsulated state.
 
 > [!warning]
 >
-> Do not conflate Clawr value types with .Net value types. In .Net, a value type is a type that implies value semantics, and the two terms are conflated by structural necessity.
->
-> Clawr does not signal value semantics through type declaration keywords, so the two terms serve distinct purposes. Value semantics is chosen individually per variable. A “value type” is a type that is defined by the memory specifically allocated to it. It’s _value_.
+> Do not mistake Clawr value types for .Net value types. See the [theory on value types](../../theory/value-type.md) for more details.
 
-A `trait` is a model type. Just like both `object` and `data`, it can apply to variables of _any_ semantics `const`, `mut` and `ref` as needed. It can also be returned as a _uniquely referenced return value_ and assigned semantics by the caller.
+A service that exists to execute processes is not a “value,” and types that describe such capabilities are not “value-types.” Hence they cannot conform to traits.
+
+## The `role` Concept
+
+A `role` is a capability or responsibility that a structure can embody. While any type can theoretically conform to a `role`, it is primarily intended for `service`s. This is because to embody a `role`, types may require access to the environment, which is not permitted for value types.
+
+Like a `service`, a `role` is presumed to interact with the environment and therefore cannot be isolated. It is only allowed to be assigned to `ref T` variables.
 
 Example roles include:
 
-- Manager types (like a `UserAccessManager`)
-- Repositories (`FriendsGraph`)
+- Managers (like a `UserAccessManager`)
+- Repositories (`UserRepository`, `FriendsGraph`)
 - Message sending capability (`SMSSender`, `EmailService`…)
 - The _Strategy_ pattern
 
-> [!question]
-> Actually… a `role` _is_ maybe a _Strategy_ by definition. Maybe the keyword should be `strategy` instead of `role`?
->
-> No. a `role` is a capability. A `strategy` is an algorithmic variation. A `FriendsGraph` is not a strategy. But every use of the `strategy` pattern must define a `role` (or an abstract`service`).
+These names could just as well refer to `service` types, but the `role` abstraction allows for more flexible and decoupled designs, especially when it comes to testing and dependency injection.
 
-Example traits include:
+### A `role` is Primarily for Services
 
-- `HasStringRepresentation` (can be converted to a `string`)
-- `Arithmetic` (can be used in arithmetics operations)
-- `Entity` (has state that can be persisted and reconstituted as raw data)
-- `Serializable` (as JSON, YAML…)
-- `Hashable`
-- `Categorised`
+While any type can theoretically embody a `role`, it is primarily intended for `service`s. This is because `role`s often require access to the environment, which cannot be structurally isolated, and therefore must be assigned to `ref T` variables.
 
-## A `trait` is only Applicable to Value-Types
-
-Clawr redefines the term “value-type.” In C#, a value-type is a type that uses value semantics as opposed to reference semantics. in Clawr, the only types that are restricted to value semantics are unboxed primitives (and the only types restricted to reference semantics are `service`s).
-
-In Clawr’s terminology, a “value type” is a type that describes _values_. A service that exists to execute processes is not a “value,” and types that describe such capabilities are not “value-types.”
-
-A value is a piece of information: a single _datum_ or an aggregate of related _data_. This data may be open (`data` types) or encapsulated (`object`). Instances of values may be `SHARED` (use reference semantics) or `ISOLATED` (use copy semantics). To Clawr, even an _Entity_ is a value!
-
-A `trait` is only applicable to value-types, while a `role` applies (primarily) to `service`s. You could say that a value-type is any type that can conform to a `trait`. Or you could say that “a value-type is any type that is not a `service`” (the only types _not_ able to conform to `trait`s).
-
-Another perspective is that an `object` is a “value-type” because its methods are restricted to touch its properties only (its own data). It may not reach beyond to access sensors, the internet, the file system… To access the environment, you need a `service`.
+An `object` or `data` type can technically embody a `role`, but it is probably rare in production code due to their limited practical utility. It can however be very helpful in testing, prototyping, or other scenarios where environmental interactions are simulated. In such cases, the `role` acts as a seam for dependency injection, allowing a value-type to fulfill the expected interface without requiring actual interactions with the environment.
