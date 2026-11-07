@@ -2,11 +2,17 @@
 
 # Refactorings
 
-Refactoring is an important part of TDD. There is a known book of refactorings written by Martin fowler around 2006, with a second edition maybe a decade later.
+> [!note]
+>
+> This is a discussion on refactoring as a general concept.
+> [Look here](../../theory/refactorings.md) for a theoretical perspective on refactorings.
 
-Fowler defines refactoring as a noun and as a verb.
+Clawr is designed for expressivity. Choosing a specific design communicates intent clearly and allows developers to reason about the code more effectively. There might, however, be situations where the initial design can be improved. Refactorings provide a systematic way to make these improvements while preserving the intended behavior of the code.
 
-- A refactoring (noun) is a small change to the system’s design that does not alter behaviour (and certainly does not leave the code base uncompiled for days).
-- Refactoring (verb) is the disciplined action of applying a series of small refactorings (noun) to incrementally and systematically make the code more extensible and more readable.
+Martin Fowler has extensively discussed refactorings in his book [_Refactoring: Improving the Design of Existing Code_][refactoring-book]. In that book, he describes recipes for a variety of common refactorings and how to apply them effectively. Most of those refactorings can be applied verbatim to Clawr as well.
 
-- [Encapsulate Data](./encapsulate-data.md) — converting a `struct` into an `object`.
+Here is a list of refactoring recipes specific to Clawr:
+
+- [Encapsulate Data](./encapsulate-data.md) — converting an exposed `data` structure into an `object`.
+
+[refactoring-book]: https://martinfowler.com/books/refactoring.html

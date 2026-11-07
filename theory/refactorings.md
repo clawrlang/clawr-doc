@@ -2,6 +2,11 @@
 
 # Refactorings
 
+> [!note]
+>
+> This is a discussion on refactoring as a theoretical concept.
+> [Look here](../lang-reference/refactorings/README.md) for example refactorings in Clawr.
+
 The term “Refactoring” is used loosely in software development to mean redesigns or improvements to the code structure with no apparent implied discipline. There is an expectation that the changes improve the code in some way, but the colloquial use of the term does not seem to imply any inherently systematic or disciplined approach.
 
 There is a different, more disciplined understanding of refactoring both within and outside the context of TDD, where refactorings are systematic, incremental improvements to the code that preserve its behavior.
