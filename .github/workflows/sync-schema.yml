@@ -1,0 +1,26 @@
+name: Sync Schema to Development Repo
+
+on:
+  push:
+    branches:
+      - main # Only triggered for commits to the main branch
+    paths:
+      - 'schema/**' # Only trigger when files in the adr directory change
+  workflow_dispatch: # This workflow can be triggered manually from the Actions tab if needed
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Repository
+        uses: actions/checkout@v4
+
+      - name: Update Schema in Target Repository
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: git@github.com:clawrlang/clawr.git
+          BRANCH: main # The branch in the target repo (often main or gh-pages)
+          FOLDER: schema # The source directory in this repo
+          TARGET_DIR: schema # The destination directory in the target repo
+          SSH_PRIVATE_KEY: ${{ secrets.ADR_DEPLOY_KEY }}
+          MESSAGE: "{msg}\n\n(Replayed schema/ changes from clawr-doc:{sha}.)"
