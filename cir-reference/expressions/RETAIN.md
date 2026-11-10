@@ -6,11 +6,11 @@ Increment the reference count of an allocation. The reference count of the `obje
 
 <!-- shape: Retain -->
 
-| Field    | Required | Type        | Meaning                          |
-| -------- | -------- | ----------- | -------------------------------- |
-| `kind`   | yes      | `"RETAIN"`  | Declaration discriminator.       |
-| `object` | yes      | `Storage`   | The variable or field to retain. |
-| `type`   | yes      | `RCTypeSet` | The type of the retained entity. |
+| Field    | Required | Type                                       | Meaning                             |
+| -------- | -------- | ------------------------------------------ | ----------------------------------- |
+| `kind`   | yes      | `"RETAIN"`                                 | Declaration discriminator.          |
+| `object` | yes      | `Storage`                                  | The variable or property to retain. |
+| `type`   | yes      | <code>RCTypeSet &#124; InterfaceSet</code> | The type of the retained entity.    |
 
 > [!info] Table: the properties of the `RETAIN` node
 

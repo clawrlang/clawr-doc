@@ -8,10 +8,10 @@ See also: [`ALLOCATION`](../expresssions/ALLOCATION.md), [`RETAIN`](../expressio
 
 <!-- shape: Release -->
 
-| Field    | Required | Type        | Meaning                                 |
-| -------- | -------- | ----------- | --------------------------------------- |
-| `kind`   | yes      | `"RELEASE"` | Declaration discriminator.              |
-| `object` | yes      | `Storage`   | The variable or field that exits scope. |
+| Field    | Required | Type        | Meaning                                    |
+| -------- | -------- | ----------- | ------------------------------------------ |
+| `kind`   | yes      | `"RELEASE"` | Declaration discriminator.                 |
+| `object` | yes      | `Storage`   | The variable or property that exits scope. |
 
 > [!info] Table: the properties of the `RELEASE` node
 

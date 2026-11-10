@@ -30,13 +30,14 @@ An [`real`](real.md) value-set is either the entire infinite mathematical set â€
 
 <!-- shape: RealSet -->
 
-| Field      | Required | Type     | Meaning                                   |
-| ---------- | -------- | -------- | ----------------------------------------- |
-| `universe` | yes      | `"real"` | Declaration discriminator.                |
-| `boxed`    | no       | `true`   | Present if the value is boxed.            |
-| `min`      | no       | `string` | The lower bound of the range (inclusive). |
-| `max`      | no       | `string` | The upper bound of the range (inclusive). |
-| `value`    | no       | `string` | The single value of the set.              |
+| Field       | Required | Type            | Meaning                                   |
+| ----------- | -------- | --------------- | ----------------------------------------- |
+| `universe`  | yes      | `"real"`        | Declaration discriminator.                |
+| `boxed`     | no       | `true`          | Present if the value is boxed.            |
+| `precision` | no       | `RealPrecision` | The required precision in storage.        |
+| `min`       | no       | `string`        | The lower bound of the range (inclusive). |
+| `max`       | no       | `string`        | The upper bound of the range (inclusive). |
+| `value`     | no       | `string`        | The single value of the set.              |
 
 > [!info] Table: the properties of the `real` node
 

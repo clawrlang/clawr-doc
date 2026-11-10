@@ -10,17 +10,30 @@ The schema accepts either a bounded/unbounded range or a singleton value:
 
 <!-- shape: RealSet -->
 
-| Field      | Required | Type     | Meaning                                   |
-| ---------- | -------- | -------- | ----------------------------------------- |
-| `universe` | yes      | `"real"` | Declaration discriminator.                |
-| `boxed`    | no       | `true`   | Present if the value is boxed.            |
-| `min`      | no       | `string` | The lower bound of the range (inclusive). |
-| `max`      | no       | `string` | The upper bound of the range (inclusive). |
-| `value`    | no       | `string` | The single value of the set.              |
+| Field       | Required | Type            | Meaning                                   |
+| ----------- | -------- | --------------- | ----------------------------------------- |
+| `universe`  | yes      | `"real"`        | Declaration discriminator.                |
+| `boxed`     | no       | `true`          | Present if the value is boxed.            |
+| `precision` | no       | `RealPrecision` | The required precision in storage.        |
+| `min`       | no       | `string`        | The lower bound of the range (inclusive). |
+| `max`       | no       | `string`        | The upper bound of the range (inclusive). |
+| `value`     | no       | `string`        | The single value of the set.              |
 
 > [!info] Table: the properties of the `real` node
 
 <!-- /shape: RealSet -->
+
+<!-- shape: RealPrecision -->
+
+| Field    | Required | Type                                         | Meaning                                                                                 |
+| -------- | -------- | -------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `kind`   | yes      | <code>"scale" &#124; "sig"</code>            | The kind of precision requirement: number of significant digits or number of “decimals” |
+| `digits` | yes      | `integer`                                    | The minimum number of digits in the specified base that must be stored correctly        |
+| `base`   | yes      | <code>"dec" &#124; "bin" &#124; "ter"</code> | The base — 2 (bin), 3 (ter) or 10 (dec) — for counting precision digits                 |
+
+> [!info] Table: the properties of the `RealPrecision` node
+
+<!-- /shape: RealPrecision -->
 
 ## Rules for Frontend
 

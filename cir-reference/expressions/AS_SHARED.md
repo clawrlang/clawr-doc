@@ -6,11 +6,11 @@ Upgrade a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 
 <!-- shape: AsShared -->
 
-| Field    | Required | Type                     | Meaning                           |
-| -------- | -------- | ------------------------ | --------------------------------- |
-| `kind`   | yes      | `"AS_SHARED"`            | Declaration discriminator.        |
-| `object` | yes      | `FunctionCallExpression` | The entity to promote to sharing. |
-| `type`   | yes      | `RCTypeSet`              | The type of the entity.           |
+| Field    | Required | Type                                       | Meaning                           |
+| -------- | -------- | ------------------------------------------ | --------------------------------- |
+| `kind`   | yes      | `"AS_SHARED"`                              | Declaration discriminator.        |
+| `object` | yes      | `FunctionCallExpression`                   | The entity to promote to sharing. |
+| `type`   | yes      | <code>RCTypeSet &#124; InterfaceSet</code> | The type of the entity.           |
 
 > [!info] Table: the properties of the `AS_SHARED` node
 

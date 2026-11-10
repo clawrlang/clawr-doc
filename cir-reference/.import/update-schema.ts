@@ -14,14 +14,17 @@ type Properties = Map<string, Property>
 // `name` is undefined for the root of a file.
 type Target = { file: string; name?: string }
 
-const rootFile = 'cir.schema.json'
+const rootFile = '../schema/cir.schema.json'
 const defPrefix = '/$defs/'
 const schemas = new Map<string, Schema>()
 
 // Loads a schema file and, recursively, every file it refers to.
 function load(file: string) {
     if (schemas.has(file)) return
-    const text = readFileSync(new URL(`./${file}`, import.meta.url), 'utf8')
+    const text = readFileSync(
+        new URL(`../../schema/${file}`, import.meta.url),
+        'utf8',
+    )
     schemas.set(file, JSON.parse(text))
     for (const [, path] of text.matchAll(/"\$ref"\s*:\s*"([^"#]+)#/g)) {
         load(path.replace(/^\.\//, ''))
@@ -168,6 +171,7 @@ function renderType({ schema: node, file }: Sourced): string[] {
     if (node.type === 'object') return ['object']
     if ('const' in node) return [literal(node.const)]
     if (node.type === 'string') return ['string']
+    if (node.type === 'integer') return ['integer']
     if (node.type === 'array') {
         const items = renderType({ schema: node.items, file })
         return [

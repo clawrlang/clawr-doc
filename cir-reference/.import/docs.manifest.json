@@ -65,7 +65,7 @@
   "../lattices/integer.md": ["IntegerSet"],
   "../lattices/interface.md": ["InterfaceSet"],
   "../lattices/rc-type.md": ["RCTypeSet"],
-  "../lattices/real.md": ["RealSet"],
+  "../lattices/real.md": ["RealSet", "RealPrecision"],
   "../lattices/string.md": ["StringSet"],
   "../lattices/truthvalue.md": ["TruthvalueSet"],
   "../statements/ASSIGN.md": ["Assign"],

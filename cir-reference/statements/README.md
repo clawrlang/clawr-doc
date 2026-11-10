@@ -10,10 +10,10 @@ An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend bef
 
 <!-- shape: EnsureUnique -->
 
-| Field    | Required | Type              | Meaning                                        |
-| -------- | -------- | ----------------- | ---------------------------------------------- |
-| `kind`   | yes      | `"ENSURE_UNIQUE"` | Declaration discriminator.                     |
-| `object` | yes      | `Storage`         | The variable or field to isolate for mutation. |
+| Field    | Required | Type              | Meaning                                           |
+| -------- | -------- | ----------------- | ------------------------------------------------- |
+| `kind`   | yes      | `"ENSURE_UNIQUE"` | Declaration discriminator.                        |
+| `object` | yes      | `Storage`         | The variable or property to isolate for mutation. |
 
 > [!info] Table: the properties of the `ENSURE_UNIQUE` node
 
@@ -27,10 +27,10 @@ The [`RELEASE`](./RELEASE.md) statement decrements the reference count of a bloc
 
 <!-- shape: Release -->
 
-| Field    | Required | Type        | Meaning                                 |
-| -------- | -------- | ----------- | --------------------------------------- |
-| `kind`   | yes      | `"RELEASE"` | Declaration discriminator.              |
-| `object` | yes      | `Storage`   | The variable or field that exits scope. |
+| Field    | Required | Type        | Meaning                                    |
+| -------- | -------- | ----------- | ------------------------------------------ |
+| `kind`   | yes      | `"RELEASE"` | Declaration discriminator.                 |
+| `object` | yes      | `Storage`   | The variable or property that exits scope. |
 
 > [!info] Table: the properties of the `RELEASE` node
 

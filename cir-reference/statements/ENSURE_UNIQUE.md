@@ -6,10 +6,10 @@ An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-w
 
 <!-- shape: EnsureUnique -->
 
-| Field    | Required | Type              | Meaning                                        |
-| -------- | -------- | ----------------- | ---------------------------------------------- |
-| `kind`   | yes      | `"ENSURE_UNIQUE"` | Declaration discriminator.                     |
-| `object` | yes      | `Storage`         | The variable or field to isolate for mutation. |
+| Field    | Required | Type              | Meaning                                           |
+| -------- | -------- | ----------------- | ------------------------------------------------- |
+| `kind`   | yes      | `"ENSURE_UNIQUE"` | Declaration discriminator.                        |
+| `object` | yes      | `Storage`         | The variable or property to isolate for mutation. |
 
 > [!info] Table: the properties of the `ENSURE_UNIQUE` node
 

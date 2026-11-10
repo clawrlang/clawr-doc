@@ -106,11 +106,11 @@ Increment the reference count of an allocation.
 
 <!-- shape: Retain -->
 
-| Field    | Required | Type        | Meaning                          |
-| -------- | -------- | ----------- | -------------------------------- |
-| `kind`   | yes      | `"RETAIN"`  | Declaration discriminator.       |
-| `object` | yes      | `Storage`   | The variable or field to retain. |
-| `type`   | yes      | `RCTypeSet` | The type of the retained entity. |
+| Field    | Required | Type                                       | Meaning                             |
+| -------- | -------- | ------------------------------------------ | ----------------------------------- |
+| `kind`   | yes      | `"RETAIN"`                                 | Declaration discriminator.          |
+| `object` | yes      | `Storage`                                  | The variable or property to retain. |
+| `type`   | yes      | <code>RCTypeSet &#124; InterfaceSet</code> | The type of the retained entity.    |
 
 > [!info] Table: the properties of the `RETAIN` node
 
@@ -124,11 +124,11 @@ Upgrades a uniquely referenced `ISOLATED` value to a `SHARED` entity.
 
 <!-- shape: AsShared -->
 
-| Field    | Required | Type                     | Meaning                           |
-| -------- | -------- | ------------------------ | --------------------------------- |
-| `kind`   | yes      | `"AS_SHARED"`            | Declaration discriminator.        |
-| `object` | yes      | `FunctionCallExpression` | The entity to promote to sharing. |
-| `type`   | yes      | `RCTypeSet`              | The type of the entity.           |
+| Field    | Required | Type                                       | Meaning                           |
+| -------- | -------- | ------------------------------------------ | --------------------------------- |
+| `kind`   | yes      | `"AS_SHARED"`                              | Declaration discriminator.        |
+| `object` | yes      | `FunctionCallExpression`                   | The entity to promote to sharing. |
+| `type`   | yes      | <code>RCTypeSet &#124; InterfaceSet</code> | The type of the entity.           |
 
 > [!info] Table: the properties of the `AS_SHARED` node
 
