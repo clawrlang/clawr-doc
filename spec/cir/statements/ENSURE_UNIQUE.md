@@ -2,6 +2,8 @@
 
 # `ENSURE_UNIQUE`
 
+The general ARC rules are defined in [Automatic Reference Counting](../arc.md).
+
 An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-write variables and properties. When assigning a variable/property to another, the value does not need to be copied immediately. Aliasing is allowed. When one of the references is modified however, it `MUST` be relocated (using `ENSURE_UNIQUE`) before the change is applied.
 
 <!-- shape: EnsureUnique -->

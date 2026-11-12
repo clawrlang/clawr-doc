@@ -47,3 +47,10 @@ Types, functions and variables use [lattices](./lattices/README.md) to constrain
 ```json
 { "$ref": "./cir.schema.json#/$defs/ValueSet" }
 ```
+
+## Cross-Cutting Rules
+
+Some rules apply to many nodes. They are defined once, in their own chapters, and the node pages link to them:
+
+- [Automatic Reference Counting](./arc.md): ownership, copy-on-write and boxing.
+- [Conformance](../conformance/README.md): checklists for frontend and backend implementers.

@@ -25,7 +25,7 @@ A `STRING_LITERAL` is a simple textual value.
 
 <!-- /shape: StringLiteral -->
 
-[Click here](./STRING_LITERAL) for details
+[Click here](./STRING_LITERAL.md) for details
 
 ## `INTEGER_LITERAL`
 
@@ -42,7 +42,7 @@ An `INTEGER_LITERAL` is a simple integer value. It may be arbitrarily large.
 
 <!-- /shape: IntegerLiteral -->
 
-[Click here](./INTEGER_LITERAL) for details
+[Click here](./INTEGER_LITERAL.md) for details
 
 ## `TRUTHVALUE_LITERAL`
 

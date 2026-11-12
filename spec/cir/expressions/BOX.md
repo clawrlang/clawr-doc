@@ -18,4 +18,9 @@ A `BOX` is reference-counted wrapper for a primitive value.
 
 ## Rules for Frontend
 
+- The `expression` `MUST` be a primitive value.
+- The `type` `MUST` have the `boxed` flag set.
+
 ## Rules for Backend
+
+- The result `MUST` be a reference-counted allocation holding the primitive value, with a reference count of exactly 1. See [Automatic Reference Counting](../arc.md).

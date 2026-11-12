@@ -9,6 +9,7 @@ This repository is the canonical Clawr specification. It is organised in three p
 - **[Specification](./spec/language/README.md)** is normative. Each rule is defined in exactly one place.
   - The [Language Reference](./spec/language/README.md) details the syntax and semantics of Clawr source code.
   - The [CIR Reference](./spec/cir/README.md) describes the data structure used to communicate from frontend to backend. The frontend reads and interprets a .clawr file and enforces all the semantic rules. The backend converts (“lowers”) the CIR into executable machine code. The two tools could be developed by different teams.
+  - The [Conformance](./spec/conformance/README.md) checklists tell frontend and backend implementers what they must do, by linking to the rules.
   - The [Standard Library Reference](./spec/stdlib/README.md) details the functions and types that are part of Clawr’s standard library. The [Standard Library Sources](./spec/stdlib/sources.md) define the declarations and their loading order for this revision.
 - **[Architecture Decision Records](./adr/README.md)** (“ADRs”) describe the reasoning behind the language design and the architecture of the compiler. They are rationale, not the place to look up the current rules.
 - **Guides** are informative:

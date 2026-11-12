@@ -2,6 +2,8 @@
 
 # `ALLOCATION`
 
+The general ARC rules are defined in [Automatic Reference Counting](../arc.md). The new allocation `MUST` have a reference count of exactly 1.
+
 Allocate memory for a reference-counted entity.
 
 <!-- shape: Allocation -->

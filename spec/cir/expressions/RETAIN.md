@@ -2,6 +2,8 @@
 
 # `RETAIN`
 
+The general ARC rules are defined in [Automatic Reference Counting](../arc.md).
+
 Increment the reference count of an allocation. The reference count of the `object` `MUST` be increased by exactly one.
 
 <!-- shape: Retain -->
@@ -23,4 +25,4 @@ Increment the reference count of an allocation. The reference count of the `obje
 ## Rules for Backend
 
 - The reference count of the `object` `MUST` be increased by exactly one.
-- If the runtime is implemented using stack-allocated values for `ISOLATED` variables, this instruction may be disregarded. (Might require including the `isolationLevel` as a property.)
+- If the runtime is implemented using stack-allocated values for `ISOLATED` variables, this instruction `MAY` be disregarded. See [Backend Optimization](../arc.md#backend-optimization). (Might require including the `isolationLevel` as a property.)

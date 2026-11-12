@@ -128,3 +128,26 @@ An `object` in Clawr is divided into distinct sections that define its behavior 
 - `state:` — Declares the internal state of the object. The state is always private and can only be accessed or modified through the object's own methods.
 
 The read-only methods section is implicit and needs to be defined first, before the `state:` section (as well as all the others). This is intentional, as the `object` should be defined by your interactions with it, rather than how it stores its state.
+
+### Initialization and Inheritance
+
+The memory layout of a type includes its entire inheritance stack, from supertype to subtype, in strict order. Memory is allocated once for the whole stack. Properties are initialized starting with the subtype and ending with the supertype. Secondary setup is performed in the opposite order, once all properties are initialized:
+
+1. The memory is allocated.
+2. All of the subtype’s properties are initialized.
+3. The initializer in the supertype is invoked.
+4. The supertype’s properties are all initialized, and if there is another supertype, its initializer is invoked.
+5. After the top supertype has initialized its properties, the entire allocation is initialized.
+6. Each initializer performs its optional setup before returning to the calling subtype initializer.
+7. Once a supertype has returned from initialization, the subtype can perform its own secondary setup before it returns to its own subtype.
+
+No operation can therefore execute on partially initialized memory.
+
+Each allocation/initialization is expressed syntactically as a data literal. That literal includes zero or one calls to a supertype initializer, as well as all property values.
+
+- All properties of the type (at that level of the hierarchy) `MUST` be included.
+- Property names `MUST NOT` be repeated.
+- All specified names `MUST` match actual properties.
+
+The rationale is documented in [ADR-017](../../../adr/adr-017.md).
+

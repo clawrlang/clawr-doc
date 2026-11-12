@@ -4,7 +4,7 @@
 
 Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is of some importance (see the rules below). As a rule of thumb, entities must be declared prior to any declarations that reference them.
 
-The module root is defined by [`cir.schema.json`](../cir.schema.json); its `declarations` items use the following schema:
+The module root is defined by [`cir.schema.json`](../schema/cir.schema.json); its `declarations` items use the following schema:
 
 ```json
 { "$ref": "../cir.schema.json#/$defs/Declaration" }
