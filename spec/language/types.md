@@ -49,6 +49,38 @@ const x = 42
 // The compiler might inject the raw number 42 wherever `x` is referenced.
 ```
 
+### Arithmetic Operators
+
+- Arithmetic applies to `integer` and `real` operands. If both operands are `integer` the result is `integer`; if at least one is `real` the result is `real`.
+- **Exponentiation** (`^`): with two `integer` operands the exponent `MUST NOT` be negative. `0^0` is an error: the frontend `MUST` report it when the operands are singletons, otherwise it `MUST` be reported at runtime.
+- **Division** (`/`): the divisor `MUST NOT` be zero. An integer quotient is rounded down ($\left\lfloor {n \over d} \right\rfloor$), so a negative result rounds to the larger magnitude.
+- **Modulus** (`%`): returns the remainder after integer division: $n - \left\lfloor {n \over d} \right\rfloor \cdot d$. The result rotates through $\left [ 0, \lvert d \rvert \right )$ without jumps.
+
+The rationale is documented in [ADR-022](../../adr/adr-022.md) and [ADR-023](../../adr/adr-023.md).
+
+### Operator Precedence
+
+> [!warning] Proposed
+>
+> The precedence table is proposed in [ADR-021](../../adr/adr-021.md).
+
+From low to high precedence:
+
+1. Logical OR (`||`)
+2. Logical AND (`&&`)
+3. Comparison (`==`/`===`/`!=`/`!==`/`>`/`<`/`<=`/`>=`/`≤`/`≥`/`≠`) — non-associative
+4. Field OR (`|`)
+5. Field AND (`&`)
+6. Shift (`<<`, `>>`)
+7. Additive (`+`, `-`)
+8. Multiplicative (`*`, `/`)
+9. Exponential (`^`) — right-associative
+10. Postfix member access (`.`, `->`) and call (`()`)
+11. Prefix (`!`)
+12. Parentheses, literals and identifiers
+
+Operators on the same level are left-associative, except `^` (right-associative) and comparisons (non-associative: chaining requires parentheses). The frontend calculates the result set (domain and current value) of each operation individually.
+
 ### Ternary Base
 
 A number is just a conceptual idea (think [ZFC](https://en.wikipedia.org/wiki/Zermelo–Fraenkel_set_theory) [^anotherroof] or the [Peano axioms](https://en.wikipedia.org/wiki/Peano_axioms)). We represent numbers in many different ways: binary, decimal, octal, hexadecimal, Roman… Apart from Roman, the listed examples are all positional (positive) base systems. Any value can be written uniquely on the form $a_0 \cdot b^0 + a_1 \cdot b^1 + a_2 \cdot b^2 + …$ We could choose any number as our base, $b$. A popular alternative to binary hardware is _balanced ternary_ (-1, 0, +1). We do not have to limit ourselves to positive numbers, and an odd base is ideal for centering the zero. This documentation has a [dedicated section](../../guides/theory/ternary/numbers.md) that delves deeper into [ternary numbers](../../guides/theory/ternary/numbers.md) and arithmetics.
