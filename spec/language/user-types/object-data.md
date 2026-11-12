@@ -132,6 +132,14 @@ namespace Money {
 }
 ```
 
+### Namespaces
+
+There is no `static` context and no `companion` in Clawr. A `namespace` defines free functions and variables. A `namespace` with the same name as a type is syntactically indistinguishable from a companion, but it `MUST NOT` have access to the type's private state.
+
+> [!warning] Proposed
+>
+> Namespaces and singleton services are only proposed ([ADR-019](../../../adr/adr-019.md), [ADR-020](../../../adr/adr-020.md)). A singleton `service` (declared with a keyword such as `singleton`, still undecided) cannot have multiple instances and may conform to `role`s but not `trait`s.
+
 ### Rules for `object`
 
 - An `object` is defined by, and exposes only, its methods. Its state is private and `MUST NOT` be exposed directly.
