@@ -45,7 +45,7 @@ state:
 
 This ensures clear separation: domain objects remain pure data, while services handle infrastructure concerns.
 
-Because a `service`’s “state” is the entire computing environment, `service` variables cannot be isolated from each other. A `service` variable `MUST NOT` be declared `const` or `mut`, but `MUST` use `ref` or `mutref`. The rationale is documented in [ADR-008](../../../adr/adr-008.md).
+Because a `service`’s “state” is the entire computing environment, `service` variables cannot be isolated from each other. A `service` variable `MUST` be declared with the `ref` modifier (`const x: ref T` or `mut x: ref T`) and `MUST NOT` be `isolated`. The rationale is documented in [ADR-008](../../../adr/adr-008.md).
 
 > [!warning]
 > [ADR-008](../../../adr/adr-008.md) says that an `object` can store references to `service` instances in `ref` properties, which contradicts the rule above. That ADR lists it as an open question, and this page was revised later, so the stricter rule applies until the author decides.

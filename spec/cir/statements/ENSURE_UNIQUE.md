@@ -24,7 +24,7 @@ An `ENSURE_UNIQUE` statement is injected to preserve isolation between copy-on-w
 - The operation `MUST` be injected before calling a `mutating:` method on an `ISOLATED` (`const`/`mut`) referenced-counted variable or property.
 - The operation `MAY` be elided/removed by optimization if the reference count is already provably 1 (e.g. if `ENSURE_UNIQUE` has already been performed due to a previous mutation).
 - The operation `MUST NOT` be injected for non-reference-counted values.
-- The operation `MUST NOT` be injected for `SHARED` (`ref`/`mutref`) variables or properties.
+- The operation `MUST NOT` be injected for `SHARED` (`ref`) variables or properties.
 
 ### Notes on Optimization
 

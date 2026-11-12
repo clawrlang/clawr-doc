@@ -78,6 +78,35 @@ const y: T = copy(of: x) // declares y as an isolated variable
 const z = copy(of: x) as isolated // declares z as an isolated variable (inferring type)
 ```
 
+## Declaration Grammar
+
+Mutability and isolation occupy separate slots in a declaration. The declaration prefix is `const` or `mut`, and isolation is a modifier on the type:
+
+```clawr
+declaration := (const | mut)? name ":" type
+type        := (ref | isolated)? typeConstructor
+```
+
+| Declaration           | Isolation          | Mutability             | Comment                             |
+| --------------------- | ------------------ | ---------------------- | ----------------------------------- |
+| `const x: isolated T` | ISOLATED           | structurally immutable | Even `mut` properties are immutable |
+| `mut x: isolated T`   | ISOLATED           | mutable                | copy-on-write                       |
+| `const x: ref T`      | SHARED             | immutable binding      | shared mutable state                |
+| `mut x: ref T`        | SHARED             | re-bindable            | shared mutable state                |
+| `const x: T`          | ISOLATED / UNKNOWN | structurally immutable |                                     |
+| `mut x: T`            | ISOLATED           | mutable                | Not allowed for parameters          |
+
+- Memory allocation and semantics are determined by the declaration, not by the type. A single type can be used in both isolated and shared contexts.
+- Properties can be declared without `mut` and still be implicitly mutable. A property can be declared `p: ref T` to be a re-bindable reference instead of an isolated value with copy-on-write.
+- Parameters can omit `const` and are then implicitly immutable.
+- In variable declarations and properties, omitting the isolation modifier implies `ISOLATED`. In function parameters the same omission implies `UNKNOWN` isolation ([Function Parameters](./function-parameters.md)).
+- Explicitly stated isolation (`ref` or `isolated`) yields the same result for all declarations.
+- For a `UNIQUE` return value, `as isolated` (or `as ref`) can be appended to the expression to infer the type but specify the isolation: `const x = copy(of: y) as isolated`.
+- In nested structures, a `mut` property in a `const` variable is “effectively const.” A `ref` property ignores the semantics of its container and always uses reference semantics. It disrupts both isolation and immutability, except that a re-bindable reference property (`mut p: ref T`) in a `const` structure is effectively a fixed reference (`const p: ref T`).
+
+> [!note]
+> [ADR-002](../../../adr/adr-002.md) originally used four declaration keywords (`const`, `mut`, `ref`, `mutref`). [ADR-035](../../../adr/adr-035.md) replaced them with the grammar above. Some conceptual documents in this section still use the old keywords: `ref x` is now `const x: ref T`, and `mutref x` is now `mut x: ref T`.
+
 ## Example: Bowling
 
 Let's explore an example to see why this flexibility is powerful. Consider a bowling game score calculator that needs to track rolls:
