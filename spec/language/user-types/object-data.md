@@ -180,4 +180,3 @@ Each allocation/initialization is expressed syntactically as a data literal. Tha
 - All specified names `MUST` match actual properties.
 
 The rationale is documented in [ADR-017](../../../adr/adr-017.md).
-
