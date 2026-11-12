@@ -37,4 +37,15 @@ The schema accepts either a bounded/unbounded range or a singleton value:
 
 ## Rules for Frontend
 
+- Arithmetic operations mixing different precision bases (`dec`, `bin`, `ter`) `MUST` be rejected unless an explicit conversion via `round(x, to: ...)` is provided. An exact decimal literal `MAY` adopt the other operand’s precision and base.
+- Assignment `MUST` round to the destination’s declared precision if it differs from the precision of the operation result. The precision of each operation result is derived from its operands, as specified by [ADR-027](../../../adr/adr-027.md).
+
 ## Rules for Backend
+
+- `dec`: the storage and representation `MUST` be base 10, such as a decimal significand and exponent, preserving decimal-exact behaviour over the declared range (so that, for example, `0.1 + 0.2 == 0.3` where the precision permits). Unbounded ranges need a scalable exponent. Bounded ranges `MAY` use finite exponent formats consistent with their $x_{\text{guarantee}}$.
+- `bin` and `ter`: the storage base is backend-defined. A bounded `sig` value `MAY` be lowered to any representation that delivers at least the requested number of significant digits at and above $x_{\text{guarantee}}$; precision `MAY` be reduced below it. Unbounded ranges need a scalable exponent.
+- `scale`: values `MUST` be lowered using an integer numerator corresponding to $b^{-n}$. The numerator `MAY` grow as needed, subject to available memory.
+- Every real-valued arithmetic operation rounds its result to the precision derived from its operands; exact intermediates are not required. Each operation’s rounding point `MUST` be preserved. Reassociation, contraction into fused operations and other optimizations that remove a rounding step `MUST NOT` be applied unless they preserve the same observable result.
+- Conversions across bases require explicit lowering steps in the backend’s runtime or in generated conversion routines.
+
+The rationale is documented in [ADR-031](../../../adr/adr-031.md).
