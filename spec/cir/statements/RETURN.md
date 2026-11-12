@@ -25,4 +25,5 @@ The `value` property indicates the returned value.
 
 ## Rules for Backend
 
--
+- End execution of the current function and return the evaluated `value` to its caller, if one is present.
+- Preserve the [ownership contract for returned values](../arc.md#ownership-and-return-values), including the caller's ownership of a returned ARC-managed value.

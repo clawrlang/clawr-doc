@@ -2,7 +2,7 @@
 
 # `FUNCTION_DECL`
 
-A `FUNCTION_DECL` defines a “free function” in the module or a method on an `object`/`service` type. A function's unique name is defined by its `baseName` and its labels, plus the optional `namespace`.
+A `FUNCTION_DECL` defines a “free function” in the program or a method on an `object`/`service` type. A function's unique name is defined by its `baseName` and its labels, plus the optional `namespace`.
 
 ## Shape
 
@@ -43,7 +43,7 @@ A `FUNCTION_DECL` defines a “free function” in the module or a method on an 
 
 <!-- /shape: Void -->
 
-A function's unique name is defined by its `baseName` and its `labels` (plus the optional `namespace` that exists on all module-scoped declarations).
+A function's unique name is defined by its `baseName` and its `labels` (plus the optional `namespace` that exists on program-scoped declarations).
 
 In the source code, each parameter is defined by an optional label. In the CIR, those `labels` are considered part of the unique, canonical function name.
 
@@ -69,34 +69,7 @@ The function's `returnType` — like parameter value-sets — is a hint to allow
 }
 ```
 
-> [!info] Relevant JSON Schema excerpt
->
-> ```jsonc
-> "FunctionDeclaration": {
->   "oneOf": [
->     { "$ref": "#/$defs/FunctionDeclarationVoid" },
->     { "$ref": "#/$defs/FunctionDeclarationNonvoid" }
->   ]
-> },
->
-> "FunctionDeclCommon": {
->   "allOf": [
->     { "$ref": "#/$defs/FunctionSignatureCommon" },
->     {
->       "type": "object",
->       "properties": {
->         "kind": { "const": "FUNCTION_DECL" },
->         "body": {
->           "type": "array",
->           "items": { "$ref": "#/$defs/Statement" }
->         },
->         "namespace": { "type": "string" }
->       },
->       "required": ["kind", "body"]
->     }
->   ]
-> }
-> ```
+The complete definition and its constraints are in [declarations.json](../schema/declarations.json).
 
 ## Rules for Frontend
 

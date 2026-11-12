@@ -16,12 +16,15 @@ Initialize the properties of the `self` entity.
 
 <!-- /shape: SelfInitialization -->
 
-The `value.type` property identifies the type of `self`. In the case of inheritance, the indicated type is one type in the inheritance hierarchy and the owning type of the properties being initialized.
+The `type` property identifies the type whose properties are initialized. With inheritance, it identifies the owning type at one level of the `self` entity's hierarchy. Each item in `properties` names a property and supplies its initial value as an expression.
 
 ## Rules for Frontend
 
--
+- `SELF_INIT` `MUST` occur in an initializer with a `self` entity whose hierarchy includes the indicated type.
+- The property names `MUST` identify all properties declared at that level, without duplicates, and each `MUST` have a compatible value. See [Initialization and Inheritance](../../language/user-types/object-data.md#initialization-and-inheritance).
+- Initialization of the hierarchy `MUST` follow the ordering defined in that section.
 
 ## Rules for Backend
 
--
+- Evaluate the supplied property expressions and initialize the corresponding properties of the existing `self` entity. `SELF_INIT` does not allocate another entity.
+- Preserve the initialization ordering and the ownership effects of the supplied expressions.

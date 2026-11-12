@@ -2,12 +2,12 @@
 
 # Backend Conformance
 
-A conforming backend accepts a valid [CIR](../cir/README.md) module and produces executable code that honours its semantics. The backend `MAY` choose any lowering strategy and optimization that preserves the observable semantics.
+A conforming backend accepts a semantically valid [CIR](../cir/README.md) artifact and produces executable code that honours its semantics. The backend `MAY` choose any lowering strategy and optimization that preserves the observable semantics.
 
 ## Input
 
-- Accept any module that validates against the [CIR schema](../cir/schema/cir.schema.json).
-- Do not re-do the frontend’s analysis. The CIR is trusted to follow the “Rules for Frontend”.
+- Accept CIR that satisfies the [schema](../cir/schema/cir.schema.json) and the applicable semantic rules.
+- The frontend is responsible for ownership analysis and the “Rules for Frontend”. A backend may trust these guarantees; it may also validate its input and reject invalid CIR. Schema validation alone does not establish semantic validity or safety.
 
 ## Output
 

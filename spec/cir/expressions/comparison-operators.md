@@ -32,4 +32,5 @@ The Ordering family applies to `integer` and `real` values as well as values tha
 
 ## Rules for Backend
 
--
+- Evaluate the comparison identified by `kind` and produce its Boolean result.
+- Referential equality `MUST` reflect entity identity rather than incidental storage identity for isolated values. Semantic equality and ordering `MUST` preserve the corresponding language semantics.

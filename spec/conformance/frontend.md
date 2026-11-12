@@ -2,7 +2,7 @@
 
 # Frontend Conformance
 
-A conforming frontend reads Clawr source code, enforces the language rules, and emits a valid [CIR](../cir/README.md) module.
+A conforming frontend reads Clawr source code, enforces the language rules, and emits a structurally and semantically valid [CIR](../cir/README.md) artifact.
 
 ## Input
 

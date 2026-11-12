@@ -6,9 +6,7 @@
 
 Every expression has a `type` property. This is a `ValueSet` that includes every possible value the expression can take at runtime. Sometimes the `type` is the full value-set of the referenced variable or function. Sometimes the value is known exactly, down to a singleton set.
 
-```json
-{ "$ref": "../cir.schema.json#/$defs/Expression" }
-```
+The [expression schema](../schema/expressions.json) defines the permitted expression shapes. The tables below summarize their fields; the individual pages explain their semantics.
 
 ## `STRING_LITERAL`
 
@@ -106,11 +104,11 @@ Increment the reference count of an allocation.
 
 <!-- shape: Retain -->
 
-| Field    | Required | Type                                       | Meaning                             |
-| -------- | -------- | ------------------------------------------ | ----------------------------------- |
-| `kind`   | yes      | `"RETAIN"`                                 | Declaration discriminator.          |
-| `object` | yes      | `Storage`                                  | The variable or property to retain. |
-| `type`   | yes      | <code>RCTypeSet &#124; InterfaceSet</code> | The type of the retained entity.    |
+| Field    | Required | Type                                                            | Meaning                             |
+| -------- | -------- | --------------------------------------------------------------- | ----------------------------------- |
+| `kind`   | yes      | `"RETAIN"`                                                      | Declaration discriminator.          |
+| `object` | yes      | `Storage`                                                       | The variable or property to retain. |
+| `type`   | yes      | <code>RCTypeSet &#124; InterfaceSet &#124; BoxedValueSet</code> | The type of the retained entity.    |
 
 > [!info] Table: the properties of the `RETAIN` node
 

@@ -23,6 +23,16 @@ The frontend has all the static-analysis information, so it injects the ARC oper
 | `RELEASE`       | Decrements the reference count by exactly 1, and deallocates the structure if the count reaches 0.        |
 | `ENSURE_UNIQUE` | If the reference count is greater than 1, shallow-copies the structure and reassigns the variable/property. |
 
+## Assignment
+
+When an assignment replaces a CIR-managed reference, the frontend `MUST` emit a `RETAIN` for the incoming value and a `RELEASE` for the reference being replaced. The frontend `MUST` arrange evaluation and ownership so the incoming value remains valid when the old reference is released, including when both references point to the same entity.
+
+The retained reference belongs to the destination after assignment. If the incoming value also carries a separately owned reference, the frontend `MUST` account for that reference as well; in particular, it `MUST` avoid leaking the +1 reference returned by a call.
+
+For example, to replace `x` with the value of `y`, the frontend can retain `y` into a temporary, release the old `x`, and assign the retained reference to `x`. The temporary's ownership transfers to `x`. Retaining first also keeps the value alive if `x` and `y` alias.
+
+The backend lowers the emitted ARC operations. `ASSIGN` does not implicitly retain the incoming CIR-managed value or release the replaced one. Equivalent optimizations remain permitted as described under [Backend Optimization](#backend-optimization).
+
 ## Ownership and Return Values
 
 - A returned ARC-managed value carries a +1 reference for the caller.
@@ -42,7 +52,7 @@ The frontend has all the static-analysis information, so it injects the ARC oper
 ## Boxing
 
 - Explicitly boxed primitives (the `BOX` expression, and value-sets with `boxed` set) are ordinary ARC-managed values.
-- The backend chooses the concrete representation of unboxed primitives. If a value does not fit an unboxed representation, the backend `MAY` box or allocate it internally.
+- The backend chooses the concrete representation of unboxed primitives. In particular, an `integer` or `real` value or operation may require an arbitrary-precision, pointer-based representation even though it is unboxed in the CIR.
 - Any such implicit boxing is backend-private. It `MUST` preserve value semantics: no pointer identity or aliasing may become observable through the language semantics. The backend owns the lifetime of these boxes and `MAY` use reference counting, arenas, immediate values or any other strategy.
 
 ## Backend Optimization

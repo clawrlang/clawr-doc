@@ -21,7 +21,7 @@ This repository is the canonical Clawr specification. It is organised in three p
 ## The Clawr Architecture
 
 1. A programmer writes Clawr source code.
-2. The frontend tokenises and parses the source code, performs static and semantic analysis of the parsed program, and outputs a JSON file (“the CIR”).
+2. The frontend tokenises and parses the source modules, performs static and semantic analysis of the program, and outputs a combined JSON CIR artifact.
 3. The backend translates (“lowers”) the CIR into machine-executable code.
 
 The source code syntax and semantics are part of the Clawr definition. So are the structure and the semantic meaning of the CIR.

@@ -2,13 +2,9 @@
 
 # Declarations
 
-Declarations are added to the top scope of a module in the `ClawrModule.declarations` array. Declarations may define types, functions or global variables. The order in which they appear is of some importance (see the rules below). As a rule of thumb, entities must be declared prior to any declarations that reference them.
+Declarations are added to the CIR artifact's top-level `declarations` array. Declarations may define types, functions or global variables. The order in which they appear is of some importance (see the rules below). As a rule of thumb, entities must be declared prior to any declarations that reference them.
 
-The module root is defined by [`cir.schema.json`](../schema/cir.schema.json); its `declarations` items use the following schema:
-
-```json
-{ "$ref": "../cir.schema.json#/$defs/Declaration" }
-```
+The artifact root is defined by [`cir.schema.json`](../schema/cir.schema.json); its `declarations` items use [declarations.json](../schema/declarations.json).
 
 This document lists all declarations and their content.
 
@@ -57,7 +53,7 @@ The `INTERFACE_DECL` node defines a polymorphic type (`trait`/`role`). The type 
 
 ## `VARIABLE_DECL`
 
-A variable in the module scope. The variable will be accessible to all functions and methods defined in the module.
+A variable in the program scope. The variable will be accessible to all functions and methods in the program.
 
 <!-- shape: VariableDeclaration -->
 
@@ -77,7 +73,7 @@ A variable in the module scope. The variable will be accessible to all functions
 
 ## `FUNCTION_DECL`
 
-A `FUNCTION_DECL` defines a “free function” in the module, a “static” `companion` method, or a method on an `object`/`service` type.
+A `FUNCTION_DECL` defines a “free function” in the program, a “static” `companion` method, or a method on an `object`/`service` type.
 
 <!-- shape: FunctionDeclaration -->
 

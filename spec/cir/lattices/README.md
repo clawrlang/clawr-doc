@@ -2,7 +2,7 @@
 
 # Lattices
 
-Clawr considers types as sets and lattices. Every variable has a set of values that it may store, functions have a set of possible result values, and so on. Every expression has a `ValueSet` too, which represents the best knowledge of the expression’s runtime value when executed.
+Clawr considers types as sets and lattices. Every variable has a set of values that it may store, functions have a set of possible result values, and so on.
 
 ## `integer`
 

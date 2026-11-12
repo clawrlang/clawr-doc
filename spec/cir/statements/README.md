@@ -2,7 +2,7 @@
 
 # Statements
 
-Statements are added to the `startBlock` of a module, and to the `body` of a function. Statements `MUST NOT` be reordered or skipped when lowering. An optimisation step `MAY` however perform limited changes.
+Statements are added to the `startBlock` of a CIR artifact, and to the `body` of a function. Statements `MUST NOT` be reordered or skipped when lowering. An optimisation step `MAY` however perform limited changes.
 
 ## ENSURE_UNIQUE
 
@@ -112,7 +112,7 @@ Initialize the properties of the `self` entity.
 
 ## `VARIABLE_DECL`
 
-The variable declaration can also be used as a `Statement`. In other words, it `MAY` appear in a function body and in the `startBlock` of a module.
+The variable declaration can also be used as a `Statement`. In other words, it `MAY` appear in a function body and in the `startBlock` of a CIR artifact.
 
 <!-- shape: VariableDeclaration -->
 
