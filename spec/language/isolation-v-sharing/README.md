@@ -6,4 +6,4 @@ Isolation and sharing are fundamental concepts in the Clawr language. They defin
 
 Other languages use terms like value semantics and reference semantics to describe similar concepts. Value semantics correspond to isolated variables in Clawr, where each variable has its own independent copy of the data. Reference semantics correspond to reference variables, where multiple variables can refer to and modify the same underlying data.
 
-A [mental model](drawers-and-boxes.md) can help in understanding the distinction.
+A [mental model](../../../guides/theory/drawers-and-boxes.md) can help in understanding the distinction.

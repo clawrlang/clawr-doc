@@ -25,7 +25,7 @@ If, instead, we think of the variable _itself_ as the object, it becomes an isol
 
 > [!warning] Overloaded Terminology
 >
-> Clawr may want to use the term “value type” in a different way from Swift and C#. A Clawr value type is a definition that may be shared in either shared or isolated contexts. It is a “value type” in the sense that its state is defined only by the contents of its own memory, it cannot reference the runtime environment. (See the discussion on [`object` vs `data`](../user-types/object-data.md) compared with [`service`](../user-types/service.md) for more details.)
+> Clawr may want to use the term “value type” in a different way from Swift and C#. A Clawr value type is a definition that may be shared in either shared or isolated contexts. It is a “value type” in the sense that its state is defined only by the contents of its own memory, it cannot reference the runtime environment. (See the discussion on [`object` vs `data`](../../spec/language/user-types/object-data.md) compared with [`service`](../../spec/language/user-types/service.md) for more details.)
 >
 > This documentation will endeavor to use terms like “value semantics” or “isolation” to refer to the concept that C# calls “value types”, to avoid confusion with Clawr’s own terminology.
 
