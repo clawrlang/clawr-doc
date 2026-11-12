@@ -37,7 +37,7 @@ The main repository for (early) Clawr development is <https://github.com/clawrla
 
 ### Architecture Design Records
 
-The ADRs are synced from the main repository using a GitHub Action. Do not make direct edits to that subfolder in this repository.
+The ADRs are maintained in this repository. A GitHub Action syncs changes in `adr/` to the development repository.
 
 ### Clawr Intermediate Representation
 
