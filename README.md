@@ -9,6 +9,7 @@ This repository contains documentation for the Clawr language. The documentation
 - The [Clawr Language Tutorials](./tutorials/README.md) provide step-by-step guidance for learning the Clawr language.
 - The [Language Reference](./lang-reference/README.md) details the syntax and semantics of Clawr source code.
 - The [Standard Library Reference](./std-lib/README.md) details the functions and types that are part of Clawr’s standard library.
+- The [Standard Library Sources](./std-lib/sources.md) define the declarations and their loading order for this revision.
 - The [IDE Extensions](./ide-reference/README.md) section provides information about creating syntax coloring and diagnostics for editors.
 - The [Architecture Design Records](./adr/README.md) (or “ADRs”) describe the reasoning behind the language design and the general architecture of the compiler.
 - The [CIR Reference](./cir-reference/README.md) describes the data structure used to communicate from frontend to backend. The frontend is the tool that reads and interprets a .clawr file and enforces all the semantic rules. The backend is the tool that converts (“lowers”) the CIR into executable machine code. The two tools could be developed by different teams.
