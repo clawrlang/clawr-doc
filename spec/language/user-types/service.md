@@ -45,6 +45,11 @@ state:
 
 This ensures clear separation: domain objects remain pure data, while services handle infrastructure concerns.
 
+Because a `service`’s “state” is the entire computing environment, `service` variables cannot be isolated from each other. A `service` variable `MUST NOT` be declared `const` or `mut`, but `MUST` use `ref` or `mutref`. The rationale is documented in [ADR-008](../../../adr/adr-008.md).
+
+> [!warning]
+> [ADR-008](../../../adr/adr-008.md) says that an `object` can store references to `service` instances in `ref` properties, which contradicts the rule above. That ADR lists it as an open question, and this page was revised later, so the stricter rule applies until the author decides.
+
 ## No `mutating:` Section
 
 An `object` needs to declare mutable methods explicitly, indicating which operations can modify its internal state. The reason is that the compiler needs to enforce isolation and therefore has to copy the object before mutating it if it has multiple references.

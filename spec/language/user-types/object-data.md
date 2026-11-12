@@ -87,6 +87,20 @@ A `data` type is instantiated directly using a data literal, and its fields are 
 }
 ```
 
+## Rules for `data`
+
+- The properties of a `data` structure are public and directly accessible. They `MUST NOT` be hidden or private.
+- A `data` structure `MUST NOT` have methods.
+- `data` properties `MUST` be mutable (`mut` or `mutref`). They `MUST NOT` be `const` or `ref`.
+- `data` properties `MUST NOT` have default or initial values.
+- A `data` type is serializable by default. A `trait` for custom serialization can be added, and `object` types can use the same `trait`, though they are not serializable without it. Serialization does not assume a specific format: encoders for any format (JSON, YAML, XML, binary, ternary…) can be written.
+
+### Ad Hoc Data Literals
+
+The data-literal syntax `{ property: value }` can be used to return values ad hoc, similar to TypeScript’s type notation, without declaring a named type. Such literals can also be the cases of a `union` type.
+
+The rationale is documented in [ADR-008](../../../adr/adr-008.md), [ADR-010](../../../adr/adr-010.md) and [ADR-011](../../../adr/adr-011.md).
+
 ## Object Syntax In Clawr
 
 An `object` is a _meaningful_ entity that hides a `data` structure in its bowels. The `object` exposes interaction points (methods) that hide the specific implementation from dependent code.
@@ -117,6 +131,14 @@ namespace Money {
     const zero = { Money.cents(0) }
 }
 ```
+
+### Rules for `object`
+
+- An `object` is defined by, and exposes only, its methods. Its state is private and `MUST NOT` be exposed directly.
+- An `object` `MUST NOT` access the environment (the internet, files, sensors…). It is limited to its own state. That is what `service` types are for.
+- `object` properties can be `const` and can have default values.
+- A `const` or `mut` variable stores an `ISOLATED` instance of an `object` or `data` structure, which gives the variable exclusive access to its contents. A `ref` property of the structure refers to other instances whose state is not owned by it, and is not covered by its isolation guarantees.
+- An `object` or `data` structure `MUST NOT` store a `service` in a property. See [Service](./service.md).
 
 ### Object Sections
 

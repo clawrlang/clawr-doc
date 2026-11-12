@@ -20,6 +20,12 @@ The difference is conceptual. A `trait` hides irrelevant data and emphasises ess
 | Value-type (`object` / `data`) | Intended Use        | Possible (rare)   |
 | Service type (`service`)       | Not Meaningful      | Intended Use      |
 
+## No Static Elements
+
+A `trait` or `role` `MUST NOT` define “static” elements or initializers. Polymorphic construction is expressed through factory `service`s or `role`s instead.
+
+A `trait` applies only to value types (see [below](#a-trait-is-only-applicable-to-value-types)). Any type can embody a `role`. The rationale is documented in [ADR-009](../../../adr/adr-009.md) and [ADR-014](../../../adr/adr-014.md).
+
 ## The `trait` Concept
 
 A `trait` is a model type. Just like both `object` and `data`, it can apply to isolated and shared-reference variables as needed. It can also be returned as _uniquely referenced return values_, assigned value semantics or reference semantics by the caller.
