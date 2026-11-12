@@ -1,6 +1,3 @@
 {
-  "sources": [
-    "subsets.clawr",
-    "traits.clawr"
-  ]
+  "sources": ["subsets.clawr", "traits.clawr", "truthvalue.clawr"]
 }

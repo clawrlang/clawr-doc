@@ -145,3 +145,14 @@ Prints a string value to `stdout`.
 ```clawr
 func print(_ value: HasStringRepresentation)
 ```
+
+## Truthvalue operations
+
+```clawr
+func rotate(_ value: truthvalue, by amount: truthvalue) -> truthvalue
+func adjust(_ value: truthvalue, towards direction: truthvalue) -> truthvalue
+func modulate(_ value: truthvalue, by factor: truthvalue) -> truthvalue
+```
+
+These operations perform mod-3 addition, clamped addition, and multiplication
+respectively, as defined in the [truthvalue specification](../language/types.md#logic-operators).

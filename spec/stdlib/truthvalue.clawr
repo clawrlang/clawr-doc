@@ -1,0 +1,3 @@
+extern func rotate(_ value: truthvalue, by amount: truthvalue) -> truthvalue
+extern func adjust(_ value: truthvalue, towards direction: truthvalue) -> truthvalue
+extern func modulate(_ value: truthvalue, by factor: truthvalue) -> truthvalue
