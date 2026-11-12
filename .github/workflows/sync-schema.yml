@@ -8,6 +8,10 @@ on:
       - 'spec/cir/schema/**' # Only trigger when files in the adr directory change
   workflow_dispatch: # This workflow can be triggered manually from the Actions tab if needed
 
+concurrency:
+  group: sync-clawr-main
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
