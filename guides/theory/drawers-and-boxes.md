@@ -1,4 +1,4 @@
-&nbsp; / &nbsp; [The Clawr Language](../README.md) &nbsp; / &nbsp; [Isolation vs Sharing](./README.md)
+&nbsp; / &nbsp; [Theory](./README.md)
 
 # Drawers and Boxes
 
