@@ -1,0 +1,6 @@
+{
+  "sources": [
+    "subsets.clawr",
+    "traits.clawr"
+  ]
+}
