@@ -2,7 +2,7 @@
 
 # Logic Operators
 
-Clawr supports three-value (Kleene K3) logic. A `truthvalue` is either `false`, `ambiguous` or `true`. The operations `AND` and `OR` have meaningful behaviours that translate cleanly between Boolean logic and K3.
+Clawr’s three-valued logic is closely related to Kleene K3, but `ambiguous == ambiguous` is `true` (see [Logic Operators](../../language/types.md#logic-operators)). A `truthvalue` is either `false`, `ambiguous` or `true`. The operations `AND` and `OR` have meaningful behaviours that translate cleanly between Boolean logic and this model.
 
 There are several ternary-only operations, but they are implemented as functions, not operators.
 
@@ -29,4 +29,4 @@ Alternatively: think of `AND` as `min(left, right)` and `OR` as `max(left, right
 
 # Rules for Backend
 
--
+- Evaluation `MUST` short-circuit `true || x` and `false && x`. If the left operand is `ambiguous`, neither operator can short-circuit.

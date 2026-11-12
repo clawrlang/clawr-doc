@@ -44,7 +44,11 @@ For Clawr, types are sets and subsets. An `integer` is defined as any member of 
 
 Just as a `Dog` can be passed to any function which accepts an `Animal` argument, or assigned to an `Animal` variable, a constrained integer can be used wherever a less constrained integer is called for. As long as the value's type is guaranteed to be a subset of the required type, no limitations are imposed.
 
-If a value is not known to be in the needed range, a runtime check will be injected and the process will exit (“panic”) if that check fails.
+If a value is not known to be in the needed range, the assignment is handled as follows:
+
+- If the value’s set is provably inside the target’s set, the assignment is accepted without a check.
+- If the two sets are provably disjoint, the frontend `MUST` reject the assignment at compile time.
+- Otherwise a runtime check `MUST` be injected, and the process exits (“panics”) if that check fails.
 
 Considering types as sets has some benefits:
 
@@ -53,13 +57,41 @@ Considering types as sets has some benefits:
 3. Speed Optimisation: If values can be proven to always remain small, the `BigInteger` overhead can be skipped.
 4. Memory Optimisation: Several values can be packed into a single addressable unit (Ada style) for reduced memory footprint.
 
+### Set-valued Expressions
+
+Every expression has a value-set, and that set differs depending on where in the code the expression appears. A reference to a variable whose declared set is too wide can still be assignable, if the surrounding control flow narrows the set. The following snippet shows how the set of `input` changes at different locations:
+
+```clawr
+mut x: integer(0..<10_000)
+
+func assign_to_x(input: integer) {
+  if (input < 10_000 && input >= 0) {
+    x = input // known to be in [0, 10,000)
+  } else {
+    // x = input is rejected here: input is known to be outside [0, 10,000)
+  }
+}
+```
+
+Backends `MAY` use value-sets to optimize storage.
+
+A complex type (`data` or `object`) is the set of all possible structures of that type. Subsets of it can be defined by restricting property values, and an `object` supertype also defines a subset through each of its subtypes.
+
+### Taxonomy
+
+Each declared binding and expression has a `type`, which defines what values it can store and how the backend lowers it. A `type` is made up of a `universe`, an optional `subset` constraint, and any additional information required for lowering, such as the precision of a `real`.
+
+![taxonomy](../../adr/images/type-taxonomy.svg)
+
+The rationale is documented in [ADR-005](../../adr/adr-005.md).
+
 ### `boolean` $\subset$ `truthvalue`
 
 Most (binary) languages have a Boolean type that can only be either `false` or `true`. Clawr also has a `boolean` type, but in this case it is a `subset` of another type: `truthvalue`. A `truthvalue` is one of three values, `false`, `ambiguous` and `true`. The `boolean` subset removed the `ambiguous` case:
 
 ```clawr
 enum truthvalue { false, ambiguous, true }
-subset boolean = ternary(false|true)
+subset boolean = truthvalue(false|true)
 ```
 
 Anywhere a `truthvalue` value is requested, a `boolean` can be used. And anywhere a `boolean` value is returned, it can be assigned to a `truthvalue` variable.

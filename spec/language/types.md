@@ -80,6 +80,24 @@ if !ternaryValue { print("ternaryValue is false") }
 else { print("ternaryValue is either true or ambiguous") }
 ```
 
+### Logic Operators
+
+- `!ambiguous == ambiguous`.
+- `&&` returns the “least true” of its operands: `true && ambiguous == ambiguous` and `false && ambiguous == false`.
+- `||` returns the “most true” of its operands: `true || ambiguous == true` and `false || ambiguous == ambiguous`.
+- In control-flow statements, both `ambiguous` and `!ambiguous` count as `false` expressions.
+- Equality is not three-valued: `ambiguous == ambiguous` is `true`, so that all three states can be handled in branching logic. This is why `truthvalue` logic is closely related to, but not an implementation of, Kleene logic.
+- Evaluation `MUST` short-circuit expressions of the form `true || x` and `false && x`. If the left-hand side is `ambiguous`, short-circuiting is not possible for either operator.
+- There is no XOR (`^`) operator for `truthvalue`.
+
+The following functions operate on the field {−1, 0, 1} = {`false`, `ambiguous`, `true`}:
+
+- `rotate(a, by: b)`: mod-3 addition. Like `adjust`, except that the value rolls over to its opposite if both inputs are equal.
+- `adjust(a, towards: b)`: clamped addition. Adjusting towards `true` makes the value one step more truthful (unless it already is `true`), and towards `false` one step less truthful. Adjusting towards `ambiguous` returns the value unchanged.
+- `modulate(a, by: b)`: multiplication. Modulating by `false` flips the value (a NOT gate), by `true` passes it through, and by `ambiguous` forces `ambiguous`.
+
+The rationale is documented in [ADR-006](../../adr/adr-006.md) and [ADR-007](../../adr/adr-007.md).
+
 ### `boolean`
 
 > [!warning]
