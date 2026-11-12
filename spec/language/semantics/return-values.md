@@ -16,6 +16,8 @@ A uniquely referenced value can be “upgraded” to reference (`SHARED`) semant
 
 Uniquely referenced values will effectively be `ISOLATED`. This is a consequence of the fact that `SHARED` values will always have multiple references. If, for example, your method returns the value of a `ref` property, that property will hold one reference, and for the caller to be able to hold a reference, the count must be at least two.
 
+A `SHARED` value `MUST NOT` be returned as uniquely referenced. An `ISOLATED` value can be returned as uniquely referenced if it has no references other than the recipient’s. One way to ensure that is to make it unique (`ENSURE_UNIQUE`) before returning.
+
 ## Return Values are _Moved_
 
 Reference-counted values will be deallocated as soon as the counter reaches zero. Therefore, it is impossible for the called function to count down _all_ its references and then return the value. It must leave a reference count of one (even though it technically holds zero references). That means that the caller must adjust _its_ behaviour accordingly. It just takes over the reference without counting up. If it does not store the value (for example if it just passes it to another function, or uses it for computation etc) it must subsequently `RELEASE` the value so that the memory does not leak.
@@ -25,3 +27,5 @@ Reference-counted values will be deallocated as soon as the counter reaches zero
 Clawr does not have constructors like other OO languages, but does have `data` literals and factory functions.
 
 A factory is just a free function (or a “static method”) that creates a uniquely referenced entity. This can be assigned as needed to a `SHARED` or `ISOLATED` variable, property or function parameter which locks its semantics down as described above.
+
+The rationale is documented in [ADR-003](../../../adr/adr-003.md). The reference-counting rules for returned values are defined in [Automatic Reference Counting](../../cir/arc.md#ownership-and-return-values).
