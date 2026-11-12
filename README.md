@@ -4,16 +4,18 @@ Clawr is a language with three main goals: clarity, a focus on modelling, and ea
 
 Clawr’s mascot is the lion [Rawry](./rawry.md), symbolizing strength and clarity, and is often depicted “rawring.”
 
-This repository contains documentation for the Clawr language. The documentation is separated into several (planned) sections:
+This repository is the canonical Clawr specification. It is organised in three parts:
 
-- The [Clawr Language Tutorials](./tutorials/README.md) provide step-by-step guidance for learning the Clawr language.
-- The [Language Reference](./lang-reference/README.md) details the syntax and semantics of Clawr source code.
-- The [Standard Library Reference](./std-lib/README.md) details the functions and types that are part of Clawr’s standard library.
-- The [Standard Library Sources](./std-lib/sources.md) define the declarations and their loading order for this revision.
-- The [IDE Extensions](./ide-reference/README.md) section provides information about creating syntax coloring and diagnostics for editors.
-- The [Architecture Design Records](./adr/README.md) (or “ADRs”) describe the reasoning behind the language design and the general architecture of the compiler.
-- The [CIR Reference](./cir-reference/README.md) describes the data structure used to communicate from frontend to backend. The frontend is the tool that reads and interprets a .clawr file and enforces all the semantic rules. The backend is the tool that converts (“lowers”) the CIR into executable machine code. The two tools could be developed by different teams.
-- The [Theory](./theory/README.md) section discusses the underlying principles and concepts that inform the design of the Clawr language, such as encapsulation.
+- **[Specification](./spec/language/README.md)** is normative. Each rule is defined in exactly one place.
+  - The [Language Reference](./spec/language/README.md) details the syntax and semantics of Clawr source code.
+  - The [CIR Reference](./spec/cir/README.md) describes the data structure used to communicate from frontend to backend. The frontend reads and interprets a .clawr file and enforces all the semantic rules. The backend converts (“lowers”) the CIR into executable machine code. The two tools could be developed by different teams.
+  - The [Standard Library Reference](./spec/stdlib/README.md) details the functions and types that are part of Clawr’s standard library. The [Standard Library Sources](./spec/stdlib/sources.md) define the declarations and their loading order for this revision.
+- **[Architecture Decision Records](./adr/README.md)** (“ADRs”) describe the reasoning behind the language design and the architecture of the compiler. They are rationale, not the place to look up the current rules.
+- **Guides** are informative:
+  - The [Clawr Language Tutorials](./guides/tutorials/README.md) provide step-by-step guidance for learning the language.
+  - The [Theory](./guides/theory/README.md) section discusses the principles and concepts that inform the design, such as encapsulation.
+  - The [Implementation](./guides/implementation/README.md) section describes the example compiler.
+  - The [IDE Extensions](./guides/ide-reference/README.md) section covers syntax coloring and diagnostics for editors.
 
 ## The Clawr Architecture
 
@@ -41,11 +43,11 @@ The ADRs are maintained in this repository. A GitHub Action syncs changes in `ad
 
 ### Clawr Intermediate Representation
 
-The CIR is defined in <https://github.com/clawrlang/clawr/tree/main/cir-schema> (multiple JSON files).
-To update the tables download the files to ./cir-reference/.import and execute the following script:
+The CIR JSON schema is maintained in this repository, in `spec/cir/schema/`. A GitHub Action syncs changes to the development repository.
+To regenerate the tables in the CIR reference after changing the schema, execute the following script:
 
 ```sh
-cd cir-reference/.import
+cd spec/cir/.import
 node update-schema.ts
 ```
 

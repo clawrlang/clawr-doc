@@ -5,7 +5,7 @@
 > [!note]
 >
 > This is a discussion on refactoring as a general concept.
-> [Look here](../../theory/refactorings.md) for a theoretical perspective on refactorings.
+> [Look here](../../../guides/theory/refactorings.md) for a theoretical perspective on refactorings.
 
 Clawr is designed for expressivity. Choosing a specific design communicates intent clearly and allows developers to reason about the code more effectively. There might, however, be situations where the initial design can be improved. Refactorings provide a systematic way to make these improvements while preserving the intended behavior of the code.
 

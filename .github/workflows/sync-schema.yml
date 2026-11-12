@@ -5,7 +5,7 @@ on:
     branches:
       - main # Only triggered for commits to the main branch
     paths:
-      - 'schema/**' # Only trigger when files in the adr directory change
+      - 'spec/cir/schema/**' # Only trigger when files in the adr directory change
   workflow_dispatch: # This workflow can be triggered manually from the Actions tab if needed
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
         env:
           REPO: git@github.com:clawrlang/clawr.git
           BRANCH: main # The branch in the target repo (often main or gh-pages)
-          FOLDER: schema # The source directory in this repo
+          FOLDER: spec/cir/schema # The source directory in this repo
           TARGET_DIR: schema # The destination directory in the target repo
           SSH_PRIVATE_KEY: ${{ secrets.ADR_DEPLOY_KEY }}
           MESSAGE: "{msg}\n\n(Replayed schema/ changes from clawr-doc:{sha}.)"

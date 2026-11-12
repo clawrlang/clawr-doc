@@ -9,7 +9,7 @@
 - **The status** (proposed, accepted, deprecated, etc.)
 
 [ADR-001](adr-001.md) defines the Clawr architecture as being made up of a frontend and a backend, with a data structure (the CIR) for communicating between them. But
-in the case of Clawr, the language itself is considered “architecture.” That is, the syntax and semantics are important enough to be documented as ADRs. There is other documentation for [learning](../tutorials/README.md) and a [language reference](../lang-reference/README.md), but they do not explain _why_ the language works as it does.
+in the case of Clawr, the language itself is considered “architecture.” That is, the syntax and semantics are important enough to be documented as ADRs. There is other documentation for [learning](../guides/tutorials/README.md) and a [language reference](../spec/language/README.md), but they do not explain _why_ the language works as it does.
 
 Many design decisions are made implicitly by the TDD principle “first make it work.” [^make-it-work] Those decisions are not documented here. When something interesting is learned requiring the design to change, that’s when the decision should be documented. The old solution should be listed under _Alternatives Considered_ and/or in the earlier sections.
 

@@ -8,7 +8,7 @@
 >
 > — Frequently asked question
 
-Technically, syntactically, and maybe even semantically, traits and roles are indeed the same thing. The runtime implementation will be identical. The [Intermediate Representation (CIR)](../../cir-reference/README.md) between compiler frontend and backend does not change.
+Technically, syntactically, and maybe even semantically, traits and roles are indeed the same thing. The runtime implementation will be identical. The [Intermediate Representation (CIR)](../../cir/README.md) between compiler frontend and backend does not change.
 
 The difference is conceptual. A `trait` hides irrelevant data and emphasises essential information; a `role` hides technical details and signals abstract capability.
 
@@ -38,7 +38,7 @@ Traits are only applicable to `object` and `data` types and to boxed primitives.
 
 > [!warning]
 >
-> Do not mistake Clawr value types for .Net value types. See the [theory on value types](../../theory/value-type.md) for more details.
+> Do not mistake Clawr value types for .Net value types. See the [theory on value types](../../../guides/theory/value-type.md) for more details.
 
 A service that exists to execute processes is not a “value,” and types that describe such capabilities are not “value-types.” Hence they cannot conform to traits.
 

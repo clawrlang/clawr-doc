@@ -59,6 +59,6 @@ As you can see here, the value of a constant does not have to be a simple litera
 
 ## Boundary
 
-This page is a learning guide. For the current parser-backed syntax and language surface, use [reference/lexical-and-syntax.md](../reference/lexical-and-syntax.md) and [reference/grammar.md](../reference/grammar.md).
+This page is a learning guide. For the current parser-backed syntax and language surface, use [reference/lexical-and-syntax.md](../../reference/lexical-and-syntax.md) and [reference/grammar.md](../../reference/grammar.md).
 
 [data structures >](./data-structures.md)

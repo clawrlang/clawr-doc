@@ -5,7 +5,7 @@
 > [!note]
 >
 > This is a discussion on encapsulation as a general concept.
-> [Look here](../lang-reference/user-types/object-data.md) for a Clawr perspective on objects and data structures.
+> [Look here](../../spec/language/user-types/object-data.md) for a Clawr perspective on objects and data structures.
 
 Encapsulation is two things in one word. On the one hand, it is a mechanism for protecting an entity's internal state from invalid manipulation. On the other hand, it is a design principle that promotes modularity and maintainability by decoupling structural details from their usage context.
 

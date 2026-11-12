@@ -22,7 +22,7 @@ const schemas = new Map<string, Schema>()
 function load(file: string) {
     if (schemas.has(file)) return
     const text = readFileSync(
-        new URL(`../../schema/${file}`, import.meta.url),
+        new URL(`../schema/${file}`, import.meta.url),
         'utf8',
     )
     schemas.set(file, JSON.parse(text))
