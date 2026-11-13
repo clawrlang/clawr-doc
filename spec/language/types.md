@@ -60,23 +60,23 @@ The rationale is documented in [ADR-022](../../adr/adr-022.md) and [ADR-023](../
 
 ### Operator Precedence
 
-> [!warning] Proposed
+> [!note]
 >
-> The precedence table is proposed in [ADR-021](../../adr/adr-021.md).
+> Fields are not yet implemented in the language.
 
 From low to high precedence:
 
 1. Logical OR (`||`)
 2. Logical AND (`&&`)
 3. Comparison (`==`/`===`/`!=`/`!==`/`>`/`<`/`<=`/`>=`/`≤`/`≥`/`≠`) — non-associative
-4. Field OR (`|`)
-5. Field AND (`&`)
-6. Shift (`<<`, `>>`)
+4. Field OR (`|`) (not yet implemented)
+5. Field AND (`&`) (not yet implemented)
+6. Shift (`<<`, `>>`) (not yet implemented)
 7. Additive (`+`, `-`)
 8. Multiplicative (`*`, `/`)
 9. Exponential (`^`) — right-associative
 10. Postfix member access (`.`, `->`) and call (`()`)
-11. Prefix (`!`)
+11. Prefix (`!`) (not yet implemented)
 12. Parentheses, literals and identifiers
 
 Operators on the same level are left-associative, except `^` (right-associative) and comparisons (non-associative: chaining requires parentheses). The frontend calculates the result set (domain and current value) of each operation individually.
@@ -93,12 +93,13 @@ A computer that uses ternary chipsets might be created in the future. The agnost
 
 ## `real`
 
-> [!warning]
->
-> Not Implemented
-> The design and representation of `real` numbers might change
+The `real` type supports any number in $\mathbb{R}$. It can, in theory, hold arbitrarily large values with arbitrary precision. Like `integer`, `real` numbers can be stored in an optimal way if the number is well known.
 
-The `real` type supports any number in $\mathbb{R}$. It can, in theory, hold arbitrarily large values with arbitrary precision. Like `integer`, `real` numbers can be stored in an optimal way if the number is well known. The default precision uses 50 decimal digits.
+Unlike `integer`, `real` types need a precision to be representable in runtime.
+
+```clawr
+let pi: real scale 15 = 3.141592653589793
+```
 
 ## `truthvalue`
 
@@ -132,22 +133,10 @@ The rationale is documented in [ADR-006](../../adr/adr-006.md) and [ADR-007](../
 
 ### `boolean`
 
-> [!warning]
->
-> Not Implemented
-> The `subset` syntax is not yet parsed
-
 There is also a `boolean` subset. A `boolean` value is a `truthvalue`, except it is not allowed to be `ambiguous`.
 
-Syntax forms under consideration:
-
 ```clawr
-subset boolean = truthvalue(false|true)
-subset boolean is truthvalue(false|true)
-subset boolean : truthvalue(false|true)
-
-subset boolean = truthvalue @values(false, true)
-subset boolean = truthvalue @except(ambiguous)
+subset boolean = truthvalue (false|true)
 ```
 
 ## Ternary Hardware
