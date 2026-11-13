@@ -4,6 +4,10 @@ The Clawr standard library is implemented by the backend. It contains some basic
 
 ## `copy(of:)`
 
+> [!warning] Not Implemented — Needs design work
+>
+> Clawr does not yet define a syntax for generic type parameters. See [the ADR Sketch on Generics](../../adr/drafts/generics.md)
+
 ```clawr
 func copy<T: RC>(of value: T) -> T
 ```
@@ -17,10 +21,6 @@ const x: MyData = { a: 12 } // ISOLATED variable
 ref y = copy(of: x) // SHARED variable
 ```
 
-> [!note]
->
-> Clawr does not yet define a syntax for generic type parameters. The above is speculative at best.
-
 ### Rules for Frontend
 
 - The CIR `MUST` wrap the returned value in an `AS_SHARED` structure if the assignment target is a `SHARED` (`ref`) variable/property/parameter. It `MUST NOT` wrap `AS_SHARED` if the target is `ISOLATED`.
@@ -33,7 +33,7 @@ ref y = copy(of: x) // SHARED variable
 
 ## `Equatable`
 
-Values that can be compared for equality (`==`) against another value of the same type.
+Values that can be compared for equality (`==`) against another value of the same type. Values that conform to both `Equatable` and `Ordered` can also be compared using “-or-equal” operators (`<=`, `>=`).
 
 ```clawr
 trait Equatable {
@@ -43,62 +43,90 @@ trait Equatable {
 
 ## `HashEquatable`
 
-> [!warning]
+> [!warning] Not Implemented — Needs design work
 >
-> **Not Implemented** — Needs design work
+> Tracked by [ADR-037](../../adr/adr-037.md) Hashing and `HashEquatable`
 >
-> Unsure how this should work. A `HashCode` cannot be defined by the Clawr specification or the frontend — it `MUST` be platform (i.e. backend) specific. But it must also be usable in sets and dictionaries. So the hash-lookup algorithm must also be backend specific.
+> The exact hashing algorithm is backend-specific, but it `MUST` be consistent with the `HashEquatable` contract.
 
 Values that can be used in hash-sets and as keys in dictionaries.
 
 ```clawr
 trait HashEquatable: Equatable {
-  func hashCode(using builder: HashBuilder) -> HashCode
+  func hash(into builder: HashBuilder)
 }
 ```
 
-This should be redesigned to force the use of a `HashCode` algorithm that is implemented by the runtime. Combining hash-codes from multiple properties should perform a mixing operation that makes similar hashes unlikely. E.g. `hash = (hash * 31 + value) % size`. The implementation should generate the prime factor at program launch so that it cannot be used maliciously.
+A `HashEquatable` type `MUST` also be `Equatable`. The idea is to locate a value by its hash-code first and then confirm equality using the `equals` method.
 
-### Rules for Backend
+The program is expected to ensure that the `hash(into:)` method is implemented consistently with the `equals` method for all `HashEquatable` types, but neither the frontend nor the backend can enforce this automatically.
 
-- The algorithm `MUST` randomize parameters such as prime factors at program launch.
-
-## `HashCode`
-
-Backend-defined type (or subset). `MAY` be an alias for `integer(0..<2^64)`, or some other range. `MAY` be a `data` or `object` type. `MAY` be a `bword` or `tword`. `MAY` be implemented in any way that suits the backend. The exact implementation is irrelevant as long as it is comparable and can be used for hash lookups.
-
-```clawr
-extern type HashCode: Equatable
-```
+The best way to ensure consistency between `hash(into:)` and `equals` is to use the same set of components for both methods. And to always feed these components into the `HashBuilder` in a consistent order. (If this can be simplified or automated, it should be, but at this time it is left to the programmer.)
 
 ## `HashBuilder`
 
 Backend-provided service that mixes multiple `HashCode` values into a single value.
 
 ```clawr
-// Defined by runtime
-role HashBuilder {
-  func add(_ code: HashCode)
-  func mixedValue() -> HashCode
+// Defined by backend
+opaque service HashBuilder {
+  extern func add(_ value: HashEquatable)
+  extern func mixedValue() -> HashCode
 }
+
+extern func newHashBuilder() -> HashBuilder
 ```
+
+> [!note] For Future Consideration
+>
+> When/if the [Extensions](../../adr/drafts/extensions.md) and [Varargs Functions](../../adr/drafts/varargs.md) ADRs are adopted, the standard library may provide a convenience method for adding multiple values in a single call.
+>
+> ```clawr
+> extension HashBuilder {
+>   func addInOrder(...values: HashEquatable) {
+>     for (const value in values) self.add(value)
+>   }
+> }
+> ```
+
+### `HashCode`
+
+Opaque, backend-defined type (or subset). `MAY` be an alias for `integer(0..<2^64)`, or some other range. `MAY` be a `data` or `object` type. `MAY` be a `bword` or `tword`. `MAY` be implemented in any way that suits the backend. The exact implementation is irrelevant as long as it can be used for hash lookups.
 
 ```clawr
-// Defined by frontend?
-companion HashBuilder {
-  extern companion func new() -> HashBuilder
-
-  func mix(...values: HashCode) -> HashCode {
-    const builder = HashBuilder.new()
-    for (const value in values) builder.add(value)
-    return builder.mixedValue()
-  }
-}
+opaque type HashCode
 ```
+
+The `HashCode` type should not be visible to programmers. It is intended to be used only by collection types in the standard library. It is intended to be implemented by the backend/runtime only and used indirectly by collection algorithms.
+
+Collection algorithms use an `extern` function, `bucketIndex(hash:,max:)` to convert a `HashCode` into a useful index for lookups. Other than that, the value is opaque and should not be manipulated directly.
+
+### `bucketIndex(hash:,max:)`
+
+Converts a `HashCode` into a usable index for hash-based collections. The result `MUST` satisfy `0 <= result < max`.
+
+```clawr
+extern func bucketIndex(hash: HashCode, max: integer) -> integer
+```
+
+> [!note] Future Extension Under Consideration
+>
+> ```clawr
+> extension HashCode {
+>     func bucketIndex(max: integer) => bucketIndex(hash: self, max: max)
+> }
+> ```
+
+### Rules for Backend
+
+- The algorithm `MUST` randomize parameters such as prime factors at program launch.
+- The backend `MUST` ensure that the `hash(into:)` method produces consistent results for the same input components, in the same order, within a single program execution.
+- The `add(_:)` method `MUST` detect boxed primitive values and convert them into a `HashCode` using backend-defined mechanisms, mixing them into the aggregate hash state.
+- The `add(_:)` method `MUST` delegate to `hash(into:)` and not attempt any further processing itself if the value is not a boxed primitive.
 
 ## `HasStringRepresentation`
 
-Values that can be used in interpolated `string` literals and `print`ed to the console.
+Values that can be used in [interpolated `string` literals](../../adr/drafts/string-interpolation.md) and [`print`ed to the console](#print_).
 
 ```clawr
 trait HasStringRepresentation {
@@ -106,31 +134,9 @@ trait HasStringRepresentation {
 }
 ```
 
-## `Identifiable`
-
-> [!warning]
->
-> **Not Implemented**
->
-> Awaiting `trait` support
-
-Values that can be compared for identity (`===`).
-
-```clawr
-trait Identifible {
-  func id() -> Equatable
-}
-```
-
 ## `Ordered`
 
-> [!warning]
->
-> **Not Implemented**
->
-> Awaiting `trait` support
-
-Values that can be compared and ordered (`<`, `>`).
+Values that can be compared and ordered (`<`, `>`). Values that conform to both `Ordered` and `Equatable` can also be compared using “-or-equal” operators (`<=`, `>=`).
 
 ```clawr
 trait Ordered {
