@@ -43,7 +43,7 @@ trait Equatable {
 
 ## `HashEquatable`
 
-> [!warning] Not Implemented — Needs design work
+> [!note] Contribution API implemented; collections and Clawr hash results deferred
 >
 > Tracked by [ADR-037](../../adr/adr-037.md) Hashing and `HashEquatable`
 >
@@ -59,6 +59,9 @@ trait HashEquatable: Equatable {
 
 A `HashEquatable` type `MUST` also be `Equatable`. The idea is to locate a value by its hash-code first and then confirm equality using the `equals` method.
 
+Equal values MUST hash equally in the same context. Hash collisions do not
+prove equality, and equality-relevant key state must remain stable while stored.
+
 The program is expected to ensure that the `hash(into:)` method is implemented consistently with the `equals` method for all `HashEquatable` types, but neither the frontend nor the backend can enforce this automatically.
 
 The best way to ensure consistency between `hash(into:)` and `equals` is to use the same set of components for both methods. And to always feed these components into the `HashBuilder` in a consistent order. (If this can be simplified or automated, it should be, but at this time it is left to the programmer.)
@@ -71,11 +74,21 @@ Backend-provided service that mixes multiple `HashCode` values into a single val
 // Defined by backend
 opaque service HashBuilder {
   extern func add(_ value: HashEquatable)
-  extern func mixedValue() -> HashCode
 }
 
-extern func newHashBuilder() -> HashBuilder
+extern func newHashBuilder() -> ref HashBuilder
 ```
+
+Builders are shared ARC-managed resources. Parameters borrow them and aliases
+contribute to the same stream. Literal construction, subclassing and
+`copy(of:)` are not permitted. Only the runtime-owned `clawr.HashBuilder`
+opaque service is supported initially. Integer, real, truthvalue and string
+contributions use canonical primitive witnesses; other values delegate to
+their `hash(into:)` implementation.
+
+The C backend uses SipHash-2-4 with a securely generated process-wide key.
+Snapshot finalization exists only in the runtime for now; it does not consume
+the builder and adding further values remains valid.
 
 > [!note] For Future Consideration
 >
@@ -91,6 +104,9 @@ extern func newHashBuilder() -> HashBuilder
 
 ### `HashCode`
 
+This is a later-stage design, not an implemented Clawr type. Public
+`mixedValue() -> HashCode` is deferred with it.
+
 Opaque, backend-defined type (or subset). `MAY` be an alias for `integer(0..<2^64)`, or some other range. `MAY` be a `data` or `object` type. `MAY` be a `bword` or `tword`. `MAY` be implemented in any way that suits the backend. The exact implementation is irrelevant as long as it can be used for hash lookups.
 
 ```clawr
@@ -102,6 +118,11 @@ The `HashCode` type should not be visible to programmers. It is intended to be u
 Collection algorithms use an `extern` function, `bucketIndex(hash:,max:)` to convert a `HashCode` into a useful index for lookups. Other than that, the value is opaque and should not be manipulated directly.
 
 ### `bucketIndex(hash:,max:)`
+
+Deferred with `HashCode`. A future backend-owned `CollectionIndex`, with
+frontend semantics `integer(0...)`, could preserve identity in CIR for
+fixed-width lowering. Ordinary subset aliases do not preserve that identity
+today. Positive capacity and representability rules remain to be specified.
 
 Converts a `HashCode` into a usable index for hash-based collections. The result `MUST` satisfy `0 <= result < max`.
 
@@ -119,7 +140,7 @@ extern func bucketIndex(hash: HashCode, max: integer) -> integer
 
 ### Rules for Backend
 
-- The algorithm `MUST` randomize parameters such as prime factors at program launch.
+- The runtime `MUST` securely generate a secret process-wide key for its keyed hash. Randomizing a multiplier alone is not a sufficient security design.
 - The backend `MUST` ensure that the `hash(into:)` method produces consistent results for the same input components, in the same order, within a single program execution.
 - The `add(_:)` method `MUST` detect boxed primitive values and convert them into a `HashCode` using backend-defined mechanisms, mixing them into the aggregate hash state.
 - The `add(_:)` method `MUST` delegate to `hash(into:)` and not attempt any further processing itself if the value is not a boxed primitive.

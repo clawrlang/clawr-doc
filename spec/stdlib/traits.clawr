@@ -10,6 +10,16 @@ trait Equatable {
     func equals(_ other: Self) -> boolean
 }
 
+trait HashEquatable: Equatable {
+    func hash(into builder: HashBuilder)
+}
+
+opaque service HashBuilder {
+    extern func add(_ value: HashEquatable)
+}
+
+extern func newHashBuilder() -> ref HashBuilder
+
 /**
  * Enable `<` and `>` comparisons. The predicate returns true when the
  * receiver precedes the other value and false otherwise.
