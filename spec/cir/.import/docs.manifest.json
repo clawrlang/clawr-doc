@@ -78,6 +78,7 @@
   ],
   "../statements/ENSURE_UNIQUE.md": ["EnsureUnique"],
   "../statements/IF.md": ["If"],
+  "../statements/LOOP.md": ["Loop"],
   "../statements/README.md": [
     "EnsureUnique",
     "Release",

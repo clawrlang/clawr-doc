@@ -10,6 +10,11 @@ Execute a statement list only when the condition is `true`, with an optional alt
 
 [Click here](./IF.md) for more details
 
+## `LOOP`
+
+Repeat a statement list using a pre-test or post-test truthvalue condition. See
+[`LOOP`](./LOOP.md) for fields and rules.
+
 ## ENSURE_UNIQUE
 
 An [`ENSURE_UNIQUE`](./ENSURE_UNIQUE.md) statement is injected by the frontend before mutations to preserve state isolation between copy-on-write variables and properties.

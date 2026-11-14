@@ -1,7 +1,7 @@
 # The Clawr Language
 
 - [Programs and Source Modules](./programs.md)
-- [Conditional Statements](./control-flow.md)
+- [Control Flow](./control-flow.md)
 - [Built-in Types and Operators](./types.md)
 - [Types as Sets](./sets.md)
 - [Variable and Function Semantics](./semantics/README.md)

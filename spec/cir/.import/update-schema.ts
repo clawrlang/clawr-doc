@@ -172,6 +172,7 @@ function renderType({ schema: node, file }: Sourced): string[] {
     if ('const' in node) return [literal(node.const)]
     if (node.type === 'string') return ['string']
     if (node.type === 'integer') return ['integer']
+    if (node.type === 'boolean') return ['boolean']
     if (node.type === 'array') {
         const items = renderType({ schema: node.items, file })
         return [
