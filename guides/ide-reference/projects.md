@@ -35,6 +35,8 @@ The editor permits declaration-only files and does not require `@main` during an
 
 The extension supports cross-file diagnostics and go-to-definition for top-level types and functions. Rename remains single-file.
 
+Clawr fenced code blocks in Markdown receive Clawr syntax highlighting in the editor. They are not analyzed as source files and do not receive Clawr diagnostics, semantic tokens, or refactorings.
+
 The compiler does not discover marker-based projects. Pass the project's files explicitly in the same order when [building](../implementation/programs.md).
 
 ## Migrating from `clawr.sourceFiles`
