@@ -1,5 +1,10 @@
 # The Clawr Language
 
+- [Programs and Source Modules](./programs.md)
+- [Conditional Statements](./control-flow.md)
+- [Built-in Types and Operators](./types.md)
+- [Types as Sets](./sets.md)
+- [Variable and Function Semantics](./semantics/README.md)
 - [Isolation vs Sharing](./isolation-v-sharing/README.md)
 - [User-Defined Types](./user-types/README.md)
 - [Refactorings](./refactorings/README.md)

@@ -62,9 +62,13 @@ An `INTERFACE_DECL` is a contract that promises that the object’s interface wi
 
 - The `name` and optional `namespace` `MUST` combine to a unique identifier. No other type, variable or function in the package may have the same identifier.
 - The frontend `MUST` forbid the cedilla (`¸`), ogonek (`˛`) and caron (`ˇ`) characters in all identifiers.
+- `methods` `MUST` contain the flattened requirements, with ancestor requirements first and shared inherited requirements deduplicated.
+- Each `RC_TYPE_DECL` conformance `MUST` map these requirements to implementing methods. Each implied ancestor interface `MUST` have its own canonical conformance table.
+- Calls through an interface `MUST` use an `interface` receiver value-set and `dispatch: "conformance"`.
 
 ## Rules for Backend
 
+- Resolve interface calls using the canonical conformance table for the indicated interface. Interface inheritance is resolved by the frontend and requires no runtime traversal of an interface-inheritance graph.
 ## Examples
 
 ```json

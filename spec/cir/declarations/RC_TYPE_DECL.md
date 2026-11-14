@@ -113,8 +113,7 @@ The `dispatchTable` array lists polymorphic methods by their method signature (`
 ## Rules for Frontend
 
 - `RC_TYPE_DECL` declarations `MAY` incur cyclic references inside a CIR artifact.
-- They `MUST NOT` cause cyclic references between modules.
-  - **_TODO_** Should that only be between libraries/packages? Packages should never be allowed to form cycles anyway so it may be a moot rule in that case.
+- Source-file boundaries do not impose an additional cycle restriction within the same artifact. Separate compilation and package dependencies remain deferred; see [Programs and Source Modules](../../language/programs.md).
 - The `initializers` are methods that are called when the type is used as a supertype. When allocated/instantiated, the subtype `MUST` always call an initializer from the supertype, after initializing all its own properties.
 - Each `RC_TYPE_DECL` `MUST` have a unique `name` in its scope (i.e. unique when including the optional `namespace`). That uniqueness includes variables and functions.
 - The `dispatchTable` of a subtype `MUST` include entries with the same `slot` values as defined by its supertype in the same order before adding new entries.

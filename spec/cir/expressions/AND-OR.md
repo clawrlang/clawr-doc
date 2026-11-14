@@ -23,10 +23,14 @@ The logic operators return the most false value (`AND`) and the most true value 
 
 Alternatively: think of `AND` as `min(left, right)` and `OR` as `max(left, right)` if the `truthvalue` values are ordered `false < ambiguous < true`.
 
-# Rules for Frontend
+## Rules for Frontend
 
-- The expression types (except logic) `MUST` be limited to Boolean values. Comparing two values `MUST NOT` yield `ambiguous`.
+- Operands and the result `MAY` include the `ambiguous` value.
+- The frontend `MUST` preserve [source-level short-circuiting](../../language/types.md#logic-operators) using explicit control flow, such as [`SCOPE`](./SCOPE.md) and [`IF`](../statements/IF.md). It `MUST NOT` rely on `AND` or `OR` to skip an operand.
 
-# Rules for Backend
+## Rules for Backend
 
-- Evaluation `MUST` short-circuit `true || x` and `false && x`. If the left operand is `ambiguous`, neither operator can short-circuit.
+- Both operand expressions `MUST` be evaluated. `AND` and `OR` are eager CIR operations, not short-circuit operators.
+- Produce the three-valued result described above. Optimizations `MUST` preserve observable effects of operand evaluation.
+- The backend `MAY` optimize lowering if one operand is statically known to be `false` for `AND` or `true` for `OR`, as long as it preserves the observable effects of operand evaluation.
+- The backend `MAY` implement further optimizations, treating values as simple Booleans, if their `type` is statically known to exclude the `ambiguous` value.

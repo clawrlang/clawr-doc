@@ -76,7 +76,7 @@ From low to high precedence:
 8. Multiplicative (`*`, `/`)
 9. Exponential (`^`) — right-associative
 10. Postfix member access (`.`, `->`) and call (`()`)
-11. Prefix (`!`) (not yet implemented)
+11. Prefix (`!`)
 12. Parentheses, literals and identifiers
 
 Operators on the same level are left-associative, except `^` (right-associative) and comparisons (non-associative: chaining requires parentheses). The frontend calculates the result set (domain and current value) of each operation individually.

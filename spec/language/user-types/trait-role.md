@@ -26,6 +26,40 @@ A `trait` or `role` `MUST NOT` define “static” elements or initializers. Pol
 
 A `trait` applies only to value types (see [below](#a-trait-is-only-applicable-to-value-types)). Any type can embody a `role`. The rationale is documented in [ADR-009](../../../adr/adr-009.md) and [ADR-014](../../../adr/adr-014.md).
 
+## Declaring and Conforming to Interfaces
+
+```clawr
+trait Shape {
+    func area() -> integer
+}
+
+object Square: Shape {
+    func area() => 4
+}
+```
+
+- A `trait` or `role` body contains method signatures only, without bodies or state. Parameter value-sets `MUST` be explicit. A value-returning requirement `MUST` state its result value-set; omitting the result denotes no return value.
+- After `:`, an `object` or `service` lists its supertype first, if present, followed by its interfaces. A type has at most one supertype, which must be declared before its subtypes.
+- Interface declarations may appear before or after their uses in the program.
+- Every requirement `MUST` have an implementation, either in the type or inherited from its supertype. Parameter requirements must match exactly; the implementation's result may be a subset of the required result.
+- Listing the same interface twice or naming a non-interface in the interface list is an error. A `service` may conform only to roles; an `object` may conform to traits and roles.
+
+### Interface Inheritance
+
+An interface can list parents after `:`. Traits inherit traits and roles inherit roles; cross-kind inheritance, cycles, and repeated direct parents are errors.
+
+```clawr
+trait HashEquatable: Equatable {
+    func hash(into builder: HashBuilder)
+}
+```
+
+Conformance implies conformance to every ancestor interface. Diamond inheritance deduplicates shared requirements; conflicting signatures are errors. `Self` in inherited requirements refers to the conforming type.
+
+The current example compiler requires a subtype to name its interfaces explicitly; it does not yet inherit its supertype's conformance declarations. General `mutating` requirements and user-declared conformance of `data` and boxed types remain outside this implemented subset. Runtime-provided primitive witnesses, such as those for hashing, are separate.
+
+The rationale is documented in [ADR-034](../../../adr/adr-034.md). CIR flattening and dispatch requirements are defined by [`INTERFACE_DECL`](../../cir/declarations/INTERFACE_DECL.md).
+
 ## The `trait` Concept
 
 A `trait` is a model type. Just like both `object` and `data`, it can apply to isolated and shared-reference variables as needed. It can also be returned as _uniquely referenced return values_, assigned value semantics or reference semantics by the caller.

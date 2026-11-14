@@ -99,8 +99,9 @@ type        := (ref | isolated)? typeConstructor
 - Memory allocation and semantics are determined by the declaration, not by the type. A single type can be used in both isolated and shared contexts.
 - Properties can be declared without `mut` and still be implicitly mutable. A property can be declared `p: ref T` to be a re-bindable reference instead of an isolated value with copy-on-write.
 - Parameters can omit `const` and are then implicitly immutable.
-- In variable declarations and properties, omitting the isolation modifier implies `ISOLATED`. In function parameters the same omission implies `UNKNOWN` isolation ([Function Parameters](./function-parameters.md)).
+- In variable declarations and properties, omitting the isolation modifier implies `ISOLATED`. For reference-capable function parameters the same omission implies `UNKNOWN` isolation ([Function Parameters](./function-parameters.md)).
 - Explicitly stated isolation (`ref` or `isolated`) yields the same result for all declarations.
+- Unboxed primitives (`integer`, `real`, `truthvalue`, and `string`) are always `ISOLATED` and `MUST NOT` be declared `ref`. Return-type defaults and explicit return modifiers are defined in [Return Values](./return-values.md#uniquely-referenced-values).
 - For a `UNIQUE` return value, `as isolated` (or `as ref`) can be appended to the expression to infer the type but specify the isolation: `const x = copy(of: y) as isolated`.
 - In nested structures, a `mut` property in a `const` variable is “effectively const.” A `ref` property ignores the semantics of its container and always uses reference semantics. It disrupts both isolation and immutability, except that a re-bindable reference property (`mut p: ref T`) in a `const` structure is effectively a fixed reference (`const p: ref T`).
 

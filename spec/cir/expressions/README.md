@@ -8,6 +8,12 @@ Every expression has a `type` property. This is a `ValueSet` that includes every
 
 The [expression schema](../schema/expressions.json) defines the permitted expression shapes. The tables below summarize their fields; the individual pages explain their semantics.
 
+## Control and Evaluation
+
+- [`SCOPE`](./SCOPE.md): local statements, a result expression, and cleanup.
+- [`NOT`](./NOT.md): three-valued logical negation.
+- [`AND` and `OR`](./AND-OR.md): eager logic operations; the frontend expresses source short-circuiting through explicit control flow.
+
 ## `STRING_LITERAL`
 
 A `STRING_LITERAL` is a simple textual value.

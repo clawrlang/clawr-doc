@@ -38,6 +38,8 @@ The main repository for (early) Clawr development is <https://github.com/clawrla
 
 ## For Contributors
 
+See [Where Documentation Belongs](./CONTRIBUTING.md#where-documentation-belongs) before adding feature documentation. Current rules go in the specification; example-tool behavior goes in guides; ADRs explain the reasoning.
+
 ### Architecture Design Records
 
 The ADRs are maintained in this repository. A GitHub Action syncs changes in `adr/` to the development repository.
@@ -53,4 +55,4 @@ node update-schema.ts
 ```
 
 - [MIT License](./LICENSE)
-- [How to contribute](./CONTRIBUTING)
+- [How to contribute](./CONTRIBUTING.md)

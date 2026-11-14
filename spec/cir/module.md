@@ -4,6 +4,8 @@
 
 A source module is a single `.clawr` file. The frontend analyzes the program's source modules together and emits one CIR artifact. The artifact has the following root fields, defined by [cir.schema.json](./schema/cir.schema.json):
 
+Source ordering and shared scope are defined in [Programs and Source Modules](../language/programs.md).
+
 | Field | Required | Meaning |
 | ----- | -------- | ------- |
 | `$schema` | yes | The format identifier, currently `http://clawr.lang/schema/cir/DRAFT-0`. |

@@ -4,9 +4,15 @@
 
 Statements are added to the `startBlock` of a CIR artifact, and to the `body` of a function. Statements `MUST NOT` be reordered or skipped when lowering. An optimisation step `MAY` however perform limited changes.
 
+## `IF`
+
+Execute a statement list only when the condition is `true`, with an optional alternative for `false` or `ambiguous`. See [`IF`](./IF.md) for fields and rules.
+
+[Click here](./IF.md) for more details
+
 ## ENSURE_UNIQUE
 
-An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend before mutations to preserve state isolation between copy-on-write variables and properties.
+An [`ENSURE_UNIQUE`](./ENSURE_UNIQUE.md) statement is injected by the frontend before mutations to preserve state isolation between copy-on-write variables and properties.
 
 <!-- shape: EnsureUnique -->
 
@@ -19,7 +25,7 @@ An [`ENSURE_UNIQUE`](ENSURE_UNIQUE.md) statement is injected by the frontend bef
 
 <!-- /shape: EnsureUnique -->
 
-[Click here](ENSURE_UNIQUE.md) for more details
+[Click here](./ENSURE_UNIQUE.md) for more details
 
 ## `RELEASE`
 

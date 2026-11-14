@@ -59,8 +59,8 @@ trait HashEquatable: Equatable {
 
 A `HashEquatable` type `MUST` also be `Equatable`. The idea is to locate a value by its hash-code first and then confirm equality using the `equals` method.
 
-Equal values MUST hash equally in the same context. Hash collisions do not
-prove equality, and equality-relevant key state must remain stable while stored.
+Equal values `MUST` hash equally in the same context. Hash collisions do not
+prove equality, and equality-relevant key state `MUST` remain stable while stored.
 
 The program is expected to ensure that the `hash(into:)` method is implemented consistently with the `equals` method for all `HashEquatable` types, but neither the frontend nor the backend can enforce this automatically.
 
@@ -68,7 +68,7 @@ The best way to ensure consistency between `hash(into:)` and `equals` is to use 
 
 ## `HashBuilder`
 
-Backend-provided service that mixes multiple `HashCode` values into a single value.
+Backend-provided opaque service that accumulates hash contributions without exposing their representation.
 
 ```clawr
 // Defined by backend
@@ -86,9 +86,9 @@ opaque service is supported initially. Integer, real, truthvalue and string
 contributions use canonical primitive witnesses; other values delegate to
 their `hash(into:)` implementation.
 
-The C backend uses SipHash-2-4 with a securely generated process-wide key.
-Snapshot finalization exists only in the runtime for now; it does not consume
-the builder and adding further values remains valid.
+Hash results are not portable or stable across processes, backends, or runtime versions and `MUST NOT` be used as persistent identifiers. The frontend `MUST NOT` assume a particular hash width, base, or representation.
+
+The builder and factory are currently visible to programs; restricting them to collection implementations is deferred until the visibility model is designed. Collections and public Clawr hash results are not yet specified. See the [example backend's hashing implementation](../../guides/implementation/backend/hashing.md) for runtime-specific details.
 
 > [!note] For Future Consideration
 >

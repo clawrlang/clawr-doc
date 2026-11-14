@@ -2,6 +2,8 @@
 
 Function parameters have the [same semantics](./variable-semantics.md) as ordinary variables and properties. Plus a mode that allows values of any isolation to be passed (the default when the isolation modifier is omitted).
 
+The isolation modes below concern reference-capable values. Unboxed primitive parameters are always isolated, so the `UNKNOWN` restrictions do not prevent storing an ordinary `integer`, `real`, `truthvalue`, or `string` parameter.
+
 A parameter declared `const x: isolated T` or `mut x: isolated T` accepts only `ISOLATED` arguments. `const` means that the variable is immutable in the function body, while `mut` allows a copy of the argument to be modified in isolation. A parameter declared `x: T` without `mut` is implicitly immutable. `mut x: T` is not allowed for parameters.
 
 A parameter declared `x: ref T` accepts only `SHARED` values. It may modify the entity with impunity and no copy is made. Declaring it `mut x: ref T` allows the in-body variable to be reassigned if necessary. It is not recommended to use this form as it is almost never needed.
@@ -50,6 +52,7 @@ object IncorrectObject: SomeTrait {
 - Two functions with the same base name and the same labels, differing only in label order, have the same signature. Declaring both `MUST` be a compile-time error.
 
 > [!warning]
+>
 > [ADR-013](../../../adr/adr-013.md) says that labeled arguments “can appear in any order”, which contradicts the ordering rule above ([ADR-012](../../../adr/adr-012.md)). Declaration order is specified here until the author decides which rule is intended.
 
 ## Currying
