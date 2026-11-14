@@ -93,7 +93,8 @@ A `data` type is instantiated directly using a data literal, and its fields are 
 - A `data` structure `MUST NOT` have methods.
 - `data` properties `MUST` be mutable: they `MUST` be declared `mut` (isolated or `ref`) and `MUST NOT` be declared `const`.
 - `data` properties `MUST NOT` have default or initial values.
-- A `data` type is serializable by default. A `trait` for custom serialization can be added, and `object` types can use the same `trait`, though they are not serializable without it. Serialization does not assume a specific format: encoders for any format (JSON, YAML, XML, binary, ternary…) can be written.
+- A `data` type is serializable by default. A `trait` for custom serialization can be added, and `object` types can use the same `trait`, though they are not serializable without it.
+- Serialization does not assume a specific format: encoders for any format (JSON, YAML, XML, binary, ternary…) can be written. JSON serialization should be supported as a default case.
 
 ### Ad Hoc Data Literals
 
