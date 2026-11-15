@@ -44,6 +44,20 @@ object Square: Shape {
 - Every requirement `MUST` have an implementation, either in the type or inherited from its supertype. Parameter requirements must match exactly; the implementation's result may be a subset of the required result.
 - Listing the same interface twice or naming a non-interface in the interface list is an error. A `service` may conform only to roles; an `object` may conform to traits and roles.
 
+### Extensions
+
+Nominal `data`, `object`, and `service` types can add methods and trait/role conformances in an extension:
+
+```clawr
+data Rectangle { width: integer }
+
+extension Rectangle: Shape {
+    func area() => self->width
+}
+```
+
+Extensions add no stored properties or initializers. Their target type must be declared in the current program. Extension methods use static dispatch and cannot override type-declared or inherited methods. Duplicate method identities (base name and labels) and duplicate explicit conformances for a canonical type/interface pair are compile-time errors. Extensions and conformance checks are combined across all source files in the current program; separately imported targets and primitive-type extensions are not yet supported. `mutating:` extension methods are supported for `data` and `object` types, but not services.
+
 ### Interface Inheritance
 
 An interface can list parents after `:`. Traits inherit traits and roles inherit roles; cross-kind inheritance, cycles, and repeated direct parents are errors.
@@ -56,7 +70,7 @@ trait HashEquatable: Equatable {
 
 Conformance implies conformance to every ancestor interface. Diamond inheritance deduplicates shared requirements; conflicting signatures are errors. `Self` in inherited requirements refers to the conforming type.
 
-The current example compiler requires a subtype to name its interfaces explicitly; it does not yet inherit its supertype's conformance declarations. General `mutating` requirements and user-declared conformance of `data` and boxed types remain outside this implemented subset. Runtime-provided primitive witnesses, such as those for hashing, are separate.
+The current example compiler requires a subtype to name its interfaces explicitly; it does not yet inherit its supertype's conformance declarations. General `mutating` requirements and user-declared conformance of boxed types remain outside this implemented subset. Runtime-provided primitive witnesses, such as those for hashing, are separate.
 
 The rationale is documented in [ADR-034](../../../adr/adr-034.md). CIR flattening and dispatch requirements are defined by [`INTERFACE_DECL`](../../cir/declarations/INTERFACE_DECL.md).
 
