@@ -27,6 +27,7 @@ Statuses used in this documentation:
 - <div class="status Draft"><span class="title">✍🏼 Draft</span> A more developed idea that is being worked on</div>
 - <div class="status Proposed"><span class="title">📝 Proposed</span> An idea to be considered for adoption</div>
 - <div class="status Adopted"><span class="title">✅ Adopted</span> Principle is in use in the ecosystem, or the feature has been implemented in the example implementation</div>
+- <div class="status Rejected"><span class="title">❌ Rejected</span> Principle is not adopted or the feature will not be implemented</div>
 
 The following ADRs have been documented so far:
 

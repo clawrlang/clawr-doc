@@ -1,11 +1,13 @@
 addEventListener('DOMContentLoaded', (_) => {
     const pEls = [...document.querySelectorAll('blockquote > p')].filter((p) =>
-        /^Status: (.*?) (Idea|Draft|Proposed|Adopted)$/.test(p.textContent),
+        /^Status: (.*?) (Idea|Draft|Proposed|Adopted|Rejected)$/.test(
+            p.textContent,
+        ),
     )
 
     for (const p of pEls) {
         const [, statusText, status] = p.textContent.match(
-            /^Status: (.*? (Idea|Draft|Proposed|Adopted))$/,
+            /^Status: (.*? (Idea|Draft|Proposed|Adopted|Rejected))$/,
         )
 
         const div = document.createElement('div')
@@ -32,4 +34,5 @@ const TOOLTIP_TEXTS = {
     Proposed: 'An idea to be considered for adoption',
     Draft: 'A rough sketch of an idea',
     Idea: 'A reminder of an idea or a problem that will need to be handled',
+    Rejected: 'Principle is not adopted or the feature will not be implemented',
 }
