@@ -44,7 +44,7 @@ The following ADRs have been documented so far:
 - 📝 [ADR-010](./adr-010.md): Serializable `data`
 - 📝 [ADR-011](./adr-011.md): Ad Hoc Data Structures
 - ✅ [ADR-012](./adr-012.md): Parameters Labels and Ordering
-- ✍🏼 [ADR-013](./adr-013.md): Currying on Labels
+- 📝 [ADR-013](./adr-013.md): Currying on Labels
 - ✅ [ADR-014](./adr-014.md): Traits and Static
 - ✅ [ADR-015](./adr-015.md): Basic ARC Rules
 - ✅ [ADR-016](./adr-016.md): Backend-Managed Boxing of Unboxed Primitives
