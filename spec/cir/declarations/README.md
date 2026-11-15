@@ -10,7 +10,7 @@ This document lists all declarations and their content.
 
 ## `RC_TYPE_DECL`
 
-The `RC_TYPE_DECL` defines a type that stores its internal data in properties. The type might include `methods` for interactions. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is irrelevant to the runtime and lowering, so it is not reflected in the CIR.
+The `RC_TYPE_DECL` defines a type that stores its internal data in properties. The type might include methods declared by the type. Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is not fully reflected in the CIR.
 
 <!-- shape: RCTypeDeclaration -->
 
@@ -30,7 +30,26 @@ The `RC_TYPE_DECL` defines a type that stores its internal data in properties. T
 
 <!-- /shape: RCTypeDeclaration -->
 
-[Click here](RC_TYPE_DECL.md) for more details
+[Click here](./RC_TYPE_DECL.md) for more details
+
+## `EXTENSION_DECL`
+
+An `EXTENSION_DECL` contributes methods and optional trait/role conformances to an existing nominal type without modifying its `RC_TYPE_DECL`.
+
+<!-- shape: ExtensionDeclaration -->
+
+| Field          | Required | Type                    | Meaning                                           |
+| -------------- | -------- | ----------------------- | ------------------------------------------------- |
+| `kind`         | yes      | `"EXTENSION_DECL"`      | Declaration discriminator.                        |
+| `target`       | yes      | `CanonicalName`         | The type extended by this declaration.            |
+| `methods`      | yes      | `FunctionDeclaration[]` | Methods implemented by this extension.            |
+| `conformances` | no       | `Conformance[]`         | Conformances and their method fulfillment tables. |
+
+> [!info] Table: the properties of the `EXTENSION_DECL` node
+
+<!-- /shape: ExtensionDeclaration -->
+
+[Click here](./EXTENSION_DECL.md) for more details
 
 ## `INTERFACE_DECL`
 
@@ -49,7 +68,7 @@ The `INTERFACE_DECL` node defines a polymorphic type (`trait`/`role`). The type 
 
 <!-- /shape: InterfaceDeclaration -->
 
-[Click here](INTERFACE_DECL.md) for more details
+[Click here](./INTERFACE_DECL.md) for more details
 
 ## `VARIABLE_DECL`
 
@@ -69,7 +88,7 @@ A variable in the program scope. The variable will be accessible to all function
 
 <!-- /shape: VariableDeclaration -->
 
-[Click here](VARIABLE_DECL.md) for more details
+[Click here](./VARIABLE_DECL.md) for more details
 
 ## `FUNCTION_DECL`
 
@@ -91,4 +110,4 @@ A `FUNCTION_DECL` defines a “free function” in the program, a “static” `
 
 <!-- /shape: FunctionDeclaration -->
 
-[Click here](FUNCTION_DECL.md) for more details
+[Click here](./FUNCTION_DECL.md) for more details

@@ -2,9 +2,9 @@
 
 # `RC_TYPE_DECL`
 
-The `RC_TYPE_DECL` node defines a reference-counted type that stores its state in properties. The type might include `methods` for interactions and it might be part of an inheritance chain.
+The `RC_TYPE_DECL` node defines a reference-counted type that stores its state in properties. The type might include methods declared by the type and it might be part of an inheritance chain. Extension methods are represented by [`EXTENSION_DECL`](./EXTENSION_DECL.md) nodes.
 
-Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. That distinction is reflected in the CIR only in so much as disallowing certain properties unless the `methods` property is included.
+Clawr separates these types in three variants: `data`, `object` and `service`, with varying structural rules. CIR has no explicit variant tag: object/service declarations include `initializers`, while a data declaration may include its custom JSON serializer in `methods`.
 
 <!-- shape: RCTypeDeclaration -->
 
@@ -104,7 +104,7 @@ Clawr separates these types in three variants: `data`, `object` and `service`, w
 
 <!-- /shape: PropertyDeclaration -->
 
-The definition has two variants: `data` and `object`/`service`. A `data` type defines only its `name` and `properties`, without `methods`, `initializers`, `base`, or `dispatchTable` (though it may add methods through extensions). `object`/`service` type support inheritance and polymorphism through the `base` and `dispatchTable` properties.
+The definition has two variants: `data` and `object`/`service`. A `data` type defines its `name` and `properties`, and may include its custom JSON serializer in `methods`. `object`/`service` types support inheritance and polymorphism through the `base` and `dispatchTable` properties.
 
 The `base` property indicates the direct supertype in an inheritance structure. While inheritance is generally not recommended, the inheritance structure `MAY` be arbitrarily long, each subtype referencing its immediate ancestor in a linked list of `base` references.
 
