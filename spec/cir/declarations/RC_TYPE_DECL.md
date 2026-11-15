@@ -104,7 +104,7 @@ Clawr separates these types in three variants: `data`, `object` and `service`, w
 
 <!-- /shape: PropertyDeclaration -->
 
-The break in the definition above indicates that some types (`object`/`service`) include `methods`, and those types may include the optional properties `base`, `initializers` and `dispatchTable`. A type without `methods` ( `data` syntax) cannot include those properties. _All_ types however have both `name` and `properties`.
+The definition has two variants: `data` and `object`/`service`. A `data` type defines only its `name` and `properties`, without `methods`, `initializers`, `base`, or `dispatchTable` (though it may add methods through extensions). `object`/`service` type support inheritance and polymorphism through the `base` and `dispatchTable` properties.
 
 The `base` property indicates the direct supertype in an inheritance structure. While inheritance is generally not recommended, the inheritance structure `MAY` be arbitrarily long, each subtype referencing its immediate ancestor in a linked list of `base` references.
 
