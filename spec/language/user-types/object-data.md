@@ -90,11 +90,14 @@ A `data` type is instantiated directly using a data literal, and its fields are 
 ## Rules for `data`
 
 - The properties of a `data` structure are public and directly accessible. They `MUST NOT` be hidden or private.
-- A `data` structure `MUST NOT` have methods.
+- A `data` structure `MUST NOT` have methods, except for the `toJSON()` method in its `serialize:` section when it explicitly conforms to `JSONSerializable`.
 - `data` properties `MUST` be mutable: they `MUST` be declared `mut` (isolated or `ref`) and `MUST NOT` be declared `const`.
 - `data` properties `MUST NOT` have default or initial values.
-- A `data` type is serializable by default. A `trait` for custom serialization can be added, and `object` types can use the same `trait`, though they are not serializable without it.
-- Serialization does not assume a specific format: encoders for any format (JSON, YAML, XML, binary, ternary…) can be written. JSON serialization should be supported as a default case.
+- A `data` type is implicitly `JSONSerializable` only when all of its properties are recursively serializable. A property whose type is an `object`, or whose isolation is `ref`, makes the containing `data` type ineligible for implicit serialization.
+- A data type can explicitly conform to `JSONSerializable` with `: JSONSerializable`. If it is not implicitly serializable, it `MUST` define a `serialize:` section containing `func toJSON() -> string`. The method returns the complete JSON representation; it may define a strategy for object and `ref` properties. Other trait conformances and custom serialization formats are not supported for `data` types yet.
+- The initial built-in encoding is JSON. A `data` value maps to a JSON object with property names as keys; strings map to JSON strings; integers and reals map to JSON number tokens; `false` and `true` map to JSON booleans; and `ambiguous` maps to JSON `null` when the encoded value is a `truthvalue`. JSON `null` does not imply general Clawr nullability. JSON arrays are not implicitly supported until Clawr has collection types.
+- JSON numbers are emitted with enough decimal digits to round-trip into the same declared Clawr numeric precision. No language-level digit limit is imposed, though consumers limited to IEEE 754 binary64 may lose precision. Deserialization is deferred until a general error-handling contract is defined.
+- The language-level serialization rule does not preclude encoders for other formats (YAML, XML, binary, ternary, etc.).
 
 ### Ad Hoc Data Literals
 
