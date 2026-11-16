@@ -82,7 +82,7 @@ const x = 42
 - **Division** (`/`): the divisor `MUST NOT` be zero. An integer quotient is rounded down ($\left\lfloor {n \over d} \right\rfloor$), so a negative result rounds to the larger magnitude.
 - **Modulus** (`%`): returns the remainder after integer division: $n - \left\lfloor {n \over d} \right\rfloor \cdot d$. The result rotates through $\left [ 0, \lvert d \rvert \right )$ without jumps.
 
-The rationale is documented in [ADR-022](../../adr/adr-022.md) and [ADR-023](../../adr/adr-023.md).
+The rationale is documented in [ADR-022](../../../adr/adr-022.md) and [ADR-023](../../../adr/adr-023.md).
 
 ### Operator Precedence
 
@@ -108,7 +108,7 @@ means `a & (b ^ c)`. Ternary fields do not have a `^` operator.
 
 ### Ternary Base
 
-A number is just a conceptual idea (think [ZFC](https://en.wikipedia.org/wiki/Zermelo–Fraenkel_set_theory) [^anotherroof] or the [Peano axioms](https://en.wikipedia.org/wiki/Peano_axioms)). We represent numbers in many different ways: binary, decimal, octal, hexadecimal, Roman… Apart from Roman, the listed examples are all positional (positive) base systems. Any value can be written uniquely on the form $a_0 \cdot b^0 + a_1 \cdot b^1 + a_2 \cdot b^2 + …$ We could choose any number as our base, $b$. A popular alternative to binary hardware is _balanced ternary_ (-1, 0, +1). We do not have to limit ourselves to positive numbers, and an odd base is ideal for centering the zero. This documentation has a [dedicated section](../../guides/theory/ternary/numbers.md) that delves deeper into [ternary numbers](../../guides/theory/ternary/numbers.md) and arithmetics.
+A number is just a conceptual idea (think [ZFC](https://en.wikipedia.org/wiki/Zermelo–Fraenkel_set_theory) [^anotherroof] or the [Peano axioms](https://en.wikipedia.org/wiki/Peano_axioms)). We represent numbers in many different ways: binary, decimal, octal, hexadecimal, Roman… Apart from Roman, the listed examples are all positional (positive) base systems. Any value can be written uniquely on the form $a_0 \cdot b^0 + a_1 \cdot b^1 + a_2 \cdot b^2 + …$ We could choose any number as our base, $b$. A popular alternative to binary hardware is _balanced ternary_ (-1, 0, +1). We do not have to limit ourselves to positive numbers, and an odd base is ideal for centering the zero. This documentation has a [dedicated section](../../../guides/theory/ternary/numbers.md) that delves deeper into [ternary numbers](../../../guides/theory/ternary/numbers.md) and arithmetics.
 
 [^anotherroof]: ZFC has been beautifully explained by [Another Roof](https://youtu.be/dKtsjQtigag?si=Ct1JHi-778aodsSi) on YouTube. This video — and the series it starts — is a recommended watch for anyone who wants to understand the logical foundation of mathematics.
 
@@ -154,7 +154,7 @@ The following functions operate on the field {−1, 0, 1} = {`false`, `ambiguous
 - `adjust(a, towards: b)`: clamped addition. Adjusting towards `true` makes the value one step more truthful (unless it already is `true`), and towards `false` one step less truthful. Adjusting towards `ambiguous` returns the value unchanged.
 - `modulate(a, by: b)`: multiplication. Modulating by `false` flips the value (a NOT gate), by `true` passes it through, and by `ambiguous` forces `ambiguous`.
 
-The rationale is documented in [ADR-006](../../adr/adr-006.md) and [ADR-007](../../adr/adr-007.md).
+The rationale is documented in [ADR-006](../../../adr/adr-006.md) and [ADR-007](../../../adr/adr-007.md).
 
 ### `boolean`
 
