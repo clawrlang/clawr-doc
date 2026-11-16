@@ -87,7 +87,7 @@ const LANGUAGES = {
         icon: 'terminal.svg',
     },
     clawr: {
-        icon: 'rawry-simplified.png',
+        icon: 'paw.svg',
     },
     swift: {
         icon: 'swift.svg',
