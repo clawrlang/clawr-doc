@@ -1,6 +1,10 @@
 # Standard Library
 
-The Clawr standard library is implemented by the backend. It contains some basic functionality. The backend/runtime `MUST` add implementation for all these declarations.
+The Clawr standard library contains Clawr implementations and runtime-backed declarations. Implementations `MUST` compile and link executable stdlib code as well as provide the declared runtime operations.
+
+## Serialization
+
+[`Serializable`, `Serializer`, and `JSONSerializer`](./serialization.md) provide format-independent value serialization and JSON string output. `serializeJSON(_:)` is the convenience entry point.
 
 ## `copy(of:)`
 
@@ -82,7 +86,7 @@ extern func newHashBuilder() -> ref HashBuilder
 Builders are shared ARC-managed resources. Parameters borrow them and aliases
 contribute to the same stream. Literal construction, subclassing and
 `copy(of:)` are not permitted. Only the runtime-owned `clawr.HashBuilder`
-opaque service is supported initially. Integer, real, truthvalue and string
+opaque service and the serialization implementation's `clawr.JSONBuffer` are supported. Integer, real, truthvalue and string
 contributions use canonical primitive witnesses; other values delegate to
 their `hash(into:)` implementation.
 

@@ -4,6 +4,12 @@ Function parameters have the [same semantics](./variable-semantics.md) as ordina
 
 The isolation modes below concern reference-capable values. Unboxed primitive parameters are always isolated, so the `UNKNOWN` restrictions do not prevent storing an ordinary `integer`, `real`, `truthvalue`, or `string` parameter.
 
+A `real` formal parameter may omit its precision to transport any real while
+preserving the incoming precision at runtime. It can be forwarded without
+rounding, including through a trait or role requirement. Arithmetic still
+requires a known precision, and explicit stored/result type declarations still
+require precision. See [Serialization](../../stdlib/serialization.md).
+
 A parameter declared `const x: isolated T` or `mut x: isolated T` accepts only `ISOLATED` arguments. `const` means that the variable is immutable in the function body, while `mut` allows a copy of the argument to be modified in isolation. A parameter declared `x: T` without `mut` is implicitly immutable. `mut x: T` is not allowed for parameters.
 
 A parameter declared `x: ref T` accepts only `SHARED` values. It may modify the entity with impunity and no copy is made. Declaring it `mut x: ref T` allows the in-body variable to be reassigned if necessary. It is not recommended to use this form as it is almost never needed.

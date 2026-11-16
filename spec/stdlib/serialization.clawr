@@ -1,0 +1,76 @@
+trait Serializable {
+    func serialize(into serializer: ref Serializer)
+}
+
+role Serializer {
+    func writeString(_ value: string)
+    func writeInteger(_ value: integer)
+    func writeReal(_ value: real)
+    func writeTruthvalue(_ value: truthvalue)
+    func beginStructure(_ typeName: string, fieldCount: integer)
+    func writeField(_ name: string, value: Serializable)
+    func endStructure()
+}
+
+opaque service JSONBuffer {}
+
+extern func newJSONBuffer() -> ref JSONBuffer
+extern func jsonWriteString(_ buffer: ref JSONBuffer, value: string)
+extern func jsonWriteInteger(_ buffer: ref JSONBuffer, value: integer)
+extern func jsonWriteReal(_ buffer: ref JSONBuffer, value: real)
+extern func jsonWriteTruthvalue(_ buffer: ref JSONBuffer, value: truthvalue)
+extern func jsonBeginStructure(_ buffer: ref JSONBuffer, fieldCount: integer)
+extern func jsonBeginField(_ buffer: ref JSONBuffer, name: string)
+extern func jsonEndField(_ buffer: ref JSONBuffer)
+extern func jsonEndStructure(_ buffer: ref JSONBuffer)
+extern func jsonResult(_ buffer: ref JSONBuffer) -> string
+
+service JSONSerializer: Serializer {
+    func writeString(_ value: string) {
+        jsonWriteString(self->buffer, value: value)
+    }
+
+    func writeInteger(_ value: integer) {
+        jsonWriteInteger(self->buffer, value: value)
+    }
+
+    func writeReal(_ value: real) {
+        jsonWriteReal(self->buffer, value: value)
+    }
+
+    func writeTruthvalue(_ value: truthvalue) {
+        jsonWriteTruthvalue(self->buffer, value: value)
+    }
+
+    func beginStructure(_ typeName: string, fieldCount: integer) {
+        jsonBeginStructure(self->buffer, fieldCount: fieldCount)
+    }
+
+    func writeField(_ name: string, value: Serializable) {
+        jsonBeginField(self->buffer, name: name)
+        value.serialize(into: self)
+        jsonEndField(self->buffer)
+    }
+
+    func endStructure() {
+        jsonEndStructure(self->buffer)
+    }
+
+    func serialize(_ value: Serializable) -> string {
+        value.serialize(into: self)
+        return self.result()
+    }
+
+    func result() -> string {
+        return jsonResult(self->buffer)
+    }
+state:
+    buffer: ref JSONBuffer
+init:
+    func new() => {buffer: newJSONBuffer()}
+}
+
+func serializeJSON(_ value: Serializable) -> string {
+    const serializer: ref JSONSerializer = {JSONSerializer.new()}
+    return serializer.serialize(value)
+}

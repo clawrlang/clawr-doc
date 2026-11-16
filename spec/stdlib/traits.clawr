@@ -2,12 +2,6 @@ trait HasStringRepresentation {
     func stringRepresentation() -> string
 }
 
-trait JSONSerializable {
-    func toJSON() -> string
-}
-
-extern func serializeJSON(_ value: JSONSerializable) -> string
-
 /**
  * Enable `==` and `!=` comparisons.
  * Combine with Ordered to enable `<=` and `>=`.
