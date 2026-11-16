@@ -2,7 +2,7 @@
 
 - [Programs and Source Modules](./programs.md)
 - [Control Flow](./control-flow.md)
-- [Built-in Types and Operators](./types.md)
+- [Built-in Types and Operators](./builtin-types/README.md)
 - [Types as Sets](./sets.md)
 - [Variable and Function Semantics](./semantics/README.md)
 - [Isolation vs Sharing](./isolation-v-sharing/README.md)

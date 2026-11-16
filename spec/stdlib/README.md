@@ -182,4 +182,4 @@ func modulate(_ value: truthvalue, by factor: truthvalue) -> truthvalue
 ```
 
 These operations perform mod-3 addition, clamped addition, and multiplication
-respectively, as defined in the [truthvalue specification](../language/types.md#logic-operators).
+respectively, as defined in the [truthvalue specification](../language/builtin-types/README.md#logic-operators).

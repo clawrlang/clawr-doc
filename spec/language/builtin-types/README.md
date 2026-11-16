@@ -1,16 +1,18 @@
+&nbsp; / &nbsp; [The Clawr Language](./README.md)
+
 # Built-in Types in Clawr
 
-- `integer`: an arbitrarily sized integer value.
 - `truthvalue`: a value with three states (`false`, `ambiguous` and `true`)
+- `integer`: an arbitrarily sized integer value.
+- [`real`](./real.md): an arbitrarily sized numeric value of unspecified precision.
 - `string`: a fixed list or sequence of characters
 
-These are foundational types that can be aggregated into `data` structures and other [user-defined types](./user-types/README.md).
+These are foundational types that can be aggregated into `data` structures and other [user-defined types](../user-types/README.md).
 
-Types can also be created by [forming subsets](./sets.md).
+Types can also be created by [forming subsets](../sets.md).
 
 ## Additional Proposed Types
 
-- `real`: a floating-point value of unspecified precision.
 - `character`: this could be simple as in C or more complex as in Swift
 - `regex`: a regular expression/pattern for string matching
 - `error`: a type for indicating issues at runtime

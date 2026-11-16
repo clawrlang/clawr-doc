@@ -6,7 +6,7 @@ A conforming frontend reads Clawr source code, enforces the language rules, and 
 
 ## Input
 
-- Accept and reject source code according to the [language reference](../language/README.md), including [types](../language/types.md), [sets](../language/sets.md), [isolation and sharing](../language/isolation-v-sharing/README.md), [user-defined types](../language/user-types/README.md) and [semantics](../language/semantics/README.md).
+- Accept and reject source code according to the [language reference](../language/README.md), including [types](../language/builtin-types/README.md), [sets](../language/sets.md), [isolation and sharing](../language/isolation-v-sharing/README.md), [user-defined types](../language/user-types/README.md) and [semantics](../language/semantics/README.md).
 - Resolve declarations from the [standard library sources](../stdlib/sources.md).
 
 ## Output

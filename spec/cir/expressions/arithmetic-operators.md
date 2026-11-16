@@ -21,7 +21,7 @@ The inputs `MAY` have mixed ranges. The backend `MUST` perform the operation in 
 
 # Rules for Frontend
 
-- The frontend `MUST` reject a negative exponent for `integer` `POWER`, a zero divisor, and `0^0`, or report them at runtime when not provable. See [Arithmetic Operators](../../language/types.md#arithmetic-operators).
+- The frontend `MUST` reject a negative exponent for `integer` `POWER`, a zero divisor, and `0^0`, or report them at runtime when not provable. See [Arithmetic Operators](../../language/builtin-types/README.md#arithmetic-operators).
 - `DIVISION` and `REMAINDER` on integers use floor semantics.
 
 - The input values `MAY` be arbitrarily large.

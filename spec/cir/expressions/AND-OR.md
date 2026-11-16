@@ -2,7 +2,7 @@
 
 # Logic Operators
 
-Clawr’s three-valued logic is closely related to Kleene K3, but `ambiguous == ambiguous` is `true` (see [Logic Operators](../../language/types.md#logic-operators)). A `truthvalue` is either `false`, `ambiguous` or `true`. The operations `AND` and `OR` have meaningful behaviours that translate cleanly between Boolean logic and this model.
+Clawr’s three-valued logic is closely related to Kleene K3, but `ambiguous == ambiguous` is `true` (see [Logic Operators](../../language/builtin-types/README.md#logic-operators)). A `truthvalue` is either `false`, `ambiguous` or `true`. The operations `AND` and `OR` have meaningful behaviours that translate cleanly between Boolean logic and this model.
 
 There are several ternary-only operations, but they are implemented as functions, not operators.
 
@@ -26,7 +26,7 @@ Alternatively: think of `AND` as `min(left, right)` and `OR` as `max(left, right
 ## Rules for Frontend
 
 - Operands and the result `MAY` include the `ambiguous` value.
-- The frontend `MUST` preserve [source-level short-circuiting](../../language/types.md#logic-operators) using explicit control flow, such as [`SCOPE`](./SCOPE.md) and [`IF`](../statements/IF.md). It `MUST NOT` rely on `AND` or `OR` to skip an operand.
+- The frontend `MUST` preserve [source-level short-circuiting](../../language/builtin-types/README.md#logic-operators) using explicit control flow, such as [`SCOPE`](./SCOPE.md) and [`IF`](../statements/IF.md). It `MUST NOT` rely on `AND` or `OR` to skip an operand.
 
 ## Rules for Backend
 
