@@ -1,11 +1,14 @@
 &nbsp; / &nbsp; [The Clawr Language](./README.md)
 
-# Built-in Types in Clawr
+# Primitive Universes in Clawr
 
-- `truthvalue`: a value with three states (`false`, `ambiguous` and `true`)
-- `integer`: an arbitrarily sized integer value.
-- [`real`](./real.md): an arbitrarily sized numeric value of unspecified precision.
-- `string`: a fixed list or sequence of characters
+The term `type` is used differently in Clawr compared to traditional programming languages. Clawr uses sets as the fundamental categories for compatibility. Each `type` belongs to a `universe` with additional constraints that define its specific characteristics. For example, the `integer` universe includes all whole numbers, and a specific `integer` `subset` might constrain the values to a particular range.
+
+- [`truthvalue`](./truthvalue.md): a value with three states (`false`, `ambiguous` and `true`)
+  - The `boolean` type is a subset of `truthvalue`, not fundamental or separate.
+- [`integer`](./integer.md): any value in the set of whole numbers (`\mathbb{Z}`).
+- [`real`](./real.md): any value in the set of real numbers (`\mathbb{R}`).
+- [`string`](./string.md): a fixed list or sequence of characters
 
 These are foundational types that can be aggregated into `data` structures and other [user-defined types](../user-types/README.md).
 
