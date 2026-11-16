@@ -9,6 +9,7 @@ The term `type` is used differently in Clawr compared to traditional programming
 - [`integer`](./integer.md): any value in the set of whole numbers (`\mathbb{Z}`).
 - [`real`](./real.md): any value in the set of real numbers (`\mathbb{R}`).
 - [`string`](./string.md): a fixed list or sequence of characters
+- `bitfield` and `tritfield`: finite ordered sequences of binary and ternary truth-value lanes
 
 These are foundational types that can be aggregated into `data` structures and other [user-defined types](../user-types/README.md).
 
@@ -22,6 +23,26 @@ Types can also be created by [forming subsets](../sets.md).
 - _lambda_: a callable function with a specific signature
 - _tuple_: a list of values of varying (but specific) types
 - _array_: ordered collection with fixed size (`[T]` / `Array<T>`)
+
+## Fields
+
+`bitfield` and `tritfield` have variable length; `bitfield(32)` and
+`tritfield(27)` constrain the exact number of lanes. `bitfield("1001")` and
+`tritfield("T01")` construct fields in displayed lane order. In a binary field,
+`0` means false and `1` means true; in a ternary field, `T`, `0`, and `1` mean
+false, ambiguous, and true. `fieldLength(value)` returns the lane count.
+
+`&`, `|`, and `!` operate lane by lane; `^` is binary-field XOR. Pointwise
+binary operations require equal lengths. `tritwiseAdjust(a, b)`,
+`tritwiseRotate(a, b)`, and `tritwiseModulate(a, b)` apply the corresponding
+truthvalue functions to each pair of ternary lanes. State rotation is distinct
+from rotation of lane positions.
+
+`<<` and `>>` shift lanes in displayed sequence order, discarding lanes shifted
+out and filling vacancies with false. A non-negative shift of at least the field
+length fills the whole field with false. A negative shift, invalid lane string,
+or dynamic length mismatch panics; errors known at compile time are rejected.
+These strings and operations do not specify a wire format.
 
 ## `integer`
 
@@ -65,26 +86,25 @@ The rationale is documented in [ADR-022](../../adr/adr-022.md) and [ADR-023](../
 
 ### Operator Precedence
 
-> [!note]
->
-> Fields are not yet implemented in the language.
-
 From low to high precedence:
 
 1. Logical OR (`||`)
 2. Logical AND (`&&`)
 3. Comparison (`==`/`===`/`!=`/`!==`/`>`/`<`/`<=`/`>=`/`≤`/`≥`/`≠`) — non-associative
-4. Field OR (`|`) (not yet implemented)
-5. Field AND (`&`) (not yet implemented)
-6. Shift (`<<`, `>>`) (not yet implemented)
+4. Field OR (`|`)
+5. Field AND (`&`)
+6. Shift (`<<`, `>>`)
 7. Additive (`+`, `-`)
 8. Multiplicative (`*`, `/`)
-9. Exponential (`^`) — right-associative
+9. Exponential or binary field XOR (`^`) — right-associative
 10. Postfix member access (`.`, `->`) and call (`()`)
 11. Prefix (`!`)
 12. Parentheses, literals and identifiers
 
 Operators on the same level are left-associative, except `^` (right-associative) and comparisons (non-associative: chaining requires parentheses). The frontend calculates the result set (domain and current value) of each operation individually.
+
+On binary fields, `^` uses the same precedence as exponentiation: `a & b ^ c`
+means `a & (b ^ c)`. Ternary fields do not have a `^` operator.
 
 ### Ternary Base
 
