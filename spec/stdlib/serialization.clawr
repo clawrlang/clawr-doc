@@ -70,6 +70,8 @@ init:
     func new() => {buffer: newJSONBuffer()}
 }
 
+// TODO: Maybe rename to serialize(_ value: Serializable)
+// When namespaces are added in the future, this could be called as JSON.serialize(value)
 func serializeJSON(_ value: Serializable) -> string {
     const serializer: ref JSONSerializer = {JSONSerializer.new()}
     return serializer.serialize(value)
