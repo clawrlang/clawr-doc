@@ -58,7 +58,9 @@ async function main(): Promise<void> {
         console.error('Usage: find-shapes [root-dir]')
         process.exit(0)
     }
-    const root = path.resolve(rootArg ?? '..')
+    const root = path.resolve(
+        rootArg ?? path.resolve(import.meta.dirname, '..'),
+    )
     const result: Record<string, string[]> = {}
 
     for await (const file of walk(root)) {
