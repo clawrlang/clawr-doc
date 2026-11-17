@@ -50,13 +50,10 @@ object IncorrectObject: SomeTrait {
 ## Labels and Ordering
 
 - All labeled parameters `MUST` appear after all unlabeled parameters in a declaration.
-- Arguments in a call `MUST` be given in the same order as the parameters: unlabeled arguments first, then labeled arguments in declaration order. Currying (below) is the exception.
+- In the CIR, arguments in a call `MUST` be given in the same order as the declared parameters. In the Clawr source code, labeled arguments `MAY` appear in any order.
+- All declarations `MUST` declare unlabeled arguments first, then only labeled arguments.
 - The canonical name of a function includes its parameter labels. `copy(to:)` and `copy(of:)` are different functions and `MUST NOT` conflict, even if declared in the same module or namespace.
 - Two functions with the same base name and the same labels, differing only in label order, have the same signature. Declaring both `MUST` be a compile-time error.
-
-> [!warning]
->
-> [ADR-013](../../../adr/adr-013.md) says that labeled arguments “can appear in any order”, which contradicts the ordering rule above ([ADR-012](../../../adr/adr-012.md)). Declaration order is specified here until the author decides which rule is intended.
 
 ## Currying
 
