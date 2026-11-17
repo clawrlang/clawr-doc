@@ -2,7 +2,7 @@
 
 # Field Expressions
 
-Field expressions operate on unboxed fields. Every result's `type` is a field value-set, except `FIELD_LENGTH`, whose result has an integer value-set.
+Field expressions operate on unboxed fields. Every result's `type` is a field value-set, except `FIELD_LENGTH`, whose result has an integer value-set, and `FIELD_LANE`, whose result has a truthvalue value-set.
 
 ## `FIELD_FROM_STRING`
 
@@ -57,6 +57,66 @@ Return the number of lanes in a field.
 <!-- /shape: FieldLength -->
 
 When the operand has a fixed length, the result type `MUST` be the singleton integer set containing that length. Otherwise, it `MUST` be an integer set whose minimum is 0.
+
+## `FIELD_LANE`
+
+Return the truthvalue at a zero-based displayed-sequence index.
+
+<!-- shape: FieldLane -->
+
+| Field     | Required | Type                     | Meaning                               |
+| --------- | -------- | ------------------------ | ------------------------------------- |
+| `kind`    | yes      | `"FIELD_LANE"`           | Expression discriminator.             |
+| `operand` | yes      | `FieldValueExpression`   | The field to inspect.                 |
+| `index`   | yes      | `IntegerValueExpression` | Zero-based index, with 0 at the left. |
+| `type`    | yes      | `TruthvalueSet`          | Result truthvalue value-set.          |
+
+> [!info] Table: the properties of the `FIELD_LANE` node
+
+<!-- /shape: FieldLane -->
+
+The index `MUST` satisfy `0 <= index < operand.length`. Binary lane results exclude `ambiguous`. Invalid dynamic indices panic.
+
+## `FIELD_SLICE`
+
+Return a field containing a contiguous sequence of lanes.
+
+<!-- shape: FieldSlice -->
+
+| Field     | Required | Type                     | Meaning                                  |
+| --------- | -------- | ------------------------ | ---------------------------------------- |
+| `kind`    | yes      | `"FIELD_SLICE"`          | Expression discriminator.                |
+| `operand` | yes      | `FieldValueExpression`   | The source field.                        |
+| `start`   | yes      | `IntegerValueExpression` | Zero-based displayed start index.        |
+| `length`  | yes      | `IntegerValueExpression` | Number of lanes to select.               |
+| `type`    | yes      | `FieldSet`               | Same field kind and selected lane count. |
+
+> [!info] Table: the properties of the `FIELD_SLICE` node
+
+<!-- /shape: FieldSlice -->
+
+Both sizes `MUST` be non-negative, `start <= operand.length`, and `length <= operand.length - start`. An empty slice at the end is valid. Invalid dynamic ranges panic; they are not clamped or padded. When known statically, the frontend `MUST` include the selected length in the result type.
+
+## `FIELD_CONCAT`
+
+Return the left field's lanes followed by the right field's lanes.
+
+<!-- shape: FieldConcat -->
+
+| Field   | Required | Type                   | Meaning                                  |
+| ------- | -------- | ---------------------- | ---------------------------------------- |
+| `kind`  | yes      | `"FIELD_CONCAT"`       | Expression discriminator.                |
+| `left`  | yes      | `FieldValueExpression` | The first lanes.                         |
+| `right` | yes      | `FieldValueExpression` | The following lanes.                     |
+| `type`  | yes      | `FieldSet`             | Same field kind and combined lane count. |
+
+> [!info] Table: the properties of the `FIELD_CONCAT` node
+
+<!-- /shape: FieldConcat -->
+
+The operands and result `MUST` have the same field kind. Operand lengths may differ; the result length is their sum. When both lengths are known statically, the frontend `MUST` include their sum in the result type. Size overflow or allocation failure panics.
+
+Slices and concatenations return owned field values without mutating their inputs. Backend storage boundaries do not affect any of these operations.
 
 ## Pointwise Operations
 
@@ -116,8 +176,9 @@ The result `MUST` have the same field kind and lane count as the left operand. L
 - Field operands and results `MUST` use unboxed field value-sets.
 - The frontend `MUST` emit a field kind and length consistent with the operation; constraints known to be invalid `MUST` be reported during compilation.
 - `FIELD_LENGTH` `MUST` have an integer result value-set.
+- `FIELD_LANE` `MUST` have a truthvalue result value-set.
 
 ## Rules for Backend
 
 - The backend `MUST` implement the specified lane mapping, operation, and sequence order independently of its internal representation.
-- The backend `MUST` reject invalid dynamic lane strings, negative shift counts, and operations whose runtime lane kinds or lengths are incompatible.
+- The backend `MUST` reject invalid dynamic lane strings, negative shift counts, invalid lane indices or slice ranges, and operations whose runtime lane kinds or lengths are incompatible. Converting indices and slice sizes to storage sizes `MUST NOT` silently truncate, wrap, or saturate.

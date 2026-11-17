@@ -19,6 +19,26 @@ A constructor string containing a character outside the field's lane alphabet is
 
 `fieldLength(field)` returns the lane count as an `integer`.
 
+### Lane access, slicing, and concatenation
+
+- `fieldLane(field, index)` returns the `truthvalue` at a zero-based displayed-sequence index. Index 0 is the leftmost lane. A binary field can return only `false` or `true`; a ternary field can also return `ambiguous`.
+- `fieldSlice(field, start, length)` returns a field of the same kind containing `length` lanes beginning at `start`. The selected range excludes `start + length`. Both arguments are non-negative integers; `start` may equal the field length only when selecting zero lanes.
+- `fieldConcat(left, right)` returns the lanes of `left` followed by the lanes of `right`. The fields must have the same kind, but need not have the same length. Empty fields are valid operands.
+
+These operations do not mutate their inputs. Slices and concatenations are field values, not views or physical buffers. Their lengths are independent of backend word boundaries.
+
+```clawr
+const flags = bitfield("1001")
+const first = fieldLane(flags, 0)                  // true
+const middle: bitfield(2) = fieldSlice(flags, 1, 2) // 00
+const joined: bitfield(3) = fieldConcat(middle, bitfield("1"))
+const empty: bitfield(0) = fieldSlice(flags, 4, 0)
+```
+
+The frontend `MUST` reject a non-integer index or count, incompatible field kinds, and bounds it can determine to be invalid. Remaining bounds and length checks happen at runtime; invalid input or an unrepresentable result size causes a panic. Indices and counts are never silently clamped, wrapped, or truncated. In particular, lane access requires `index < fieldLength(field)`, while slicing requires `start <= fieldLength(field)` and `length <= fieldLength(field) - start`. When known statically, the result type includes the exact slice or concatenation length.
+
+### Pointwise operations and shifts
+
 The operators `&` and `|` apply pointwise to fields of the same kind and length. They use the corresponding truthvalue AND and OR rules. Prefix `!` applies truthvalue NOT to each lane. Binary fields also support pointwise XOR with `^`; ternary fields do not.
 
 Ternary fields support pointwise state operations:

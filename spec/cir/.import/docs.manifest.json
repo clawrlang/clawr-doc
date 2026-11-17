@@ -34,6 +34,9 @@
     "FieldFromString",
     "FieldNot",
     "FieldLength",
+    "FieldLane",
+    "FieldSlice",
+    "FieldConcat",
     "FieldBinaryOperation",
     "FieldShift"
   ],
