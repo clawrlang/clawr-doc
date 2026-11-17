@@ -177,6 +177,57 @@ Prints a string value to `stdout`.
 func print(_ value: HasStringRepresentation)
 ```
 
+## Octet file streams
+
+The first file-stream API uses an explicit **MSB-first octet encoding** of
+`bitfield`, not the field's in-memory representation.
+
+```clawr
+opaque service OctetInput {}
+opaque service OctetOutput {}
+
+extern func openOctetInput(_ path: string) -> ref OctetInput
+extern func openOctetOutput(_ path: string) -> ref OctetOutput
+extern func readOctets(_ input: ref OctetInput, count: integer) -> bitfield
+extern func writeOctets(_ output: ref OctetOutput, value: bitfield)
+extern func closeOctetInput(_ input: ref OctetInput)
+extern func closeOctetOutput(_ output: ref OctetOutput)
+```
+
+### Encoding and chunk boundaries
+
+One octet maps to eight consecutive binary lanes, with its most significant bit first: octet `0x80` maps to `10000000`, `0x01` to `00000001`, and `0x00` to `00000000`. Octets appear in stream order. Encoding reverses that mapping. Neither host endianness nor internal word boundaries affect the wire bytes. No text conversion, framing, length header, or padding is added. Every octet value is valid input.
+
+Writes require a binary field whose length is a multiple of eight; the empty field is valid and writes nothing. Non-aligned fields are rejected, not padded. The application must specify its own framing and any treatment of partial octets. Ternary fields require a separately defined encoding and are not accepted by this API. These operations do not interpret fields as integers.
+
+`readOctets` requests a **positive maximum count of octets**, not lanes. It reads that many octets unless it reaches EOF or encounters an error. The returned field has eight times the actual octet count as its length. A short field is the final chunk, and an empty field means EOF. Further reads at EOF also return empty fields. Zero and negative counts are invalid, and counts or resulting allocations beyond runtime limits panic.
+
+The count is chosen by the caller, not by the hardware. Concatenating decoded chunks preserves the same lane sequence as decoding the complete stream. Any algorithm-specific 9- or 27-lane blocks must be assembled separately with field slicing and concatenation; file read boundaries do not define them.
+
+### File effects, ownership, and errors
+
+Opening input requires an existing readable file. Opening output creates a file or **truncates an existing one**. Paths must not contain embedded NUL. These are blocking binary file operations; seeking, append mode, non-blocking streams, and concurrency guarantees are not provided by this initial API.
+
+Handles are opaque shared services: aliases refer to the same cursor and closed state. They cannot be constructed, copied with `copy(of:)`, subclassed, or inspected by user code. Closing through any alias closes the resource for all aliases. Reading, writing, or closing an already closed handle is an error. The runtime also closes an unclosed resource when its final reference is released. Explicitly close output to observe errors from buffered writes before proceeding.
+
+Open, read, write, flush/close, allocation, and invalid-input failures panic and terminate the process; they are not reported as EOF or successful empty results. A failed operation may already have consumed input or written part of the output. No rollback or atomic replacement is promised. Structured errors are deferred until the language supports them.
+
+For example, this copies an octet file in caller-selected chunks. Use distinct input and output files, since opening output truncates it:
+
+```clawr
+const source = openOctetInput("input.bin")
+const destination = openOctetOutput("copy.bin")
+mut chunk: bitfield = readOctets(source, count: 4096)
+while fieldLength(chunk) > 0 {
+    writeOctets(destination, value: chunk)
+    chunk = readOctets(source, count: 4096)
+}
+closeOctetInput(source)
+closeOctetOutput(destination)
+```
+
+The reference C backend currently requires eight-bit host bytes for this file adapter. Other backends must implement the same logical octet mapping rather than expose their native binary or ternary storage.
+
 ## Truthvalue operations
 
 ```clawr
@@ -185,5 +236,4 @@ func adjust(_ value: truthvalue, towards direction: truthvalue) -> truthvalue
 func modulate(_ value: truthvalue, by factor: truthvalue) -> truthvalue
 ```
 
-These operations perform mod-3 addition, clamped addition, and multiplication
-respectively, as defined in the [truthvalue specification](../language/builtin-types/truthvalue.md#logical-operators).
+These operations perform mod-3 addition, clamped addition, and multiplication respectively, as defined in the [truthvalue specification](../language/builtin-types/truthvalue.md#logical-operators).

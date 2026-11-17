@@ -59,4 +59,9 @@ Equality and inequality require the same field kind and compare length and lane 
 
 Fields are not integers or physical buffers. Reading or writing them requires an explicit encoding that defines lane order, symbol mapping, framing, and malformed-input behavior. A backend may choose its internal representation, but that representation does not define a portable wire format.
 
+The initial [octet file-stream API](../../stdlib/README.md#octet-file-streams)
+maps each octet to eight binary lanes, MSB-first. It rejects non-aligned writes
+instead of silently padding them. This is one explicit encoding, not an
+intrinsic byte order for all fields; ternary encodings remain separate.
+
 The current scope and deferred design questions are recorded in [ADR-041](../../../adr/adr-041.md).

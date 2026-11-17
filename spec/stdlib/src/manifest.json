@@ -3,6 +3,7 @@
     "subsets.clawr",
     "traits.clawr",
     "truthvalue.clawr",
-    "serialization.clawr"
+    "serialization.clawr",
+    "io.clawr"
   ]
 }

@@ -1,0 +1,9 @@
+opaque service OctetInput {}
+opaque service OctetOutput {}
+
+extern func openOctetInput(_ path: string) -> ref OctetInput
+extern func openOctetOutput(_ path: string) -> ref OctetOutput
+extern func readOctets(_ input: ref OctetInput, count: integer) -> bitfield
+extern func writeOctets(_ output: ref OctetOutput, value: bitfield)
+extern func closeOctetInput(_ input: ref OctetInput)
+extern func closeOctetOutput(_ output: ref OctetOutput)
