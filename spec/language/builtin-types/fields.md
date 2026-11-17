@@ -15,6 +15,27 @@ The string constructor uses displayed order, with the first character at lane in
 
 A constructor string containing a character outside the field's lane alphabet is invalid. The frontend `MUST` report invalid literal strings during compilation; invalid dynamic strings fail at runtime. A value assigned to a fixed-length field `MUST` have the declared number of lanes.
 
+## Field literals
+
+Prefixed literals construct fields, not integers:
+
+```clawr
+const flags = 0b0001                    // bitfield(4)
+const states = 0tT01_T01_T01            // tritfield(9)
+const octets = 0x00_80_FF_01            // bitfield(32)
+const same: bitfield(8) = 0b0000_1111
+const also: bitfield(8) = 0x0F
+```
+
+- `0b` accepts binary lanes `0` and `1`; its inferred length is the number of digits.
+- `0t` accepts ternary lanes `T`, `0`, and `1`, meaning `false`, `ambiguous`, and `true`; its inferred length is the number of digits.
+- `0x` accepts hexadecimal digits `0` through `9`, `a` through `f`, and `A` through `F`. Each digit expands to four binary lanes, most significant first, so its inferred length is four times the number of digits.
+- Prefixes are lowercase. A single underscore may separate adjacent digits; underscores do not contribute lanes or establish algorithmic chunk boundaries.
+- Leading zeroes are preserved. Index 0 is the leftmost expanded lane. For example, `0x01` has eight lanes and equals `0b00000001`, not `0b1`.
+- At least one digit is required. Invalid digits, misplaced underscores, and incompatible declared lengths are compile-time errors. Use `bitfield("")` or `tritfield("")` for empty fields.
+
+Literal widths need not be multiples of eight or match a machine word. Octet alignment is a requirement of the octet output encoding, not field construction. Literals do not depend on function-name resolution; a user-defined function named `bitfield` or `tritfield` does not change their meaning. String constructors remain available for dynamic input.
+
 ## Operations
 
 `fieldLength(field)` returns the lane count as an `integer`.

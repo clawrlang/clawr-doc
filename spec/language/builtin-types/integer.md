@@ -6,6 +6,10 @@ The `integer` universe represents whole numbers, both positive and negative, wit
 
 A type in the `integer` universe can be constrained to specific subsets, such as a range of values. Or it can be unbounded, allowing any value in $\mathbb{Z}$.
 
+Integer literals use decimal notation. The `0b`, `0t`, and `0x` prefixes denote
+[field literals](./fields.md#field-literals), not alternative integer bases.
+Fields do not expose an integer's underlying representation.
+
 ## Usage
 
 An `integer` can be used in arithmetic expressions and assigned to variables. For example:
