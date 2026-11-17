@@ -60,7 +60,14 @@ The frontend `MUST` reject a non-integer index or count, incompatible field kind
 
 ### Pointwise operations and shifts
 
-The operators `&` and `|` apply pointwise to fields of the same kind and length. They use the corresponding truthvalue AND and OR rules. Prefix `!` applies truthvalue NOT to each lane. Binary fields also support pointwise XOR with `^`; ternary fields do not.
+The operators `&` and `|` apply pointwise to fields of the same kind and length. They use the corresponding truthvalue AND and OR rules. Prefix `~` applies truthvalue NOT to each lane, preserving the field kind and length; ternary `ambiguous` lanes remain ambiguous. The `!` operator is reserved for scalar truthvalues and is not accepted on fields. Binary fields also support pointwise XOR with `^`; ternary fields do not.
+
+```clawr
+const invertedBits: bitfield(4) = ~0b1001 // 0110
+const invertedTrits: tritfield(3) = ~0tT01 // 10T
+```
+
+Prefix `~` has the same precedence as prefix `!`, binding more tightly than field XOR, shifts, AND, and OR.
 
 Ternary fields support pointwise state operations:
 
