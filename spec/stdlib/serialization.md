@@ -1,8 +1,10 @@
+&nbsp; / &nbsp; [Clawr Standard Library](./README.md)
+
 # Serialization
 
 `Serializable` describes a value independently of its output format.
 `Serializer` is the shared writer capability. Their declarations and the Clawr
-JSON implementation are in [serialization.clawr](./serialization.clawr).
+JSON implementation are in [serialization.clawr](./src/serialization.clawr).
 
 Strings, integers, reals, and truthvalues have builtin conformance. Recursively
 pure `data` has synthesized conformance; an object or `ref` property anywhere

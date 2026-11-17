@@ -1,7 +1,7 @@
 # Standard library sources
 
 The standard-library declarations are Clawr source files listed, in order, by
-[`manifest.json`](./manifest.json). The list is the complete set of sources
+[`manifest.json`](./src/manifest.json). The list is the complete set of sources
 for this revision. An implementation reads them in the listed order; named
 aliases must be declared before they are used.
 
