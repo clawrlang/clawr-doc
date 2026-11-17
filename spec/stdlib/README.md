@@ -96,7 +96,7 @@ The builder and factory are currently visible to programs; restricting them to c
 
 > [!note] For Future Consideration
 >
-> When/if the [Extensions](../../adr/drafts/extensions.md) and [Varargs Functions](../../adr/drafts/varargs.md) ADRs are adopted, the standard library may provide a convenience method for adding multiple values in a single call.
+> When/if the [Extensions](../../adr/adr-040.md) and [Varargs Functions](../../adr/drafts/varargs.md) ADRs are adopted, the standard library may provide a convenience method for adding multiple values in a single call.
 >
 > ```clawr
 > extension HashBuilder {
