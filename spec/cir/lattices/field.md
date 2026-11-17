@@ -11,7 +11,7 @@ A field value-set identifies either `bitfield` or `tritfield`. An optional `leng
 | `universe` | yes      | <code>"bitfield" &#124; "tritfield"</code> | The kind of field.                           |
 | `length`   | no       | `integer`                                  | The exact number of lanes, when constrained. |
 
-> [!info] Table: the properties of the `bitfield` and `tritfield` nodes
+> [!info] Table: the properties of the `bitfield` node
 
 <!-- /shape: FieldSet -->
 

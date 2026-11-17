@@ -5,6 +5,7 @@
 // and fragments that are only composed into other definitions are skipped.
 
 import { readFileSync, writeFileSync } from 'node:fs'
+import * as path from 'node:path'
 
 type Schema = { [keyword: string]: any }
 // A schema together with the file it was written in, which is what its relative $refs resolve against.
@@ -235,7 +236,7 @@ const manifest: Manifest = JSON.parse(
 )
 
 for (const [file, names] of Object.entries(manifest)) {
-    let src = readFileSync(file, 'utf8')
+    let src = readFileSync(path.resolve(import.meta.dirname, file), 'utf8')
     // Docs in `statements/` prefer definitions from statements.json, and so on.
     const preferredFile = `${file.split('/').at(-2)}.json`
     for (const name of names) {
@@ -254,5 +255,5 @@ for (const [file, names] of Object.entries(manifest)) {
             '\n\n' +
             src.slice(j)
     }
-    writeFileSync(file, src)
+    writeFileSync(path.resolve(import.meta.dirname, file), src)
 }

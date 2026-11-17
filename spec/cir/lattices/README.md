@@ -56,7 +56,7 @@ Field value-sets identify a binary or ternary field and may constrain its exact 
 | `universe` | yes      | <code>"bitfield" &#124; "tritfield"</code> | The kind of field.                           |
 | `length`   | no       | `integer`                                  | The exact number of lanes, when constrained. |
 
-> [!info] Table: the properties of the `bitfield` and `tritfield` nodes
+> [!info] Table: the properties of the `bitfield` node
 
 <!-- /shape: FieldSet -->
 
