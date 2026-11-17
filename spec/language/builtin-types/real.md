@@ -24,6 +24,14 @@ The precision of a `real` value is specified as a number of digits in a given ba
 
 The choice of base affects how the precision is interpreted and how rounding is performed.
 
+### Precision in Parameters
+
+A formal parameter may declare `real` without specifying precision. It accepts
+a real value while preserving its incoming precision, so passing or forwarding
+the parameter does not round it. Arithmetic still requires known precision,
+and stored values and declared function results still require explicit
+precision. See [Function Parameters](../semantics/function-parameters.md).
+
 > [!note] Base 3 is Considered Niche
 >
 > As most contemporary developers are unused to base 3 arithmetics, the `ter` base is not expected to be widely used.

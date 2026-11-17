@@ -4,7 +4,7 @@
 
 The `truthvalue` type represents a value with three possible states: `false`, `ambiguous`, and `true`.
 
-The `truthvalue` type can be thought of as an extension of the traditional boolean type, with an additional `ambiguous` state to represent uncertainty. In fact, `boolean`is defined as a `subset` of `truthvalue` containing only `false` and `true`.
+The `truthvalue` type can be thought of as an extension of the traditional boolean type, with an additional `ambiguous` state to represent uncertainty. In fact, `boolean` is defined as a `subset` of `truthvalue` containing only `false` and `true`.
 
 ```clawr
 subset boolean = truthvalue (false|true)
@@ -33,6 +33,8 @@ The `truthvalue` type supports standard logical operators: AND (`&&`), OR (`||`)
 - `&&` (AND) returns the least truthy value among its operands.
 - `||` (OR) returns the most truthy value among its operands.
 - `!` (NOT) inverts the truth value: `true` becomes `false`, `false` becomes `true`, and `ambiguous` remains `ambiguous`.
+- Equality is two-valued: comparing a value with itself, including `ambiguous`, returns `true`.
+- Source evaluation short-circuits `true || right` and `false && right`. An `ambiguous` left operand does not short-circuit either operator.
 
 There are also three logical functions in the standard library that are unavailable for binary Boolean operations:
 
@@ -111,7 +113,7 @@ The `truthvalue` values can be interpreted numerically as `false = -1`, `ambiguo
 | true      | ambiguous | true               |
 | true      | true      | false              |
 
-`adjust(_:,by:)` Truth Table:
+`adjust(_:,towards:)` Truth Table:
 
 | `A`       | `B`       | `adjust(A, by: B)` |
 | --------- | --------- | ------------------ |

@@ -30,6 +30,13 @@
   "../expressions/AND-OR.md": ["LogicalOperation"],
   "../expressions/AS_SHARED.md": ["AsShared"],
   "../expressions/BOX.md": ["Box"],
+  "../expressions/fields.md": [
+    "FieldFromString",
+    "FieldNot",
+    "FieldLength",
+    "FieldBinaryOperation",
+    "FieldShift"
+  ],
   "../expressions/CALL.md": [
     "FunctionCallExpression",
     "Receiver",
@@ -59,11 +66,13 @@
   "../lattices/README.md": [
     "IntegerSet",
     "RealSet",
+    "FieldSet",
     "TruthvalueSet",
     "StringSet",
     "RCTypeSet",
     "InterfaceSet"
   ],
+  "../lattices/field.md": ["FieldSet", "BitfieldSet", "TritfieldSet"],
   "../lattices/integer.md": ["IntegerSet"],
   "../lattices/interface.md": ["InterfaceSet"],
   "../lattices/rc-type.md": ["RCTypeSet"],

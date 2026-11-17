@@ -30,17 +30,17 @@ The `integer` type supports the following arithmetic operations:
 - Division (`/`): Divides the first integer by the second, performing integer division.
 - Modulo (`%`): Returns the remainder of the division of the first integer by the second.
 
-> [!note] Integer Division
->
-> In Clawr, integer division always rounds down towards negative infinity, which may differ from some other programming languages that truncate towards zero.
->
-> Examples:
->
-> - `5 / 2` results in `2`
-> - `-5 / 2` results in `-3`
+- Integer division rounds down to the nearest integer (floor division):
+  `5 / 2` is `2`, and `-5 / 2` is `-3`.
+- The divisor of `/` and `%` `MUST NOT` be zero. The frontend reports a known
+  zero divisor; otherwise, the error is reported at runtime.
+- The exponent in integer exponentiation (`^`) `MUST NOT` be negative. `0^0` is
+  invalid; the frontend reports it when both operands are known, otherwise the
+  error is reported at runtime.
+- For `q = a / b`, the remainder is `a % b = a - b * q`. It is zero or has
+  the sign of the divisor, and its magnitude is less than the divisor's
+  magnitude. Thus a positive divisor gives a non-negative remainder; a
+  negative divisor gives a non-positive remainder.
 
-The invariant that `MUST` always be satisfied for integer division and modulo is that if `m = a % b` and `q = a / b`, then $a = b \cdot q + m$. Therefore, the behavior of modulo operations are intrinsically linked to division, and vice versa.
-
-Division always round down to the nearest smaller integer (mathematical floor division). For example, `5 / 2` results in `2`, and `-5 / 2` results in `-3` (because $\lfloor {-5 \over 2} \rfloor = -3$). The motivation behind this behavior is to maintain consistency when using modulo operations to rotate through values.
-
-In languages that truncate towards zero instead of rounding down, a rotating view that moves to the left (smaller values) could unexpectedly jump to negative positions when using modulo operations. By consistently rounding towards negative infinity, Clawr ensures that modulo operations always result in non-negative values within the expected range.
+The rationale for floor division and its relationship to remainder is recorded
+in [ADR-022](../../../adr/adr-022.md) and [ADR-023](../../../adr/adr-023.md).

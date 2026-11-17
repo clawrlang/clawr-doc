@@ -45,6 +45,23 @@ An [`real`](real.md) value-set is either the entire infinite mathematical set â€
 
 [Click here](real.md) for more details
 
+## `bitfield` and `tritfield`
+
+Field value-sets identify a binary or ternary field and may constrain its exact lane count.
+
+<!-- shape: FieldSet -->
+
+| Field      | Required | Type                                       | Meaning                                      |
+| ---------- | -------- | ------------------------------------------ | -------------------------------------------- |
+| `universe` | yes      | <code>"bitfield" &#124; "tritfield"</code> | The kind of field.                           |
+| `length`   | no       | `integer`                                  | The exact number of lanes, when constrained. |
+
+> [!info] Table: the properties of the `bitfield` and `tritfield` nodes
+
+<!-- /shape: FieldSet -->
+
+[Click here](field.md) for more details
+
 ## `truthvalue`
 
 The three values of three-valued (Kleene K3) truth.

@@ -46,17 +46,9 @@ object Square: Shape {
 
 ### Extensions
 
-Nominal `data`, `object`, and `service` types can add methods and trait/role conformances in an extension:
-
-```clawr
-data Rectangle { width: integer }
-
-extension Rectangle: Shape {
-    func area() => self->width
-}
-```
-
-Extensions add no stored properties or initializers. Their target type must be declared in the current program. Extension methods use static dispatch and cannot override type-declared or inherited methods. Duplicate method identities (base name and labels) and duplicate explicit conformances for a canonical type/interface pair are compile-time errors. Extensions and conformance checks are combined across all source files in the current program; separately imported targets and primitive-type extensions are not yet supported. `mutating:` extension methods are supported for `data` and `object` types, but not services.
+Nominal `data`, `object`, and `service` types can add methods and
+trait/role conformances through extensions. See the [extension rules](./extensions.md)
+for eligibility, lookup, dispatch, and mutation semantics.
 
 ### Interface Inheritance
 

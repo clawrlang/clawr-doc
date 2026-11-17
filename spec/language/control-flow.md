@@ -20,11 +20,11 @@ func describe(_ value: truthvalue) {
 
 `else if` tests another condition only when the previous condition was not `true`. Each branch has its own local scope. Assignments to variables in an enclosing scope persist after the branch; branch-local declarations are not visible outside it.
 
-Conditions `MUST` have a `truthvalue` value-set, including the `boolean` subset. Integers and other values are not implicitly converted to truth values. Negation follows the [three-valued logic rules](./builtin-types/README.md#logic-operators): in particular, `!ambiguous` remains `ambiguous`.
+Conditions `MUST` have a `truthvalue` value-set, including the `boolean` subset. Integers and other values are not implicitly converted to truth values. Negation follows the [three-valued logic rules](./builtin-types/truthvalue.md#logical-operators): in particular, `!ambiguous` remains `ambiguous`.
 
 The frontend `MUST` account for possible branch outcomes when describing values after the conditional. It `MUST NOT` retain a singleton assumption that a branch assignment can invalidate.
 
-The CIR represents conditional statements with [`IF`](../cir/statements/IF.md). Source-level `&&` and `||` retain their [short-circuit semantics](./builtin-types/README.md#logic-operators); the frontend encodes that conditional evaluation explicitly rather than relying on lazy CIR logic nodes.
+The CIR represents conditional statements with [`IF`](../cir/statements/IF.md). Source-level `&&` and `||` retain their [short-circuit semantics](./builtin-types/truthvalue.md#logical-operators); the frontend encodes that conditional evaluation explicitly rather than relying on lazy CIR logic nodes.
 
 ## `while` and `repeat`
 

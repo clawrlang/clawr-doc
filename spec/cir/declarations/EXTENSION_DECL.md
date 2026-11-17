@@ -19,4 +19,17 @@ An `EXTENSION_DECL` contributes methods and optional trait/role conformances to 
 
 Each conformance records the interface and the method implementations used to construct its witness table. Conformance registration is associated with the target type at runtime; lookup also considers conformances registered on its supertypes.
 
-The target must identify an `RC_TYPE_DECL` in the current CIR artifact. Separate package artifacts and cross-package conflict resolution are deferred.
+The source eligibility, method lookup, mutation, and conformance rules are specified in [Extensions](../../language/user-types/extensions.md).
+
+## Rules for Frontend
+
+- The target `MUST` identify an `RC_TYPE_DECL` in the current CIR artifact.
+- Extension methods and conformance fulfillment tables `MUST` be emitted in `EXTENSION_DECL`; they are not merged into the target's `RC_TYPE_DECL`.
+- A conformance `MUST` identify its interface and map each required method to the implementation emitted by the extension.
+
+## Rules for Backend
+
+- The backend `MUST` make extension methods available for direct dispatch; it `MUST NOT` require an `RC_TYPE_DECL` virtual-dispatch slot for them.
+- The backend `MUST` register explicit conformances for the target type and make conformance lookup account for its supertypes.
+
+Separate package artifacts and cross-package conflict resolution are deferred.

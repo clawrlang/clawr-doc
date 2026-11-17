@@ -4,12 +4,54 @@
   "oneOf": [
     { "$ref": "#/$defs/IntegerSet" },
     { "$ref": "#/$defs/RealSet" },
+    { "$ref": "#/$defs/FieldSet" },
     { "$ref": "#/$defs/InterfaceSet" },
     { "$ref": "#/$defs/RCTypeSet" },
     { "$ref": "#/$defs/StringSet" },
     { "$ref": "#/$defs/TruthvalueSet" }
   ],
   "$defs": {
+    "FieldSet": {
+      "oneOf": [
+        { "$ref": "#/$defs/BitfieldSet" },
+        { "$ref": "#/$defs/TritfieldSet" }
+      ]
+    },
+
+    "BitfieldSet": {
+      "type": "object",
+      "properties": {
+        "universe": {
+          "$comment": "The kind of field.",
+          "const": "bitfield"
+        },
+        "length": {
+          "$comment": "The exact number of lanes, when constrained.",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["universe"],
+      "unevaluatedProperties": false
+    },
+
+    "TritfieldSet": {
+      "type": "object",
+      "properties": {
+        "universe": {
+          "$comment": "The kind of field.",
+          "const": "tritfield"
+        },
+        "length": {
+          "$comment": "The exact number of lanes, when constrained.",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["universe"],
+      "unevaluatedProperties": false
+    },
+
     "IntegerSet": {
       "oneOf": [
         { "$ref": "#/$defs/IntegerRange" },

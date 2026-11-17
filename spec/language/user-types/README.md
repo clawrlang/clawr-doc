@@ -9,5 +9,6 @@ There are several classes of user-defined types:
 - A [`trait`](./trait-role.md) is an an abstract interface that may be implemented by `data` oriented types.
 - A [`service`](./service.md) is an object whose state is defined by the system, not (or not primarily) by a `data` structure.
 - A [`role`](./trait-role.md) is a capability that a `service` may embody.
+- An [extension](./extensions.md) adds methods or conformances to an existing nominal type.
 - An `enum` is a list of available values a type allows.
 - A `union` type can have values that are structured in multiple ways.

@@ -13,6 +13,7 @@ The [expression schema](../schema/expressions.json) defines the permitted expres
 - [`SCOPE`](./SCOPE.md): local statements, a result expression, and cleanup.
 - [`NOT`](./NOT.md): three-valued logical negation.
 - [`AND` and `OR`](./AND-OR.md): eager logic operations; the frontend expresses source short-circuiting through explicit control flow.
+- [Field expressions](./fields.md): field construction, pointwise operations, length queries, and shifts.
 
 ## `STRING_LITERAL`
 

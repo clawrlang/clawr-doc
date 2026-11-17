@@ -96,7 +96,7 @@ The builder and factory are currently visible to programs; restricting them to c
 
 > [!note] For Future Consideration
 >
-> When/if the [Extensions](../../adr/adr-040.md) and [Varargs Functions](../../adr/drafts/varargs.md) ADRs are adopted, the standard library may provide a convenience method for adding multiple values in a single call.
+> If [Varargs Functions](../../adr/drafts/varargs.md) are adopted, the standard library may provide a convenience method for adding multiple values in a single call. Extensions are already specified; see [Extensions](../language/user-types/extensions.md).
 >
 > ```clawr
 > extension HashBuilder {
@@ -186,4 +186,4 @@ func modulate(_ value: truthvalue, by factor: truthvalue) -> truthvalue
 ```
 
 These operations perform mod-3 addition, clamped addition, and multiplication
-respectively, as defined in the [truthvalue specification](../language/builtin-types/README.md#logic-operators).
+respectively, as defined in the [truthvalue specification](../language/builtin-types/truthvalue.md#logical-operators).
