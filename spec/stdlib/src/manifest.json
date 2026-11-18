@@ -4,6 +4,7 @@
     "traits.clawr",
     "truthvalue.clawr",
     "serialization.clawr",
-    "io.clawr"
+    "io.clawr",
+    "lane-streams.clawr"
   ]
 }

@@ -1,0 +1,113 @@
+role BitfieldInput {
+    func readSome(maxLanes: integer) -> bitfield
+    func close()
+}
+
+role BitfieldOutput {
+    func write(_ value: bitfield)
+    func close()
+}
+
+role TritfieldInput {
+    func readSome(maxLanes: integer) -> tritfield
+    func close()
+}
+
+role TritfieldOutput {
+    func write(_ value: tritfield)
+    func close()
+}
+
+opaque service MemoryBitfieldInput: BitfieldInput {
+    func readSome(maxLanes: integer) -> bitfield {
+        return readMemoryBits(self, maxLanes: maxLanes)
+    }
+
+    func close() {
+        closeMemoryBitfieldInput(self)
+    }
+}
+
+opaque service MemoryBitfieldOutput: BitfieldOutput {
+    func write(_ value: bitfield) {
+        writeMemoryBits(self, value: value)
+    }
+
+    func close() {
+        closeMemoryBitfieldOutput(self)
+    }
+
+    func result() -> bitfield {
+        return memoryBitfieldResult(self)
+    }
+}
+
+opaque service MemoryTritfieldInput: TritfieldInput {
+    func readSome(maxLanes: integer) -> tritfield {
+        return readMemoryTrits(self, maxLanes: maxLanes)
+    }
+
+    func close() {
+        closeMemoryTritfieldInput(self)
+    }
+}
+
+opaque service MemoryTritfieldOutput: TritfieldOutput {
+    func write(_ value: tritfield) {
+        writeMemoryTrits(self, value: value)
+    }
+
+    func close() {
+        closeMemoryTritfieldOutput(self)
+    }
+
+    func result() -> tritfield {
+        return memoryTritfieldResult(self)
+    }
+}
+
+extern func newMemoryBitfieldInput(_ value: bitfield) -> ref MemoryBitfieldInput
+extern func newMemoryBitfieldOutput() -> ref MemoryBitfieldOutput
+extern func newMemoryTritfieldInput(_ value: tritfield) -> ref MemoryTritfieldInput
+extern func newMemoryTritfieldOutput() -> ref MemoryTritfieldOutput
+
+extern func readMemoryBits(_ input: ref MemoryBitfieldInput, maxLanes: integer) -> bitfield
+extern func readMemoryTrits(_ input: ref MemoryTritfieldInput, maxLanes: integer) -> tritfield
+extern func writeMemoryBits(_ output: ref MemoryBitfieldOutput, value: bitfield)
+extern func writeMemoryTrits(_ output: ref MemoryTritfieldOutput, value: tritfield)
+extern func closeMemoryBitfieldInput(_ input: ref MemoryBitfieldInput)
+extern func closeMemoryBitfieldOutput(_ output: ref MemoryBitfieldOutput)
+extern func closeMemoryTritfieldInput(_ input: ref MemoryTritfieldInput)
+extern func closeMemoryTritfieldOutput(_ output: ref MemoryTritfieldOutput)
+extern func memoryBitfieldResult(_ output: ref MemoryBitfieldOutput) -> bitfield
+extern func memoryTritfieldResult(_ output: ref MemoryTritfieldOutput) -> tritfield
+extern func laneStreamCheckCount(_ count: integer)
+extern func laneStreamCheckRead(_ length: integer, maxLanes: integer)
+
+func readBitfieldExactly(_ input: ref BitfieldInput, count: integer) -> bitfield {
+    laneStreamCheckCount(count)
+    mut result: bitfield = bitfield("")
+    mut remaining = count
+    while remaining > 0 {
+        const chunk = input.readSome(maxLanes: remaining)
+        const length = fieldLength(chunk)
+        laneStreamCheckRead(length, maxLanes: remaining)
+        result = fieldConcat(result, chunk)
+        remaining = remaining - length
+    }
+    return result
+}
+
+func readTritfieldExactly(_ input: ref TritfieldInput, count: integer) -> tritfield {
+    laneStreamCheckCount(count)
+    mut result: tritfield = tritfield("")
+    mut remaining = count
+    while remaining > 0 {
+        const chunk = input.readSome(maxLanes: remaining)
+        const length = fieldLength(chunk)
+        laneStreamCheckRead(length, maxLanes: remaining)
+        result = fieldConcat(result, chunk)
+        remaining = remaining - length
+    }
+    return result
+}

@@ -63,8 +63,7 @@ trait HashEquatable: Equatable {
 
 A `HashEquatable` type `MUST` also be `Equatable`. The idea is to locate a value by its hash-code first and then confirm equality using the `equals` method.
 
-Equal values `MUST` hash equally in the same context. Hash collisions do not
-prove equality, and equality-relevant key state `MUST` remain stable while stored.
+Equal values `MUST` hash equally in the same context. Hash collisions do not prove equality, and equality-relevant key state `MUST` remain stable while stored.
 
 The program is expected to ensure that the `hash(into:)` method is implemented consistently with the `equals` method for all `HashEquatable` types, but neither the frontend nor the backend can enforce this automatically.
 
@@ -83,12 +82,7 @@ opaque service HashBuilder {
 extern func newHashBuilder() -> ref HashBuilder
 ```
 
-Builders are shared ARC-managed resources. Parameters borrow them and aliases
-contribute to the same stream. Literal construction, subclassing and
-`copy(of:)` are not permitted. Only the runtime-owned `clawr.HashBuilder`
-opaque service and the serialization implementation's `clawr.JSONBuffer` are supported. Integer, real, truthvalue and string
-contributions use canonical primitive witnesses; other values delegate to
-their `hash(into:)` implementation.
+Builders are shared ARC-managed resources. Parameters borrow them and aliases contribute to the same stream. Literal construction, subclassing and `copy(of:)` are not permitted. Only the runtime-owned `clawr.HashBuilder` opaque service and the serialization implementation's `clawr.JSONBuffer` are supported. Integer, real, truthvalue and string contributions use canonical primitive witnesses; other values delegate to their `hash(into:)` implementation.
 
 Hash results are not portable or stable across processes, backends, or runtime versions and `MUST NOT` be used as persistent identifiers. The frontend `MUST NOT` assume a particular hash width, base, or representation.
 
@@ -108,8 +102,7 @@ The builder and factory are currently visible to programs; restricting them to c
 
 ### `HashCode`
 
-This is a later-stage design, not an implemented Clawr type. Public
-`mixedValue() -> HashCode` is deferred with it.
+This is a later-stage design, not an implemented Clawr type. Public `mixedValue() -> HashCode` is deferred with it.
 
 Opaque, backend-defined type (or subset). `MAY` be an alias for `integer(0..<2^64)`, or some other range. `MAY` be a `data` or `object` type. `MAY` be a `bword` or `tword`. `MAY` be implemented in any way that suits the backend. The exact implementation is irrelevant as long as it can be used for hash lookups.
 
@@ -123,10 +116,7 @@ Collection algorithms use an `extern` function, `bucketIndex(hash:,max:)` to con
 
 ### `bucketIndex(hash:,max:)`
 
-Deferred with `HashCode`. A future backend-owned `CollectionIndex`, with
-frontend semantics `integer(0...)`, could preserve identity in CIR for
-fixed-width lowering. Ordinary subset aliases do not preserve that identity
-today. Positive capacity and representability rules remain to be specified.
+Deferred with `HashCode`. A future backend-owned `CollectionIndex`, with frontend semantics `integer(0...)`, could preserve identity in CIR for fixed-width lowering. Ordinary subset aliases do not preserve that identity today. Positive capacity and representability rules remain to be specified.
 
 Converts a `HashCode` into a usable index for hash-based collections. The result `MUST` satisfy `0 <= result < max`.
 
@@ -176,6 +166,10 @@ Prints a string value to `stdout`.
 ```clawr
 func print(_ value: HasStringRepresentation)
 ```
+
+## Logical lane streams
+
+[Logical lane streams](./streams.md) define separate binary and ternary input and output roles with lane-counted reads, exact-read helpers, and in-memory endpoints. Chunk boundaries do not impose word sizes or wire encodings. These roles do not change the existing octet file API below.
 
 ## Octet file streams
 
