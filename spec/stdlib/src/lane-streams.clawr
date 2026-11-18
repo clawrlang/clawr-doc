@@ -18,7 +18,12 @@ role TritfieldOutput {
     func close()
 }
 
-opaque service MemoryBitfieldInput: BitfieldInput {
+opaque service MemoryBitfieldInput {}
+opaque service MemoryBitfieldOutput {}
+opaque service MemoryTritfieldInput {}
+opaque service MemoryTritfieldOutput {}
+
+extension MemoryBitfieldInput: BitfieldInput {
     func readSome(maxLanes: integer) -> bitfield {
         return readMemoryBits(self, maxLanes: maxLanes)
     }
@@ -28,7 +33,7 @@ opaque service MemoryBitfieldInput: BitfieldInput {
     }
 }
 
-opaque service MemoryBitfieldOutput: BitfieldOutput {
+extension MemoryBitfieldOutput: BitfieldOutput {
     func write(_ value: bitfield) {
         writeMemoryBits(self, value: value)
     }
@@ -42,7 +47,7 @@ opaque service MemoryBitfieldOutput: BitfieldOutput {
     }
 }
 
-opaque service MemoryTritfieldInput: TritfieldInput {
+extension MemoryTritfieldInput: TritfieldInput {
     func readSome(maxLanes: integer) -> tritfield {
         return readMemoryTrits(self, maxLanes: maxLanes)
     }
@@ -52,7 +57,7 @@ opaque service MemoryTritfieldInput: TritfieldInput {
     }
 }
 
-opaque service MemoryTritfieldOutput: TritfieldOutput {
+extension MemoryTritfieldOutput: TritfieldOutput {
     func write(_ value: tritfield) {
         writeMemoryTrits(self, value: value)
     }

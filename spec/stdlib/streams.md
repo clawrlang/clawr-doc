@@ -60,7 +60,7 @@ Outputs start empty. `result()` returns an owned immutable snapshot of all lanes
 
 Memory handles cannot be constructed directly, subclassed, or copied using `copy(of:)`. Their final release frees retained fields automatically, even if explicit close was omitted. Explicit close of an input releases its retained source; closed outputs retain their result until final release. There is no alignment restriction, including on final output length.
 
-Runtime-backed free functions in the executable declarations implement opaque endpoint methods and exact-read validation. They are implementation machinery; applications should use the roles, factories, methods, and exact-read helpers. No complexity or buffering-size guarantee is specified for this initial in-memory implementation.
+The opaque service declarations name runtime-owned handles. Clawr extensions provide their methods and role conformances without accessing the handles' storage. The runtime-backed free functions called by those methods and the exact-read helpers are implementation machinery; applications should use the roles, factories, methods, and exact-read helpers. No complexity or buffering-size guarantee is specified for this initial in-memory implementation.
 
 ## File and text adapters
 
